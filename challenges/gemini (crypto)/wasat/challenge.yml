@@ -1,0 +1,27 @@
+version: "0.1"
+name: "Wasat"
+author: "STARS"
+category: "Gemini (Crypto)"
+type: standard
+value: 60
+attempts: 3
+description: |-
+  Wasat means "middle", and it sits between the twins. Its message uses a **Vigenère cipher**, which shifts each letter by a different amount according to a keyword.
+
+  Nobody wrote the keyword down this time. All you know is that it's five letters long, and that you already know how part of the message reads, because you know how every flag begins.
+
+  **Your goal:** work out the keyword, then use it to decrypt `message.txt` and read the flag.
+
+  **Tools you may need to solve this level:** CyberChef (`Vigenère Decode`)
+files:
+  - dist/message.txt
+flags:
+  - "STARS{w4s4t_k3pt_th3_k3y}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "This cipher only changes letters, so the `{` is still there. The five letters right before it have to decrypt to `STARS`."
+    cost: 5
+  - content: "Each letter was shifted by the keyword, so shifting the ciphertext back by the plaintext leaves the keyword. In CyberChef, use **Vigenère Decode** on just those five letters, with `STARS` as the key."
+    cost: 10
+state: visible

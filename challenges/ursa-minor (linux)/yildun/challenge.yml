@@ -1,0 +1,26 @@
+version: "0.1"
+name: "Yildun"
+author: "STARS"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Yildun sits in the handle of the Little Dipper. Someone filed its record deep inside a folder called `sky`, among folders for lots of other stars.
+
+  **Your goal:** find the file called `flag.txt` somewhere inside `sky` and read it.
+
+  Log in with the password `littledipper`. Use `ls` to see what's in a folder, `cd name` to go into one, and `cd ..` to come back out.
+
+  **Commands you may need to solve this level:** `ls`, `cd`, `cat`, `find`
+connection_info: ssh yildun@192.168.68.103 -p 2220
+flags:
+  - "STARS{y1ldun_f0ll0w_th3_p4th}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Yildun is a northern star in Ursa Minor. Follow the folders with those names."
+    cost: 5
+  - content: "`find ~ -name flag.txt` searches every folder for you."
+    cost: 5
+state: visible

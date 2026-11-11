@@ -1,0 +1,23 @@
+version: "0.1"
+name: "Alhena"
+author: "STARS"
+category: "Gemini (Crypto)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Alhena's message is written in **hexadecimal**. Computers store each letter as a number, and hex is one way of writing those numbers: `53` means `S`, and `54` means `T`.
+
+  **Your goal:** turn the numbers in `message.txt` back into text to read the flag.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/message.txt
+flags:
+  - "STARS{4lh3n4_t4lks_1n_h3x}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In CyberChef, use the **From Hex** operation."
+    cost: 5
+state: visible

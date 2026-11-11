@@ -1,0 +1,201 @@
+name: stars
+
+# Shared limits for anything players can touch.
+x-challenge: &challenge
+  restart: on-failure
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  networks: [challenges]
+  cpus: 1.0
+  mem_limit: 256m
+  pids_limit: 128
+
+# Orion's simpler stars share one image and differ only in which app they run.
+x-web: &web
+  <<: *challenge
+  build: "./challenges/orion (web)/web-box"
+  tmpfs:
+    - /tmp
+
+services:
+  # --- Scoreboard ---------------------------------------------------------
+  ctfd:
+    image: ctfd/ctfd:3.8.9
+    restart: on-failure
+    ports:
+      - "${CTF_BIND_IP}:8000:8000"
+    environment:
+      UPLOAD_FOLDER: /var/uploads
+      DATABASE_URL: mysql+pymysql://ctfd:${DB_PASSWORD}@db/ctfd
+      REDIS_URL: redis://cache:6379
+      SECRET_KEY: ${SECRET_KEY}
+      WORKERS: 1
+      LOG_FOLDER: /var/log/CTFd
+      ACCESS_LOG: "-"
+      ERROR_LOG: "-"
+    volumes:
+      - ctfd_logs:/var/log/CTFd
+      - ctfd_uploads:/var/uploads
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthcheck')"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 30s
+    depends_on: [db, cache]
+    networks: [ctfd_public, ctfd_internal]
+
+  db:
+    image: mariadb:10.11
+    restart: on-failure
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_USER: ctfd
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ctfd
+      MARIADB_AUTO_UPGRADE: "1"
+    volumes:
+      - db_data:/var/lib/mysql
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --wait_timeout=28800
+      - --log-warnings=0
+    networks: [ctfd_internal]
+
+  cache:
+    image: redis:4
+    restart: on-failure
+    volumes:
+      - cache_data:/data
+    networks: [ctfd_internal]
+
+  # --- Challenge entry point ----------------------------------------------
+  # Challenges sit on an internal network with no route out, and Docker can't
+  # publish ports from one, so this proxy is what players actually connect to.
+  edge:
+    <<: *challenge
+    image: nginx:stable
+    cap_add: [CHOWN, SETGID, SETUID]
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+    volumes:
+      - ./edge/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "${CTF_BIND_IP}:2220:2220"
+      - "${CTF_BIND_IP}:8081-8086:8081-8086"
+      - "${CTF_BIND_IP}:9001-9006:9001-9006"
+    networks: [edge_public, challenges]
+
+  # --- Ursa Minor: shared SSH box, also the SSH route into Scorpius --------
+  ssh-box:
+    <<: *challenge
+    build: "./challenges/ursa-minor (linux)/ssh-box"
+    # Without AUDIT_WRITE, sshd crashes on any login that has a terminal.
+    cap_add: [CHOWN, SETGID, SETUID, SYS_CHROOT, KILL, AUDIT_WRITE]
+    cpus: 2.0
+    mem_limit: 1g
+    pids_limit: 1024
+    tmpfs:
+      - /tmp:size=64m,mode=1777,noexec,nosuid,nodev
+      - /run:size=1m,mode=755
+      # Docker leaves these writable by default, even on a read-only container.
+      - /dev/shm:ro,size=4k
+      - /dev/mqueue:ro,size=4k
+
+  # --- Orion ---------------------------------------------------------------
+  rigel:
+    <<: *challenge
+    build: "./challenges/orion (web)/rigel/app"
+    tmpfs:
+      - /tmp
+
+  betelgeuse:
+    <<: *web
+    command: ["betelgeuse:app"]
+
+  bellatrix:
+    <<: *web
+    command: ["bellatrix:app"]
+
+  mintaka:
+    <<: *web
+    command: ["mintaka:app"]
+
+  alnilam:
+    <<: *web
+    command: ["alnilam:app"]
+
+  alnitak:
+    <<: *web
+    command: ["alnitak:app"]
+
+  # --- Scorpius ------------------------------------------------------------
+  # One Dockerfile, but each image only contains its own star's flag.
+  antares:
+    <<: *challenge
+    build:
+      context: "./challenges/scorpius (pwn)"
+      target: service
+      args: {STAR: antares}
+
+  shaula:
+    <<: *challenge
+    build:
+      context: "./challenges/scorpius (pwn)"
+      target: service
+      args: {STAR: shaula}
+
+  sargas:
+    <<: *challenge
+    build:
+      context: "./challenges/scorpius (pwn)"
+      target: service
+      args: {STAR: sargas}
+
+  lesath:
+    <<: *challenge
+    build:
+      context: "./challenges/scorpius (pwn)"
+      target: service
+      args: {STAR: lesath}
+
+  dschubba:
+    <<: *challenge
+    build:
+      context: "./challenges/scorpius (pwn)"
+      target: service
+      args: {STAR: dschubba}
+
+  acrab:
+    <<: *challenge
+    build:
+      context: "./challenges/scorpius (pwn)"
+      target: service
+      args: {STAR: acrab}
+
+  # --- Tools --------------------------------------------------------------
+  # docker compose run --rm ctfcli challenge sync
+  ctfcli:
+    build: ./tools/ctfcli
+    profiles: [tools]
+    volumes:
+      - .:/work
+    networks: [ctfd_internal]
+
+volumes:
+  ctfd_logs:
+  ctfd_uploads:
+  db_data:
+  cache_data:
+
+networks:
+  ctfd_public:
+  ctfd_internal:
+    internal: true
+  edge_public:
+  challenges:
+    internal: true

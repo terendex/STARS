@@ -1,0 +1,28 @@
+version: "0.1"
+name: "Sargas"
+author: "STARS"
+category: "Scorpius (Pwn)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  The flag costs 1000 credits at the Sargas Star Shop, and you only have 100. Star maps cost 10 credits each. The shop checks that you can afford what you buy, but does it check everything?
+
+  **Your goal:** buy the flag. The shop prints it when you do.
+
+  **How to connect:** Run the command below and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9003 instead.
+
+  The program's source code is attached. Reading it is how you find the weakness.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`
+connection_info: ssh sargas@192.168.68.103 -p 2220
+files:
+  - dist/sargas.c
+flags:
+  - "STARS{s4rg4s_n3g4t1v3_cr3d1ts}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Look at how `cost` is worked out, and how it changes `credits`. What happens if you buy fewer than zero maps?"
+    cost: 5
+state: visible

@@ -1,0 +1,24 @@
+version: "0.1"
+name: "Kochab"
+author: "STARS"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 60
+attempts: 3
+description: |-
+  Kochab is one of the two Guardians of the Pole, circling Polaris all night. Its `catalog` folder holds 600 star records, and every one of them contains a line that looks like a flag. Only one is real.
+
+  **Your goal:** find the one record that is **exactly 1337 bytes** and **owned by the user `astronomer`**, and read the flag inside it. Checking 600 files by hand would take all night.
+
+  Log in with the password `guardian`.
+
+  **Commands you may need to solve this level:** `ls`, `cd`, `cat`, `find`, `grep`
+connection_info: ssh kochab@192.168.68.103 -p 2220
+flags:
+  - "STARS{k0ch4b_gu4rd14n_0f_th3_p0l3}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "`find` can filter by both size and owner. In `-size`, the suffix `c` means bytes."
+    cost: 5
+state: visible

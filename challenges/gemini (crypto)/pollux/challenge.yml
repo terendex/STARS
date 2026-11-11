@@ -1,0 +1,23 @@
+version: "0.1"
+name: "Pollux"
+author: "STARS"
+category: "Gemini (Crypto)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Pollux, the brightest star in Gemini, has sent a message in **Base64**. Base64 is an encoding rather than a cipher: there's no key, and anyone can reverse it.
+
+  **Your goal:** decode `message.txt` to read the flag. Paste its contents into CyberChef's **Input** box and find the operation that reverses Base64.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/message.txt
+flags:
+  - "STARS{p0llux_sp34ks_b4s3_64}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In CyberChef, drag **From Base64** from the left into the Recipe column. The answer appears at the bottom right."
+    cost: 5
+state: visible

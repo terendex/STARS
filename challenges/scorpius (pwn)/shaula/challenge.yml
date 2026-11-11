@@ -1,0 +1,30 @@
+version: "0.1"
+name: "Shaula"
+author: "STARS"
+category: "Scorpius (Pwn)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  "Pwn" means finding a weakness in a running program and making it do something it shouldn't. This is the gentlest possible start.
+
+  The Shaula Sky Tour shows you a menu with three choices, but the source code tells a different story.
+
+  **Your goal:** use what you find in the source code to make the program print the flag.
+
+  **How to connect:** Run the command below and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9002 instead.
+
+  The program's source code is attached. Reading it is how you find the weakness.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`
+connection_info: ssh shaula@192.168.68.103 -p 2220
+files:
+  - dist/shaula.c
+flags:
+  - "STARS{sh4ul4_h1dd3n_m3nu}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Open `shaula.c` in a text editor and find the `switch` section. Each `case` is a menu choice."
+    cost: 5
+state: visible

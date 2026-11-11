@@ -1,0 +1,31 @@
+version: "0.1"
+name: "Pherkad"
+author: "STARS"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Start here if you've never done this before. Pherkad is one of the two Guardians of the Pole, and it's where new astronomers begin.
+
+  **Your goal:** log in to the server and read the flag stored in your home folder. Every flag in this CTF looks like `STARS{...}`.
+
+  **How to connect:**
+
+  1. Open a terminal. On Windows, that's PowerShell.
+  2. Type the command below and press Enter.
+  3. If it asks whether you want to continue connecting, type `yes`.
+  4. Enter the password `firststep`. Nothing appears as you type, which is normal.
+
+  **Then:** type `ls` to see what files are here, and `cat` followed by a file name to read one. Paste the flag into the box below. Type `exit` to leave.
+
+  **Commands you may need to solve this level:** `ssh`, `ls`, `cat`
+connection_info: ssh pherkad@192.168.68.103 -p 2220
+flags:
+  - "STARS{ph3rk4d_f1rst_st3p}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Type `cat flag.txt` once you've logged in."
+    cost: 5
+state: visible

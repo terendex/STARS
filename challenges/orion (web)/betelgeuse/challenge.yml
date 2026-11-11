@@ -1,0 +1,22 @@
+version: "0.1"
+name: "Betelgeuse"
+author: "STARS"
+category: "Orion (Web)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Betelgeuse's visitor page looks ordinary, but a web page sends your browser more than it shows you. Developers sometimes leave notes in a page's code that visitors never see on screen.
+
+  **Your goal:** find the staff note hidden in this page's code. The flag is in it.
+
+  **Tools you may need to solve this level:** View page source (right-click the page, or press Ctrl+U). Use it rather than Inspect, which also shows code your browser extensions add.
+connection_info: http://192.168.68.103:8082
+flags:
+  - "STARS{b3t3lg3us3_v13w_s0urc3}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Notes in HTML are called comments, and they start with `<!--`. Press Ctrl+F in the page source to search for one."
+    cost: 5
+state: visible

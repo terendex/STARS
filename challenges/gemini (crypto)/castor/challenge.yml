@@ -1,0 +1,27 @@
+version: "0.1"
+name: "Castor"
+author: "STARS"
+category: "Gemini (Crypto)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Castor is one half of the Gemini twins, and its transmission comes in two layers as well.
+
+  The outer layer is an encoding you'll see all over the web. The inner one is a cipher that's about 2,000 years old and named after a Roman general. It moves every letter the same number of places along the alphabet.
+
+  **Your goal:** undo both layers of `transmission.txt` to read the flag.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/transmission.txt
+flags:
+  - "STARS{c4st0r_4nd_p0llux_tw1n_s1gn4ls}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "The general is Julius Caesar. CyberChef does a Caesar shift with its **ROT13** operation: change **Amount** from 13. (**Caesar Box Cipher** is a different thing.)"
+    cost: 5
+  - content: "Every flag starts with STARS. Compare that to the start of the flag in your decoded text to work out the shift."
+    cost: 5
+state: visible

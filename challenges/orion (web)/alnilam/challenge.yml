@@ -1,0 +1,26 @@
+version: "0.1"
+name: "Alnilam"
+author: "STARS"
+category: "Orion (Web)"
+type: standard
+value: 60
+attempts: 3
+description: |-
+  Alnilam's dome only opens for astronomers. The site decides who you are by reading a cookie, a small note the website stores in your browser, and you can edit your own cookies.
+
+  **Your goal:** make the site believe you're an astronomer. The dome opens and shows the flag.
+
+  Press **F12** to open your browser's developer tools. The cookie called `pass` is under **Application** > **Cookies** (in Firefox, **Storage** > **Cookies**). Work out what its value says, change it, then refresh the page.
+
+  **Tools you may need to solve this level:** Your browser's developer tools (F12), CyberChef
+connection_info: http://192.168.68.103:8085
+flags:
+  - "STARS{4ln1l4m_c00k13s_c4n_l13}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "The cookie's value is Base64. Decode it with [CyberChef](https://gchq.github.io/CyberChef/) to read it."
+    cost: 5
+  - content: "Replace `visitor` with `astronomer`, encode it back to Base64, and paste that in as the cookie's value."
+    cost: 10
+state: visible

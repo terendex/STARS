@@ -1,0 +1,30 @@
+version: "0.1"
+name: "Acrab"
+author: "STARS"
+category: "Scorpius (Pwn)"
+type: standard
+value: 60
+attempts: 3
+description: |-
+  Acrab's radio relay repeats your callsign back to you. In C, `printf` treats codes like `%p` and `%s` as instructions to read data from memory, and this program passes your input straight to it. This is called a **format string** bug.
+
+  **Your goal:** the flag is sitting in the program's memory, but the program never prints it. Use the bug to read it out.
+
+  **How to connect:** Run the command below and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9006 instead.
+
+  The program's source code is attached. Reading it is how you find the weakness.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`
+connection_info: ssh acrab@192.168.68.103 -p 2220
+files:
+  - dist/acrab.c
+flags:
+  - "STARS{4cr4b_f0rm4t_str1ng_l34k}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Type `%p %p %p %p` as your callsign and you'll see values from memory. That's the bug working."
+    cost: 5
+  - content: "`%5$s` means \"treat the 5th value as the location of some text and print it\". Try different numbers. A crash just means that value wasn't text, so reconnect and keep going."
+    cost: 10
+state: visible

@@ -1,0 +1,25 @@
+version: "0.1"
+name: "Sheliak"
+author: "STARS"
+category: "Lyra (Forensics)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Image files can store more than the picture itself, such as notes about who took it and how. That extra information is called **metadata**.
+
+  An observer left a note in this photo of Sheliak. You won't see it by looking at the picture.
+
+  **Your goal:** find the observer's note inside `sheliak.png`. The flag is in it.
+
+  **Tools you may need to solve this level:** A text editor such as Notepad
+files:
+  - dist/sheliak.png
+flags:
+  - "STARS{sh3l14k_m3t4d4t4_sp34ks}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Open the file in a text editor like Notepad. It'll look like gibberish, but Ctrl+F can search for `STARS`."
+    cost: 5
+state: visible

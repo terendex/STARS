@@ -1,0 +1,30 @@
+version: "0.1"
+name: "Lesath"
+author: "STARS"
+category: "Scorpius (Pwn)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  The Lesath visitor desk gives you a name tag with space for 16 characters, and right next to it in memory is the value that says whether you're an astronomer.
+
+  What happens when a name doesn't fit? This is called a **buffer overflow**.
+
+  **Your goal:** get the desk to treat you as an astronomer. It gives astronomers the flag.
+
+  **How to connect:** Run the command below and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9004 instead.
+
+  The program's source code is attached. Reading it is how you find the weakness.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`
+connection_info: ssh lesath@192.168.68.103 -p 2220
+files:
+  - dist/lesath.c
+flags:
+  - "STARS{l3s4th_0v3rfl0w3d_th3_b4dg3}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Try signing in with a really long name."
+    cost: 5
+state: visible

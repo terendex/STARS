@@ -1,0 +1,26 @@
+version: "0.1"
+name: "Larawag"
+author: "STARS"
+category: "Scorpius (Pwn)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  The Larawag Star Greeter asks for a name, puts it into a terminal command, and runs that command. The source code is attached. A terminal can run more than one command from a single line.
+
+  **Your goal:** make the program show you the file `/flag.txt`.
+
+  **How to connect:** Run the command below and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9022 instead.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`, `cat`
+connection_info: ssh larawag@192.168.68.103 -p 2221
+files:
+  - dist/larawag.c
+flags:
+  - "STARS{l4r4w4g_c0mm4nd_1nj3ct10n}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In a terminal, `;` ends one command and starts the next, so `echo hi; ls` runs both. Put that idea into the name you give the greeter."
+    cost: 5
+state: visible

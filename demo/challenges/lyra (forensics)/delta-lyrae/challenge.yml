@@ -1,0 +1,23 @@
+version: "0.1"
+name: "Delta Lyrae"
+author: "STARS"
+category: "Lyra (Forensics)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Delta Lyrae is a wide pair of stars in Lyra. Its survey report has nothing interesting on the page, but files also carry information about themselves, such as a title, an author and a subject. That information is called metadata.
+
+  **Your goal:** find the flag in the metadata of `delta_lyrae_report.pdf`.
+
+  **Tools you may need to solve this level:** A PDF viewer, such as your web browser
+files:
+  - dist/delta_lyrae_report.pdf
+flags:
+  - "STARS{d3lt4_lyr43_m3t4d4t4}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "PDF viewers list metadata under **Document properties**. In Chrome's PDF viewer, it's in the ⋮ menu at the top right. In Firefox, it's in the » menu. Searching the web for \"PDF metadata viewer\" also finds online tools."
+    cost: 5
+state: visible

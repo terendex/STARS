@@ -1,0 +1,22 @@
+version: "0.1"
+name: "Saiph"
+author: "STARS"
+category: "Orion (Web)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Saiph marks the hunter's right knee in Orion. Its status page looks plain, but the page isn't the only thing the server sends. Every response also comes with extra lines of information, called headers, which your browser reads but doesn't show you.
+
+  **Your goal:** find the flag the server sends in the headers of this page.
+
+  **Tools you may need to solve this level:** Your browser's developer tools (press F12)
+connection_info: http://192.168.68.103:8091
+flags:
+  - "STARS{s41ph_s3nds_h34d3rs}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In the developer tools, open the **Network** tab and reload the page. Click the first request in the list and look under **Response Headers**."
+    cost: 5
+state: visible

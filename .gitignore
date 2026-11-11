@@ -1,0 +1,9 @@
+# Passwords and tokens. Each PC makes its own with scripts/setup.ps1 or setup.sh.
+.env
+.ctf/config
+demo/.ctf/config
+LOGINS.txt
+
+logs/
+__pycache__/
+*.pyc

@@ -1,0 +1,32 @@
+version: "0.1"
+name: "Dschubba"
+author: "STARS"
+category: "Scorpius (Pwn)"
+type: standard
+value: 60
+attempts: 3
+description: |-
+  This is a buffer overflow again, but it has to be exact now. Your name can spill into the access key, and the key has to end up holding one specific number. The source code shows which number.
+
+  The program shows you what ended up in the key, in hexadecimal, so you can see how close you are.
+
+  **Your goal:** make the key hold exactly the right number. The program prints the flag when it does.
+
+  **How to connect:** Run the command below and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9005 instead.
+
+  The program's source code is attached. Reading it is how you find the weakness.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`
+connection_info: ssh dschubba@192.168.68.103 -p 2220
+files:
+  - dist/dschubba.c
+flags:
+  - "STARS{dschubb4_3x4ct_0ff53t}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Look at `struct record` in the source. Add up the size of every field before `key` to work out how many characters to type first. An `unsigned int` is 4 bytes."
+    cost: 5
+  - content: "Letters are numbers too, and each pair of hex digits is one character in an ASCII table. This computer stores the lowest byte of a number first (little-endian), so check the order against what the program prints."
+    cost: 10
+state: visible

@@ -1,0 +1,24 @@
+version: "0.1"
+name: "Polaris"
+author: "STARS"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Polaris, the North Star, has guided travellers for centuries. Our observation post keeps its record in your home folder, but a plain `ls` doesn't list it.
+
+  **Your goal:** find the file `ls` isn't showing you, and read the flag inside it. `README.txt` has a clue.
+
+  Log in with the password `northstar`.
+
+  **Commands you may need to solve this level:** `ls`, `cat`
+connection_info: ssh polaris@192.168.68.103 -p 2220
+flags:
+  - "STARS{p0l4r1s_gu1d3s_th3_w4y}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "`ls` skips files whose names start with a dot. `ls -a` shows everything."
+    cost: 5
+state: visible

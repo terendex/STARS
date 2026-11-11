@@ -1,0 +1,27 @@
+version: "0.1"
+name: "Alathfar"
+author: "STARS"
+category: "Lyra (Forensics)"
+type: standard
+value: 60
+attempts: 3
+description: |-
+  This is a recording of network traffic at the Lyra Observatory, captured while an astronomer logged in over plain, unencrypted HTTP. Anything sent that way can be read by anyone watching the network.
+
+  **Your goal:** find the password the astronomer logged in with. That password is the flag.
+
+  Files like this open in [Wireshark](https://www.wireshark.org/), a free tool for inspecting network traffic.
+
+  **Tools you may need to solve this level:** Wireshark
+files:
+  - dist/alathfar_capture.pcap
+flags:
+  - "STARS{4l4thf4r_sn1ff3d_th3_w1r3}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "In Wireshark, type `http` in the filter bar. Look for the `POST /login` requests. There are two: the first attempt failed."
+    cost: 5
+  - content: "Open the request and find the `Authorization` line. It's Base64 of `username:password`, and Wireshark may decode it for you."
+    cost: 10
+state: visible

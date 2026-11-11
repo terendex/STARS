@@ -1,0 +1,24 @@
+version: "0.1"
+name: "Alnitak"
+author: "STARS"
+category: "Orion (Web)"
+type: standard
+value: 100
+attempts: 3
+description: |-
+  Alnitak's star catalog has the same weakness as Rigel: it pastes whatever you type into a database query. There's no login to bypass this time. The flag is stored in **another table** in the same database, and you don't know that table's name.
+
+  The catalog runs on **SQLite**. `UNION SELECT` lets you add rows from another query to the search results. The catalog shows 3 columns, so your query has to return 3 as well.
+
+  **Your goal:** find the hidden table's name, then use the search box to read the flag out of it.
+connection_info: http://192.168.68.103:8086
+flags:
+  - "STARS{4ln1t4k_un10n_s3l3ct_w1ns}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "Search for `' UNION SELECT 1, 2, 3 -- ` (with a space at the end). The numbers appear as a row, which shows the injection works."
+    cost: 10
+  - content: "SQLite lists its tables in one called `sqlite_master`. Its `name` and `sql` columns tell you what every table is called and what's in it."
+    cost: 20
+state: visible

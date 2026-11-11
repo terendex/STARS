@@ -1,0 +1,23 @@
+version: "0.1"
+name: "RR Lyrae"
+author: "STARS"
+category: "Lyra (Forensics)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  RR Lyrae is a star that brightens and dims every 13 hours or so. This photo was taken at its dimmest, and apart from a few stars it looks pure black. But a pixel that's almost black isn't the same as one that is black.
+
+  **Your goal:** make the hidden text in `rr_lyrae.png` visible. The text is the flag.
+
+  **Tools you may need to solve this level:** An image editor, such as Paint
+files:
+  - dist/rr_lyrae.png
+flags:
+  - "STARS{RR_LYRAE_HIDES_IN_THE_DARK}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In Paint, pick a bright colour and use **Fill** (the paint bucket) on the black sky. It only fills pixels that are exactly the colour you clicked, so the hidden letters stay black."
+    cost: 5
+state: visible

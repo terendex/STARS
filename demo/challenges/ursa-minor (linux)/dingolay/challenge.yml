@@ -1,0 +1,26 @@
+version: "0.1"
+name: "Dingolay"
+author: "STARS"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Dingolay is the star 11 Ursae Minoris, home to a giant planet called Ramajay. Our survey of it logged twenty thousand readings, and one of them carries the flag.
+
+  Scrolling through them all would take all night. Linux has a command that searches inside a file and prints only the lines that match.
+
+  **Your goal:** find the one line in `sky_survey.log` that contains the flag.
+
+  Log in with the password `ramajay`.
+
+  **Commands you may need to solve this level:** `ls`, `grep`
+connection_info: ssh dingolay@192.168.68.103 -p 2221
+flags:
+  - "STARS{d1ng0l4y_n33dl3_1n_th3_l0g}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "`grep` takes the text to look for first, then the file name. Every flag starts with `STARS{`."
+    cost: 5
+state: visible

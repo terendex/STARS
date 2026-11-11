@@ -1,0 +1,29 @@
+version: "0.1"
+name: "Antares"
+author: "STARS"
+category: "Scorpius (Pwn)"
+type: standard
+value: 100
+attempts: 3
+description: |-
+  Antares, the red heart of Scorpius, is near the end of its life. Its core monitor takes a fusion reading and logs it, but it's never been told what to do with a reading that's too big.
+
+  The program has a function called `supernova` that nothing ever calls, and it even tells you where that function is. Overflow the buffer far enough to overwrite the **return address**, the place the program goes back to when a function ends, and send it to `supernova`.
+
+  **Your goal:** make the program run `supernova`, which prints the flag.
+
+  This one needs raw bytes, so a normal keyboard won't do. If you don't have `nc` on your computer, log in to any Ursa Minor account (Pherkad's works) and run `nc antares 9001` from there. It works the same way.
+connection_info: nc 192.168.68.103 9001
+files:
+  - dist/antares
+  - dist/antares.c
+flags:
+  - "STARS{4nt4r3s_w3nt_sup3rn0v4}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "The buffer is 64 bytes, and 8 more bytes of saved data sit before the return address. That's 72 bytes in total."
+    cost: 10
+  - content: "Addresses are stored backwards (little-endian) in 8 bytes. On the SSH box, `printf 'AAAA\\x12\\x34' | nc antares 9001` sends those exact bytes. Replace them with 72 A's followed by the address."
+    cost: 10
+state: visible

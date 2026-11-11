@@ -1,0 +1,26 @@
+version: "0.1"
+name: "Anwar"
+author: "STARS"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Anwar al Farkadain is a faint star in the Little Dipper, and its full name is three words long. So is the name of the file in your home folder that holds its record.
+
+  Commands treat a space as the gap between two separate names, so a name with spaces in it needs special care.
+
+  **Your goal:** read the file in your home folder whose name has spaces in it. The flag is inside.
+
+  Log in with the password `farkadain`.
+
+  **Commands you may need to solve this level:** `ls`, `cat`
+connection_info: ssh anwar@192.168.68.103 -p 2221
+flags:
+  - "STARS{4nw4r_qu0t3s_th3_sp4c3s}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Put the whole name in quotes, like `cat \"my file.txt\"`. Or type the first few letters and press Tab, and the terminal finishes the name for you."
+    cost: 5
+state: visible

@@ -1,0 +1,11 @@
+# Text files use LF line endings everywhere, even on Windows. Shell scripts and
+# configs run inside Linux containers, and Windows line endings break them.
+* text=auto eol=lf
+
+# Player downloads must reach players byte for byte, so git never changes them.
+# Some of them (the PDFs, the Gemini messages) look like text to git, and
+# converting their line endings would change or corrupt them.
+**/dist/** -text
+*.png -text
+*.pdf -text
+*.pcap -text

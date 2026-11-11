@@ -1,0 +1,23 @@
+version: "0.1"
+name: "Propus"
+author: "STARS"
+category: "Gemini (Crypto)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Propus sits at the foot of Castor, one of the Gemini twins. Its beacon only sends two symbols, 0 and 1. That's binary, the way computers store everything, and each group of eight digits is one character.
+
+  **Your goal:** turn `signal.txt` back into text to read the flag.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/signal.txt
+flags:
+  - "STARS{pr0pus_sp34ks_b1n4ry}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In CyberChef, drag the **From Binary** operation into the Recipe column, and paste the file's contents into Input."
+    cost: 5
+state: visible

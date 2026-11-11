@@ -1,0 +1,25 @@
+version: "0.1"
+name: "Vega"
+author: "STARS"
+category: "Lyra (Forensics)"
+type: standard
+value: 60
+attempts: 3
+description: |-
+  This deep field image was taken while pointing at Vega, the brightest star in Lyra. It looks like an ordinary photo, but the file is much bigger than a picture this dark should be.
+
+  **Your goal:** find out what else is stored in `vega_deep_field.png`, get it out, and read the flag.
+
+  **Tools you may need to solve this level:** `binwalk`, or a hex editor such as HxD
+files:
+  - dist/vega_deep_field.png
+flags:
+  - "STARS{v3g4_h1d3s_1n_th3_d33p_f13ld}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Image viewers stop reading at the end of the PNG, but the file doesn't have to end there. Try `binwalk`, or look at the end with a hex viewer."
+    cost: 5
+  - content: "It's a zip archive. `unzip vega_deep_field.png` extracts it (ignore the warning about extra bytes). On Windows, `tar -xf vega_deep_field.png` in PowerShell does the same."
+    cost: 5
+state: visible

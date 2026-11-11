@@ -1,0 +1,25 @@
+version: "0.1"
+name: "Double Double"
+author: "STARS"
+category: "Lyra (Forensics)"
+type: standard
+value: 100
+attempts: 3
+description: |-
+  Epsilon Lyrae is nicknamed the Double Double, because what looks like one star turns out to be four. This image hides something just as well.
+
+  Every pixel has red, green and blue values. Changing the lowest bit of a value changes the color so slightly that nobody can see it, which makes it a perfect hiding place. This is called **steganography**.
+
+  **Your goal:** pull the hidden bits out of `double_double.png` and turn them back into text to read the flag.
+files:
+  - dist/double_double.png
+flags:
+  - "STARS{d0ubl3_d0ubl3_b1ts_1n_th3_r3d}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "The flag is in the lowest bit of the **red** values only, starting at the top-left pixel and going left to right."
+    cost: 10
+  - content: "Join the bits into groups of 8 and turn each group into a character. Online tools like Aperi'Solve can do this, or Python with the Pillow library."
+    cost: 20
+state: visible

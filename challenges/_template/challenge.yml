@@ -1,0 +1,37 @@
+# Copy this folder to challenges/<constellation> (<skill>)/<star>/ and fill it in.
+# README.md has the full steps for adding a challenge.
+version: "0.1"
+name: "Star name"
+author: "STARS"
+category: "Constellation (Skill)"   # Same text as other stars in that constellation
+type: standard
+value: 30                           # 30 Easy, 60 Medium, 100 Hard
+attempts: 3                         # Wrong flags allowed per team before lockout
+# Easy and Medium end with the clue line below. Delete it for Hard, and don't
+# let it give away a paid hint. Use "Tools" instead of "Commands" for anything
+# that isn't typed into a terminal.
+description: |-
+  What the player sees. A little star lore, then what they need to do.
+
+  **Commands you may need to solve this level:** `ls`, `cat`
+
+# Hands-on challenges only. Delete this line for download-only ones.
+connection_info: nc 192.168.68.103 9007
+
+# Download-only or hybrid challenges. Keep flags out of these files unless
+# they're part of the puzzle.
+files:
+  - dist/example.txt
+
+flags:
+  - "STARS{replace_me}"
+
+tags:
+  - "★ Easy"                        # "★ Easy", "★★ Medium" or "★★★ Hard"
+
+# Optional. The cost is deducted from the player's score when they unlock it.
+hints:
+  - content: "A nudge in the right direction."
+    cost: 5
+
+state: visible

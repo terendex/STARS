@@ -1,0 +1,26 @@
+version: "0.1"
+name: "Fang"
+author: "STARS"
+category: "Scorpius (Pwn)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Fang guards the scorpion's vault with a 16-letter passcode. It picks a new one every time someone connects, so guessing is hopeless. The source code is attached, so read exactly how the program checks what you type.
+
+  **Your goal:** get past the passcode check and make the program print the flag.
+
+  **How to connect:** Run the command below and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9021 instead.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`
+connection_info: ssh fang@192.168.68.103 -p 2221
+files:
+  - dist/fang.c
+flags:
+  - "STARS{f4ng_3mpty_p4ssc0d3}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "`strncmp(a, b, n)` only compares the first `n` characters. Look at where this program gets `n` from. What's the smallest it can be?"
+    cost: 5
+state: visible

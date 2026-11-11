@@ -1,0 +1,29 @@
+version: "0.1"
+name: "Tejat"
+author: "STARS"
+category: "Gemini (Crypto)"
+type: standard
+value: 100
+attempts: 3
+description: |-
+  Tejat shares its patch of sky with a neighbor once called Tejat Prior, and the two relay messages to each other using **RSA**, the system that protects much of the web. Each station publishes a number `n`, made by multiplying two secret primes. Anyone who can split `n` back into those primes can work out the private key and read that station's messages.
+
+  These keys are 2048 bits long, so no computer on Earth can split one on its own. But both stations got their keys from the same cheap generator, and it was running low on primes.
+
+  We intercepted a message sent to Tejat. `transmission.txt` holds both stations' `n`, the public exponent `e` they share, and the encrypted message `c`.
+
+  **Your goal:** recover Tejat's two primes, use them to decrypt `c`, and read the flag.
+
+  You don't need to write any code. Free online big-number calculators and RSA decoders handle numbers this size.
+files:
+  - dist/transmission.txt
+flags:
+  - "STARS{t3j4t_tw1ns_sh4r3d_4_pr1m3}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "If two numbers have a factor in common, you don't need to split either one to find it. Their greatest common divisor (GCD) gives it to you instantly, even for numbers this big. On [Alpertron's calculator](https://www.alpertron.com.ar/ECM.HTM), type `Gcd(first number, second number)` and press **Only evaluate**."
+    cost: 10
+  - content: "With one prime `p`, the other is Tejat's `n` divided by `p`, and Alpertron's `/` works that out too. Then [dcode's RSA Cipher tool](https://www.dcode.fr/rsa-cipher) decrypts for you: fill in `C`, `E`, `N` (Tejat's), `P` and `Q`, and choose to show the plaintext as a character string."
+    cost: 20
+state: visible

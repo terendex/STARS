@@ -1,0 +1,23 @@
+version: "0.1"
+name: "Aladfar"
+author: "STARS"
+category: "Lyra (Forensics)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  This observation report from Aladfar seems to be missing a line. There's a suspicious gap in the middle, as if someone wrote it in invisible ink.
+
+  **Your goal:** reveal the missing line in `aladfar_report.pdf`. The flag is on it.
+
+  **Tools you may need to solve this level:** A PDF viewer (your browser works), or `pdftotext`
+files:
+  - dist/aladfar_report.pdf
+flags:
+  - "STARS{4l4df4r_wh1t3_1nk}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Open the PDF in your browser and press Ctrl+A to select everything. Highlighting shows text that's the same color as the page."
+    cost: 5
+state: visible

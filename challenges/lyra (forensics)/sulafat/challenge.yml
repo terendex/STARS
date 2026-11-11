@@ -1,0 +1,25 @@
+version: "0.1"
+name: "Sulafat"
+author: "STARS"
+category: "Lyra (Forensics)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  We recovered `notes.txt` from Sulafat's archive, but it won't read properly. A file's extension (the `.txt` part of its name) is only a label, and it can be wrong.
+
+  **Your goal:** work out what kind of file `notes.txt` really is, then open it as that kind of file. The flag is in it.
+
+  Open it in a text editor and look at the very first characters. Most file types begin with their own signature.
+
+  **Tools you may need to solve this level:** A text editor such as Notepad
+files:
+  - dist/notes.txt
+flags:
+  - "STARS{SULAFAT_WRONG_EXTENSION}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "The file starts with `PNG`. Rename it so it ends in `.png` and open it. If Windows hides extensions, turn them on in File Explorer's **View** menu."
+    cost: 5
+state: visible
