@@ -8,9 +8,9 @@ attempts: 3
 description: |-
   Castor is one half of the Gemini twins, and its transmission comes in two layers as well.
 
-  The outer layer is an encoding you'll see all over the web. The inner one is a cipher that's about 2,000 years old and named after a Roman general. It moves every letter the same number of places along the alphabet.
+  The outer layer is **Base64**, like Pollux. Under it is a **Caesar cipher**, which is about 2,000 years old: it moves every letter the same number of places along the alphabet, so with a shift of 3, `A` becomes `D`. Nobody told us Castor's shift, but there are only 25 possibilities. CyberChef files the Caesar cipher under the name of its most famous 13-place version, and it has an operation that tries every shift at once.
 
-  **Your goal:** undo both layers of `transmission.txt` to read the flag.
+  **Your goal:** undo both layers of `transmission.txt` to read the flag. CyberChef runs the Recipe from top to bottom, so put the Base64 step first.
 
   **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
 files:
@@ -20,8 +20,6 @@ flags:
 tags:
   - "★ Easy"
 hints:
-  - content: "The general is Julius Caesar. CyberChef does a Caesar shift with its **ROT13** operation: change **Amount** from 13. (**Caesar Box Cipher** is a different thing.)"
-    cost: 5
-  - content: "Every flag starts with STARS. Compare that to the start of the flag in your decoded text to work out the shift."
+  - content: "Below **From Base64**, add **ROT13 Brute Force**. It shows the message at every shift. Type `STARS` in its **Crib** box to keep only the line that reads. (**Caesar Box Cipher** is a different thing.)"
     cost: 5
 state: visible

@@ -6,11 +6,11 @@ type: standard
 value: 60
 attempts: 3
 description: |-
-  Mebsuta's message is written in hex, but decoding the hex only gives you gibberish. It was also encrypted with **XOR**, using a key that's several bytes long and repeats for the whole message.
+  Mebsuta's message is written in hex, but decoding the hex only gives you gibberish. It was also encrypted with **XOR**, using a key that repeats for the whole message. XOR undoes itself, so the key that locked the message also unlocks it.
 
-  There are far too many possible keys to try them all. Luckily, Mebsuta always opens its transmissions with the flag, and you know how every flag begins.
+  The key is four capital letters: the name of the Gemini twins' mother in Greek myth.
 
-  **Your goal:** recover the XOR key, then use it to decrypt `message.txt` and read the flag.
+  **Your goal:** decode the hex, then XOR the result with the key to read the flag. CyberChef's **XOR** reads its key as hex unless you switch the key's format to **UTF8**, so switch it before typing letters.
 
   **Tools you may need to solve this level:** CyberChef (`From Hex`, `XOR`)
 files:
@@ -20,8 +20,8 @@ flags:
 tags:
   - "★★ Medium"
 hints:
-  - content: "XOR undoes itself. If `ciphertext = plaintext XOR key`, then `key = ciphertext XOR plaintext`, and you know how the plaintext starts."
+  - content: "Can't find her name? Work the key out instead. Mebsuta opens its messages with the flag, so XOR the decoded hex with `STARS{` (format UTF8). The first characters of the output spell the key, which then starts to repeat."
     cost: 5
-  - content: "In CyberChef, use **From Hex**, then **XOR** with `STARS{` as a UTF8 key. Only the first six characters of the output mean anything, and they show the key starting to repeat."
-    cost: 10
+  - content: "The key is `LEDA`. Recipe: **From Hex**, then **XOR** with key `LEDA` and format **UTF8**."
+    cost: 5
 state: visible

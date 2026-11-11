@@ -89,10 +89,13 @@ FLAG = "STARS{4lh3n4_t4lks_1n_h3x}"
 message = f"ALHENA RELAY. FLAG FOLLOWS: {FLAG}"
 write("alhena", "message.txt", wrapped(message.encode().hex(" ")))
 
-# Castor: Base64 over a Caesar cipher
+# Castor: Base64 over a Caesar cipher. Players solve it with CyberChef's ROT13
+# Brute Force, which only shows the first 100 characters at each shift, so the
+# whole message must stay under 100 characters or the flag gets cut off.
 FLAG = "STARS{c4st0r_4nd_p0llux_tw1n_s1gn4ls}"
 SHIFT = 7
-message = f"GEMINI RELAY, CHANNEL TWO. THE TWINS SEND THEIR REGARDS. FLAG FOLLOWS: {FLAG}"
+message = f"GEMINI RELAY, CHANNEL TWO. FLAG FOLLOWS: {FLAG}"
+assert len(message) < 100
 write(
     "castor",
     "transmission.txt",

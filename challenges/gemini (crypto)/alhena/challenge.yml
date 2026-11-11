@@ -8,7 +8,7 @@ attempts: 3
 description: |-
   Alhena's message is written in **hexadecimal**. Computers store each letter as a number, and hex is one way of writing those numbers: `53` means `S`, and `54` means `T`.
 
-  **Your goal:** turn the numbers in `message.txt` back into text to read the flag.
+  **Your goal:** turn the numbers in `message.txt` back into text to read the flag. Use CyberChef the same way as in Pollux: paste the file into **Input**, then find the operation that reads hex.
 
   **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
 files:

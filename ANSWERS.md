@@ -217,32 +217,36 @@ Each one is solved from the file CTFd gives the player to download. The first fi
 
 ### Castor
 
-Two layers: Base64 on the outside, a Caesar shift of 7 on the inside.
+Two layers: Base64 on the outside, a Caesar shift of 7 on the inside. The description names both and steers players to CyberChef's ROT13 operations.
 
 1. Copy `transmission.txt` into the Input.
 2. Drag **From Base64** into the Recipe. The Output is still scrambled letters.
-3. Drag **ROT13** below it, and set its **Amount** to `19`. (Shifting back 7 is the same as shifting forward 19.)
-4. The Output reads `GEMINI RELAY... FLAG FOLLOWS: STARS{...}`.
+3. Drag **ROT13 Brute Force** below it and type `STARS` in its **Crib** box.
+4. One line is left: `Amount = 19: GEMINI RELAY, CHANNEL TWO. FLAG FOLLOWS: STARS{...}`. (Shifting back 7 is the same as shifting forward 19.)
 
-If you'd rather not do the arithmetic: leave the amount at 13 and it won't read; try amounts until the text turns to English. 19 is the one that works.
+Plain **ROT13** with **Amount** `19` gives the same text without the `Amount = 19:` prefix. ROT13 Brute Force only shows the first 100 characters at each shift, which is why `make_files.py` keeps Castor's message shorter than that.
 
 ### Wasat
 
-A Vigenère cipher with a five-letter keyword nobody wrote down. You recover the keyword from the fact that the flag starts with `STARS`.
+A Vigenère cipher with the keyword `TWINS`. The description gives it as a riddle: five letters, what Castor and Pollux are to each other.
 
-1. Copy `message.txt` into the Input. Note the five letters immediately before the `{` — those are the encrypted `STARS`.
-2. First recover the keyword: put just those five letters in the Input, drag in **Vigenère Decode**, and set the key to `STARS`. The Output is `TWINS`. That's the keyword.
-3. Now put the whole `message.txt` back in the Input and change the Vigenère Decode key to `TWINS`.
-4. The Output reads `THE MIDDLE OF THE TWINS... FLAG FOLLOWS: STARS{...}`.
+1. Copy `message.txt` into the Input.
+2. Drag in **Vigenère Decode** and set the key to `TWINS` (capitals don't matter here).
+3. The Output reads `THE MIDDLE OF THE TWINS... FLAG FOLLOWS: STARS{...}`.
+
+The first hint teaches the other way in, for teams that can't guess the riddle: the five letters just before the `{` are the encrypted `STARS`, so putting only those five through **Vigenère Decode** with key `STARS` outputs `TWINS`. The second hint just gives the keyword.
 
 ### Mebsuta
 
-Hex on the outside, a repeating-key XOR underneath. The message opens with the flag, so XORing the start against `STARS{` leaks the key.
+Hex on the outside, a repeating-key XOR underneath, with the key `LEDA`. The description gives it as a clue: four capital letters, the Gemini twins' mother in Greek myth (Leda). A search for "Gemini twins mother" finds her.
 
-1. First find the key. Copy `message.txt` into the Input, drag in **From Hex**, then drag in **XOR** and set the **Key** to `STARS{` with type **UTF8**.
-2. The first six characters of the Output read `LEDALE` — that's the key `LEDA` starting to repeat. The rest is still gibberish because `STARS{` is only right for the first six bytes.
-3. Change the XOR key to `LEDA` (type UTF8), leaving **From Hex** above it.
-4. The Output reads `STARS{...} END OF MEBSUTA RELAY.`
+1. Copy `message.txt` into the Input and drag in **From Hex**.
+2. Drag in **XOR** below it, switch the key's format from Hex to **UTF8**, and type `LEDA`.
+3. The Output reads `STARS{...} END OF MEBSUTA RELAY.`
+
+The key must be in capitals: XOR treats `L` and `l` as different bytes, so `Leda` gives gibberish. Leaving the format on Hex is the other likely mistake, and the description warns about both.
+
+The first hint teaches the other way in: the message opens with the flag, so XOR with `STARS{` (UTF8) makes the first six characters read `LEDALE`, the key starting to repeat. The second hint gives the key and the recipe.
 
 ### Tejat
 
