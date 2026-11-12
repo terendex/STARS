@@ -11,7 +11,7 @@ description: |-
   **Your goal:** find the access code in the page, then enter it. The vault opens and shows the flag.
 
   **Tools you may need to solve this level:** View page source
-connection_info: http://192.168.68.103:8084
+connection_info: http://192.168.68.101:8084
 flags:
   - "STARS{m1nt4k4_n3v3r_trust_th3_br0ws3r}"
 tags:

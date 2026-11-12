@@ -11,7 +11,7 @@ description: |-
   **Your goal:** find the staff note hidden in this page's code. The flag is in it.
 
   **Tools you may need to solve this level:** View page source (right-click the page, or press Ctrl+U). Use it rather than Inspect, which also shows code your browser extensions add.
-connection_info: http://192.168.68.103:8082
+connection_info: http://192.168.68.101:8082
 flags:
   - "STARS{b3t3lg3us3_v13w_s0urc3}"
 tags:

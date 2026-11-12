@@ -15,7 +15,7 @@ description: |-
   The program's source code is attached. Reading it is how you find the weakness.
 
   **Commands you may need to solve this level:** `ssh`, `nc`
-connection_info: ssh sargas@192.168.68.103 -p 2220
+connection_info: ssh sargas@192.168.68.101 -p 2220
 files:
   - dist/sargas.c
 flags:

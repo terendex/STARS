@@ -15,7 +15,7 @@ description: |-
   Log in with the password `farkadain`.
 
   **Commands you may need to solve this level:** `ls`, `cat`
-connection_info: ssh anwar@192.168.68.103 -p 2221
+connection_info: ssh anwar@192.168.68.101 -p 2221
 flags:
   - "STARS{4nw4r_qu0t3s_th3_sp4c3s}"
 tags:

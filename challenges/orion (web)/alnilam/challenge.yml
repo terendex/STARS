@@ -13,7 +13,7 @@ description: |-
   Press **F12** to open your browser's developer tools. The cookie called `pass` is under **Application** > **Cookies** (in Firefox, **Storage** > **Cookies**). Work out what its value says, change it, then refresh the page.
 
   **Tools you may need to solve this level:** Your browser's developer tools (F12), CyberChef
-connection_info: http://192.168.68.103:8085
+connection_info: http://192.168.68.101:8085
 flags:
   - "STARS{4ln1l4m_c00k13s_c4n_l13}"
 tags:

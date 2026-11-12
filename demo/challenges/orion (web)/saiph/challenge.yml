@@ -11,7 +11,7 @@ description: |-
   **Your goal:** find the flag the server sends in the headers of this page.
 
   **Tools you may need to solve this level:** Your browser's developer tools (press F12)
-connection_info: http://192.168.68.103:8091
+connection_info: http://192.168.68.101:8091
 flags:
   - "STARS{s41ph_s3nds_h34d3rs}"
 tags:

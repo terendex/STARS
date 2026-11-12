@@ -13,7 +13,7 @@ description: |-
   **How to connect:** Run the command below and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9021 instead.
 
   **Commands you may need to solve this level:** `ssh`, `nc`
-connection_info: ssh fang@192.168.68.103 -p 2221
+connection_info: ssh fang@192.168.68.101 -p 2221
 files:
   - dist/fang.c
 flags:

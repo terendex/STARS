@@ -11,7 +11,7 @@ description: |-
   The catalog runs on **SQLite**. `UNION SELECT` lets you add rows from another query to the search results. The catalog shows 3 columns, so your query has to return 3 as well.
 
   **Your goal:** find the hidden table's name, then use the search box to read the flag out of it.
-connection_info: http://192.168.68.103:8086
+connection_info: http://192.168.68.101:8086
 flags:
   - "STARS{4ln1t4k_un10n_s3l3ct_w1ns}"
 tags:

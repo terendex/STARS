@@ -11,7 +11,7 @@ description: |-
   **Your goal:** find Bellatrix Station's file for search engine robots, then visit the page it tells them to skip. The flag is on that page.
 
   **Tools you may need to solve this level:** Your browser's address bar
-connection_info: http://192.168.68.103:8083
+connection_info: http://192.168.68.101:8083
 flags:
   - "STARS{b3ll4tr1x_r0b0ts_kn0w}"
 tags:
