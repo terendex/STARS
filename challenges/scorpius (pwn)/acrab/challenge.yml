@@ -10,12 +10,12 @@ description: |-
 
   **Your goal:** the flag is sitting in the program's memory, but the program never prints it. Use the bug to read it out.
 
-  **How to connect:** Run the command below and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9006 instead.
+  **How to connect:** open a terminal (on Windows, that's PowerShell), run the command below, and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9006 instead.
 
-  The program's source code is attached. Reading it is how you find the weakness.
+  The program's source code is attached below as a download. Reading it is how you find the weakness.
 
   **Commands you may need to solve this level:** `ssh`, `nc`
-connection_info: ssh acrab@192.168.68.101 -p 2220
+connection_info: ssh acrab@192.168.68.103 -p 2220
 files:
   - dist/acrab.c
 flags:

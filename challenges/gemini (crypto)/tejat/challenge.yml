@@ -10,7 +10,7 @@ description: |-
 
   These keys are 2048 bits long, so no computer on Earth can split one on its own. But both stations got their keys from the same cheap generator, and it was running low on primes.
 
-  We intercepted a message sent to Tejat. `transmission.txt` holds both stations' `n`, the public exponent `e` they share, and the encrypted message `c`.
+  We intercepted a message sent to Tejat. `transmission.txt` (download it below) holds both stations' `n`, the public exponent `e` they share, and the encrypted message `c`.
 
   **Your goal:** recover Tejat's two primes, use them to decrypt `c`, and read the flag.
 

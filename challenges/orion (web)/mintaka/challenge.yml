@@ -8,10 +8,10 @@ attempts: 3
 description: |-
   Mintaka's vault asks for an access code, and the code is checked by your own browser, not by the server. That means the page your browser downloaded already contains the answer.
 
-  **Your goal:** find the access code in the page, then enter it. The vault opens and shows the flag.
+  **Your goal:** open Mintaka's vault at the address below, find the access code in the page, then enter it. The vault opens and shows the flag.
 
   **Tools you may need to solve this level:** View page source
-connection_info: http://192.168.68.101:8084
+connection_info: http://192.168.68.103:8084
 flags:
   - "STARS{m1nt4k4_n3v3r_trust_th3_br0ws3r}"
 tags:

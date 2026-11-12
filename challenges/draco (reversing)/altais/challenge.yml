@@ -1,0 +1,30 @@
+version: "0.1"
+name: "Altais"
+author: "STARS"
+category: "Draco (Reversing)"
+type: standard
+value: 60
+attempts: 3
+description: |-
+  Altais works out its flag and holds it in memory, then wipes it without ever printing it. The flag only exists for a moment while the program runs.
+
+  To see it, you need to pause the program at the right moment and look inside. That's what a **debugger** does, and this server has one called `gdb`. In gdb, `info functions` lists the program's functions, and Altais's have helpful names.
+
+  **Your goal:** stop `altais` before it forgets the flag, and read the flag from its memory.
+
+  gdb may warn that it can't find `altais.c`. That's normal: you have the program, not the code it was written from.
+
+  Log in with the command below and the password `draco`.
+
+  **Commands you may need to solve this level:** `gdb`
+connection_info: ssh altais@192.168.68.103 -p 2222
+flags:
+  - "STARS{4lt41s_c4ught_1n_m3m0ry}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Start with `gdb ./altais`. `break forget_flag` tells gdb to pause when the program reaches that function, and `run` starts the program."
+    cost: 5
+  - content: "When gdb pauses at `forget_flag`, type `info args`. It shows what the function was given, which is the flag it's about to wipe. Type `quit` to leave gdb."
+    cost: 5
+state: visible

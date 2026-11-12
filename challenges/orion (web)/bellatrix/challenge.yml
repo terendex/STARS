@@ -8,10 +8,10 @@ attempts: 3
 description: |-
   Search engines send robots to crawl websites. Most sites keep a file telling those robots which pages to skip. Anyone can read that file, though, so it also points out the very pages the owner wanted hidden.
 
-  **Your goal:** find Bellatrix Station's file for search engine robots, then visit the page it tells them to skip. The flag is on that page.
+  **Your goal:** open Bellatrix Station's website at the address below, find its file for search engine robots, then visit the page that file tells them to skip. The flag is on that page.
 
   **Tools you may need to solve this level:** Your browser's address bar
-connection_info: http://192.168.68.101:8083
+connection_info: http://192.168.68.103:8083
 flags:
   - "STARS{b3ll4tr1x_r0b0ts_kn0w}"
 tags:

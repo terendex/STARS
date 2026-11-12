@@ -10,10 +10,10 @@ description: |-
 
   **Your goal:** find the file called `flag.txt` somewhere inside `sky` and read it.
 
-  Log in with the password `littledipper`. Use `ls` to see what's in a folder, `cd name` to go into one, and `cd ..` to come back out.
+  Log in with the command below and the password `littledipper`. Use `ls` to see what's in a folder, `cd name` to go into one, and `cd ..` to come back out.
 
   **Commands you may need to solve this level:** `ls`, `cd`, `cat`, `find`
-connection_info: ssh yildun@192.168.68.101 -p 2220
+connection_info: ssh yildun@192.168.68.103 -p 2220
 flags:
   - "STARS{y1ldun_f0ll0w_th3_p4th}"
 tags:

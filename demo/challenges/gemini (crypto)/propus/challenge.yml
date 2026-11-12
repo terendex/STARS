@@ -8,7 +8,7 @@ attempts: 3
 description: |-
   Propus sits at the foot of Castor, one of the Gemini twins. Its beacon only sends two symbols, 0 and 1. That's binary, the way computers store everything, and each group of eight digits is one character.
 
-  **Your goal:** turn `signal.txt` back into text to read the flag.
+  **Your goal:** turn `signal.txt` (download it below) back into text to read the flag.
 
   **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
 files:

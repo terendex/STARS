@@ -6,18 +6,23 @@ type: standard
 value: 30
 attempts: 3
 description: |-
-  "Pwn" means finding a weakness in a running program and making it do something it shouldn't. This is the gentlest possible start.
+  Start here if you've never done pwn. "Pwn" means finding a weakness in a running program and making it do something it shouldn't. This is the gentlest possible start.
 
-  The Shaula Sky Tour shows you a menu with three choices, but the source code tells a different story.
+  The Shaula Sky Tour shows you a menu with three choices, but its source code, the code the program was written from, tells a different story.
 
   **Your goal:** use what you find in the source code to make the program print the flag.
 
-  **How to connect:** Run the command below and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9002 instead.
+  **How to do it:**
 
-  The program's source code is attached. Reading it is how you find the weakness.
+  1. Click `shaula.c` below to download it, and open it in Notepad.
+  2. Find the part that decides what each menu choice does. Is there a choice the menu doesn't show you?
+  3. Open a terminal (on Windows, that's PowerShell), run the command below, and enter the password `scorpius`. Nothing appears as you type the password, which is normal. It takes you straight into the program.
+  4. Type the hidden choice and press Enter.
 
-  **Commands you may need to solve this level:** `ssh`, `nc`
-connection_info: ssh shaula@192.168.68.101 -p 2220
+  If you know `nc`, port 9002 works too.
+
+  **Commands you may need to solve this level:** `ssh`
+connection_info: ssh shaula@192.168.68.103 -p 2220
 files:
   - dist/shaula.c
 flags:
@@ -25,6 +30,6 @@ flags:
 tags:
   - "★ Easy"
 hints:
-  - content: "Open `shaula.c` in a text editor and find the `switch` section. Each `case` is a menu choice."
+  - content: "In `shaula.c`, find the `switch` section. Each `case` is a menu choice, and its number is what you type."
     cost: 5
 state: visible

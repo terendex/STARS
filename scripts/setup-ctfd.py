@@ -20,6 +20,10 @@ import sys
 
 import requests
 
+# The home pages, with their "How to play" guide. Python puts this script's
+# folder on the import path, so scripts/home_page.py is found.
+from home_page import PAGES
+
 REPO = pathlib.Path(__file__).resolve().parent.parent
 ROOT = pathlib.Path.cwd()
 URL = "http://ctfd:8000"
@@ -27,29 +31,12 @@ CONFIG = ROOT / ".ctf" / "config"
 LOGINS = ROOT / "LOGINS.txt"
 
 
-def home_page(heading, text, buttons):
-    links = "\n".join(
-        f'        <a class="btn {style} btn-lg m-1" href="{href}">{label}</a>' for label, href, style in buttons
-    )
-    return f"""<div class="row">
-    <div class="col-md-6 offset-md-3 text-center" style="padding-top: 14vh;">
-        <h1 class="mb-3">{heading}</h1>
-        <p class="lead">{text}</p>
-{links}
-    </div>
-</div>"""
-
-
 PROFILES = {
     "main": {
         "ctf_name": "STARS",
         "ctf_description": "6 challenges per category",
         "theme_color": None,
-        "home": home_page(
-            "STARS CTF",
-            "Log in with the account your organizer gave you, then open Challenges.",
-            [("Log in", "/login", "btn-primary"), ("Challenges", "/challenges", "btn-outline-secondary")],
-        ),
+        "home": PAGES["main"],
         "configs": {"team_creation": "false", "team_disbanding": "disabled"},
         "demo_team": False,
     },
@@ -58,11 +45,7 @@ PROFILES = {
         "ctf_description": "A demo of the STARS CTF.",
         # Purple, so the demo is never mistaken for the real CTF.
         "theme_color": "#6f42c1",
-        "home": home_page(
-            "STARS CTF Demo",
-            "No login needed. You're already playing as the Demo Team.",
-            [("Open the challenges", "/challenges", "btn-primary")],
-        ),
+        "home": PAGES["demo"],
         # Name changes are off because everyone shares the demo1 account
         # (see demo/ctfd-plugin).
         "configs": {"team_creation": "false", "team_disbanding": "disabled", "name_changes": "false"},

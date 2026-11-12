@@ -10,7 +10,7 @@ description: |-
 
   Every pixel has red, green and blue values. Changing the lowest bit of a value changes the color so slightly that nobody can see it, which makes it a perfect hiding place. This is called **steganography**.
 
-  **Your goal:** pull the hidden bits out of `double_double.png` and turn them back into text to read the flag.
+  **Your goal:** pull the hidden bits out of `double_double.png` (download it below) and turn them back into text to read the flag.
 files:
   - dist/double_double.png
 flags:

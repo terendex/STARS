@@ -8,7 +8,7 @@ attempts: 3
 description: |-
   This deep field image was taken while pointing at Vega, the brightest star in Lyra. It looks like an ordinary photo, but the file is much bigger than a picture this dark should be.
 
-  **Your goal:** find out what else is stored in `vega_deep_field.png`, get it out, and read the flag.
+  **Your goal:** find out what else is stored in `vega_deep_field.png` (download it below), get it out, and read the flag.
 
   **Tools you may need to solve this level:** `binwalk`, or a hex editor such as HxD
 files:

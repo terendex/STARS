@@ -6,14 +6,14 @@ type: standard
 value: 30
 attempts: 3
 description: |-
-  The Larawag Star Greeter asks for a name, puts it into a terminal command, and runs that command. The source code is attached. A terminal can run more than one command from a single line.
+  The Larawag Star Greeter asks for a name, puts it into a terminal command, and runs that command. The source code is attached below as a download. A terminal can run more than one command from a single line.
 
   **Your goal:** make the program show you the file `/flag.txt`.
 
-  **How to connect:** Run the command below and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9022 instead.
+  **How to connect:** open a terminal (on Windows, that's PowerShell), run the command below, and enter the password `scorpius`. It takes you straight into the program. If you have `nc`, you can use port 9022 instead.
 
   **Commands you may need to solve this level:** `ssh`, `nc`, `cat`
-connection_info: ssh larawag@192.168.68.101 -p 2221
+connection_info: ssh larawag@192.168.68.103 -p 2221
 files:
   - dist/larawag.c
 flags:

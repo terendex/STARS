@@ -10,10 +10,10 @@ description: |-
 
   **Your goal:** find the file `ls` isn't showing you, and read the flag inside it. `README.txt` has a clue.
 
-  Log in with the password `northstar`.
+  Log in with the command below and the password `northstar`.
 
   **Commands you may need to solve this level:** `ls`, `cat`
-connection_info: ssh polaris@192.168.68.101 -p 2220
+connection_info: ssh polaris@192.168.68.103 -p 2220
 flags:
   - "STARS{p0l4r1s_gu1d3s_th3_w4y}"
 tags:

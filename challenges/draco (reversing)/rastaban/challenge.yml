@@ -1,0 +1,24 @@
+version: "0.1"
+name: "Rastaban"
+author: "STARS"
+category: "Draco (Reversing)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Rastaban, in the dragon's head, guards its flag with a password, and its program is written in Python. Python programs are plain text, so you can read every line of `rastaban.py`, including the line that checks your password.
+
+  **Your goal:** read the program, work out the password it wants, then run `python3 rastaban.py` and type it in. The program prints the flag. If you don't know what a piece of Python does, search for it.
+
+  Log in with the command below and the password `draco`.
+
+  **Commands you may need to solve this level:** `cat`, `python3`
+connection_info: ssh rastaban@192.168.68.103 -p 2222
+flags:
+  - "STARS{r4st4b4n_r34d_th3_c0d3}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In Python, `[::-1]` reverses text, so `SECRET[::-1]` is `SECRET` written backwards. CyberChef's **Reverse** operation does the same."
+    cost: 5
+state: visible

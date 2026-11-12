@@ -8,7 +8,7 @@ attempts: 3
 description: |-
   Alzirr, a star in Gemini, sent its message with one of the oldest ciphers there is. The alphabet is flipped, so A becomes Z, B becomes Y, C becomes X, and so on. Numbers and symbols aren't changed.
 
-  **Your goal:** decode `message.txt` to read the flag.
+  **Your goal:** decode `message.txt` (download it below) to read the flag.
 
   **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
 files:

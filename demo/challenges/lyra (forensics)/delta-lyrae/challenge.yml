@@ -8,7 +8,7 @@ attempts: 3
 description: |-
   Delta Lyrae is a wide pair of stars in Lyra. Its survey report has nothing interesting on the page, but files also carry information about themselves, such as a title, an author and a subject. That information is called metadata.
 
-  **Your goal:** find the flag in the metadata of `delta_lyrae_report.pdf`.
+  **Your goal:** find the flag in the metadata of `delta_lyrae_report.pdf` (download it below).
 
   **Tools you may need to solve this level:** A PDF viewer, such as your web browser
 files:

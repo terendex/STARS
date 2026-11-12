@@ -6,11 +6,18 @@ type: standard
 value: 30
 attempts: 3
 description: |-
-  Image files can store more than the picture itself, such as notes about who took it and how. That extra information is called **metadata**.
+  Start here if you've never done forensics, which means digging information out of files. Image files can store more than the picture itself, such as notes about who took it and how. That extra information is called **metadata**.
 
   An observer left a note in this photo of Sheliak. You won't see it by looking at the picture.
 
   **Your goal:** find the observer's note inside `sheliak.png`. The flag is in it.
+
+  **How to do it:**
+
+  1. Click `sheliak.png` below to download it.
+  2. Open Notepad, then drag `sheliak.png` from your Downloads folder into the Notepad window. (On a Mac, open it with TextEdit.)
+  3. Most of what you see is gibberish, because a picture isn't text. Press **Ctrl+F** and search for `STARS`.
+  4. The search finds the observer's note, with the flag in it.
 
   **Tools you may need to solve this level:** A text editor such as Notepad
 files:
@@ -20,6 +27,6 @@ flags:
 tags:
   - "★ Easy"
 hints:
-  - content: "Open the file in a text editor like Notepad. It'll look like gibberish, but Ctrl+F can search for `STARS`."
+  - content: "Notepad searches from wherever your cursor is. If it can't find `STARS`, press **Ctrl+Home** to jump to the start of the file, then search again."
     cost: 5
 state: visible

@@ -1,0 +1,31 @@
+version: "0.1"
+name: "Thuban"
+author: "STARS"
+category: "Draco (Reversing)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Start here if you've never done reverse engineering. Reversing means working out what a program does, and what it's hiding, without seeing the code it was written from. Thuban was the pole star when the pyramids were built, and its program has kept a secret ever since.
+
+  **Your goal:** find the flag hidden inside the program `thuban`. Running it won't show you the flag.
+
+  **How to do it:**
+
+  1. Open a terminal (on Windows, that's PowerShell), type the command below, and log in with the password `draco`. Nothing appears as you type the password, which is normal.
+  2. Type `ls` to see the program, and `./thuban` to run it.
+  3. Programs carry their text inside them. Type `strings thuban` to list every piece of readable text in the program.
+  4. That's a lot of lines. Type `strings thuban | grep STARS` to show only the lines containing `STARS`.
+
+  **Then:** paste the flag into the box below. Type `exit` to leave.
+
+  **Commands you may need to solve this level:** `ssh`, `ls`, `strings`, `grep`
+connection_info: ssh thuban@192.168.68.103 -p 2222
+flags:
+  - "STARS{thub4n_th3_0ld_p0l3_st4r}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "The `|` character is on the key above Enter on most keyboards: hold Shift and press `\\`. `grep STARS` only matches capital letters, so type it exactly."
+    cost: 5
+state: visible

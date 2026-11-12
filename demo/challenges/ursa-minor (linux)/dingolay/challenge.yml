@@ -12,10 +12,10 @@ description: |-
 
   **Your goal:** find the one line in `sky_survey.log` that contains the flag.
 
-  Log in with the password `ramajay`.
+  Log in with the command below and the password `ramajay`.
 
   **Commands you may need to solve this level:** `ls`, `grep`
-connection_info: ssh dingolay@192.168.68.101 -p 2221
+connection_info: ssh dingolay@192.168.68.103 -p 2221
 flags:
   - "STARS{d1ng0l4y_n33dl3_1n_th3_l0g}"
 tags:

@@ -16,7 +16,7 @@ description: |-
   **Commands you may need to solve this level:** `ls`, `cat`
 
 # Hands-on challenges only. Delete this line for download-only ones.
-connection_info: nc 192.168.68.101 9007
+connection_info: nc 192.168.68.103 9007
 
 # Download-only or hybrid challenges. Keep flags out of these files unless
 # they're part of the puzzle.

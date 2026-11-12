@@ -1,0 +1,24 @@
+version: "0.1"
+name: "Giausar"
+author: "STARS"
+category: "Draco (Reversing)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Reverse engineering means working out what a program does, and what it's hiding. Giausar guards its flag with a password, and its program is written in Python. Python programs are plain text, so you can read every line of `giausar.py`.
+
+  **Your goal:** find the password in the program, then run `python3 giausar.py` and type it in. The program prints the flag.
+
+  Log in with the command below and the password `draco`.
+
+  **Commands you may need to solve this level:** `cat`, `python3`
+connection_info: ssh giausar@192.168.68.103 -p 2223
+flags:
+  - "STARS{g14us4r_l0ck_1n_pl41n_s1ght}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Type `cat giausar.py` and look at the line starting with `if guess ==`."
+    cost: 5
+state: visible

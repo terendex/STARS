@@ -1,0 +1,26 @@
+version: "0.1"
+name: "Edasich"
+author: "STARS"
+category: "Draco (Reversing)"
+type: standard
+value: 60
+attempts: 3
+description: |-
+  Edasich scrambles the password you type in three steps, then compares the result with a scrambled copy of the real password that it keeps in `edasich.py`. You can't make the program unscramble it for you, but you can read exactly how the scrambling works.
+
+  **Your goal:** undo the scrambling to recover the password, then run `python3 edasich.py` and type it in. The program prints the flag.
+
+  Log in with the command below and the password `draco`.
+
+  **Tools you may need to solve this level:** `cat`, `python3`, [CyberChef](https://gchq.github.io/CyberChef/)
+connection_info: ssh edasich@192.168.68.103 -p 2222
+flags:
+  - "STARS{3d4s1ch_und0n3_1n_r3v3rs3}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "To undo a process, undo its steps in the opposite order, like taking off socks and shoes. Base64 was the last step, so undo it first, and undo the reversing last."
+    cost: 5
+  - content: "In CyberChef, paste the scrambled password and use **From Base64**, then **ROT13** with **Amount** set to `23` (moving 23 letters forward is the same as 3 back), then **Reverse**."
+    cost: 5
+state: visible

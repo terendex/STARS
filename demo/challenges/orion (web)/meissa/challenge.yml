@@ -8,10 +8,10 @@ attempts: 3
 description: |-
   Meissa is the star at Orion's head. Its observation log lists five entries, and each one opens at its own address. Look at the address bar when you open one. The number at the end decides which entry you see, and nothing stops you from changing it.
 
-  **Your goal:** find the log entry that isn't listed on the main page. The flag is in it.
+  **Your goal:** open Meissa's log at the address below, and find the entry that isn't listed on its main page. The flag is in it.
 
   **Tools you may need to solve this level:** Your browser's address bar
-connection_info: http://192.168.68.101:8092
+connection_info: http://192.168.68.103:8092
 flags:
   - "STARS{m31ss4_3ntry_z3r0}"
 tags:

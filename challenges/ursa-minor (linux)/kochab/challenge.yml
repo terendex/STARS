@@ -10,10 +10,10 @@ description: |-
 
   **Your goal:** find the one record that is **exactly 1337 bytes** and **owned by the user `astronomer`**, and read the flag inside it. Checking 600 files by hand would take all night.
 
-  Log in with the password `guardian`.
+  Log in with the command below and the password `guardian`.
 
   **Commands you may need to solve this level:** `ls`, `cd`, `cat`, `find`, `grep`
-connection_info: ssh kochab@192.168.68.101 -p 2220
+connection_info: ssh kochab@192.168.68.103 -p 2220
 flags:
   - "STARS{k0ch4b_gu4rd14n_0f_th3_p0l3}"
 tags:

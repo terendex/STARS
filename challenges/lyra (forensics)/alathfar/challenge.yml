@@ -10,7 +10,7 @@ description: |-
 
   **Your goal:** find the password the astronomer logged in with. That password is the flag.
 
-  Files like this open in [Wireshark](https://www.wireshark.org/), a free tool for inspecting network traffic.
+  Download the recording, `alathfar_capture.pcap`, below and open it in [Wireshark](https://www.wireshark.org/), a free tool for inspecting network traffic.
 
   **Tools you may need to solve this level:** Wireshark
 files:

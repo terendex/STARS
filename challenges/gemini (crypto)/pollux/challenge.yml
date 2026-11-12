@@ -12,7 +12,7 @@ description: |-
 
   **How to decode it with CyberChef:**
 
-  1. Open the downloaded `message.txt` (Notepad works) and copy everything in it.
+  1. Click `message.txt` below to download it, open it (Notepad works), and copy everything in it.
   2. Open [CyberChef](https://gchq.github.io/CyberChef/) and paste it into the **Input** box at the top right.
   3. In the search box at the top left, above the list of operations, type `base64`.
   4. Drag **From Base64** into the **Recipe** column in the middle.

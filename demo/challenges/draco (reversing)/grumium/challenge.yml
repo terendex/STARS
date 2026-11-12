@@ -1,0 +1,24 @@
+version: "0.1"
+name: "Grumium"
+author: "STARS"
+category: "Draco (Reversing)"
+type: standard
+value: 30
+attempts: 3
+description: |-
+  Grumium's program knows the flag but never says it. Programs carry their text inside them, so the flag is in there somewhere, and `strings` lists every piece of readable text in a program.
+
+  **Your goal:** find the flag inside the program `grumium`.
+
+  Log in with the command below and the password `draco`.
+
+  **Commands you may need to solve this level:** `strings`, `grep`
+connection_info: ssh grumium@192.168.68.103 -p 2223
+flags:
+  - "STARS{grum1um_k33ps_1t_1ns1d3}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Type `strings grumium | grep STARS` to show only the lines containing `STARS`."
+    cost: 5
+state: visible

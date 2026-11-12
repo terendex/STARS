@@ -4,7 +4,7 @@ name: stars-demo
 # category, none of which are in the real event, so it's safe to show players.
 # Use scripts\demo.ps1 to set it up, start it and stop it. It has its own CTFd,
 # accounts and scores, and these ports:
-#   8100 CTFd   2221 SSH box   8091-8092 Orion   9021-9022 Scorpius
+#   8100 CTFd   2221 SSH box   2223 Draco box   8091-8092 Orion   9021-9022 Scorpius
 
 # Shared limits for anything players can touch.
 x-challenge: &challenge
@@ -95,6 +95,7 @@ services:
       - ./edge/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - "${CTF_BIND_IP}:2221:2221"
+      - "${CTF_BIND_IP}:2223:2223"
       - "${CTF_BIND_IP}:8091-8092:8091-8092"
       - "${CTF_BIND_IP}:9021-9022:9021-9022"
     networks: [edge_public, challenges]
@@ -106,6 +107,23 @@ services:
     build:
       context: "./challenges/ursa-minor (linux)/ssh-box"
       dockerfile: "../../../../challenges/ursa-minor (linux)/ssh-box/Dockerfile"
+    cap_add: [CHOWN, SETGID, SETUID, SYS_CHROOT, KILL, AUDIT_WRITE]
+    cpus: 2.0
+    mem_limit: 1g
+    pids_limit: 1024
+    tmpfs:
+      - /tmp:size=64m,mode=1777,noexec,nosuid,nodev
+      - /run:size=1m,mode=755
+      - /dev/shm:ro,size=4k
+      - /dev/mqueue:ro,size=4k
+
+  # --- Draco: SSH box with the reversing tools ------------------------------
+  # Same Dockerfile as the real Draco box, with the demo's own levels.
+  draco-box:
+    <<: *challenge
+    build:
+      context: "./challenges/draco (reversing)/draco-box"
+      dockerfile: "../../../../challenges/draco (reversing)/draco-box/Dockerfile"
     cap_add: [CHOWN, SETGID, SETUID, SYS_CHROOT, KILL, AUDIT_WRITE]
     cpus: 2.0
     mem_limit: 1g

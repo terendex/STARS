@@ -10,7 +10,7 @@ description: |-
 
   The outer layer is **Base64**, like Pollux. Under it is a **Caesar cipher**, which is about 2,000 years old: it moves every letter the same number of places along the alphabet, so with a shift of 3, `A` becomes `D`. Nobody told us Castor's shift, but there are only 25 possibilities. CyberChef files the Caesar cipher under the name of its most famous 13-place version, and it has an operation that tries every shift at once.
 
-  **Your goal:** undo both layers of `transmission.txt` to read the flag. CyberChef runs the Recipe from top to bottom, so put the Base64 step first.
+  **Your goal:** undo both layers of `transmission.txt` (download it below) to read the flag. CyberChef runs the Recipe from top to bottom, so put the Base64 step first.
 
   **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
 files:

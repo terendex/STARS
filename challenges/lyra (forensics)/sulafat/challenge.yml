@@ -8,7 +8,7 @@ attempts: 3
 description: |-
   We recovered `notes.txt` from Sulafat's archive, but it won't read properly. A file's extension (the `.txt` part of its name) is only a label, and it can be wrong.
 
-  **Your goal:** work out what kind of file `notes.txt` really is, then open it as that kind of file. The flag is in it.
+  **Your goal:** work out what kind of file `notes.txt` (download it below) really is, then open it as that kind of file. The flag is in it.
 
   Open it in a text editor and look at the very first characters. Most file types begin with their own signature.
 

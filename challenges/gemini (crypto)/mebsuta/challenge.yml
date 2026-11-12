@@ -10,7 +10,7 @@ description: |-
 
   The key is four capital letters: the name of the Gemini twins' mother in Greek myth.
 
-  **Your goal:** decode the hex, then XOR the result with the key to read the flag. CyberChef's **XOR** reads its key as hex unless you switch the key's format to **UTF8**, so switch it before typing letters.
+  **Your goal:** decode the hex in `message.txt` (download it below), then XOR the result with the key to read the flag. CyberChef's **XOR** reads its key as hex unless you switch the key's format to **UTF8**, so switch it before typing letters.
 
   **Tools you may need to solve this level:** CyberChef (`From Hex`, `XOR`)
 files:

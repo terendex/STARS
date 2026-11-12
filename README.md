@@ -14,8 +14,9 @@ A Jeopardy-style CTF hosted from one PC. Each category is a constellation and ea
 | Gemini (Crypto), Lyra (Forensics) | Files downloaded from CTFd |
 | Scorpius (Pwn) | `ssh <star>@<host> -p 2220`, or `nc <host> 9002` to `9006` |
 | Antares (Pwn, Hard) | `nc <host> 9001` |
+| Draco (Reversing), its own SSH box | `ssh <star>@<host> -p 2222`, password `draco` |
 
-Every category has 3 Easy, 2 Medium and 1 Hard challenge, for 30 challenges and a maximum score of 1550. Every hint costs points: the first one on a challenge is 5 on Easy and Medium and 10 on Hard. CTFd won't sell a hint that costs more than a team's current score, so a team on 0 points has to solve something first. Easy and Medium descriptions also end with a line listing the commands or tools that help, as OverTheWire does. Hard ones don't.
+Every category has 3 Easy, 2 Medium and 1 Hard challenge, for 36 challenges and a maximum score of 1860. Draco's SSH box has `strings`, `ltrace`, `gdb` and `python3` installed, so players don't need to install anything for it. Every hint costs points: the first one on a challenge is 5 on Easy and Medium and 10 on Hard. CTFd won't sell a hint that costs more than a team's current score, so a team on 0 points has to solve something first. Easy and Medium descriptions also end with a line listing the commands or tools that help, as OverTheWire does. Hard ones don't.
 
 Players can't sign up or make teams. You create every account and team (see [Registering players](#registering-players)), and players only see the login page and the challenges. They solve a challenge on its port and paste the flag into CTFd, which is what awards the points. Solves and hints belong to the team: once one member solves a challenge, it's marked solved for the others and CTFd won't take it again. Wrong flags are shared too: each team gets 3 per challenge, then CTFd locks that challenge for them. To unlock it, delete one of the team's wrong submissions for it in **Admin Panel > Submissions**, then have them wait a minute before trying again.
 
@@ -24,6 +25,8 @@ Players can't sign up or make teams. You create every account and team (see [Reg
 | Easy | 30 | 5 each | `★ Easy` |
 | Medium | 60 | 5, then 5 or 10 | `★★ Medium` |
 | Hard | 100 | 10, then 10 or 20 | `★★★ Hard` |
+
+The CTFd home page has a short **How to play** guide for beginners, covering flags, submitting, the 3 tries and hints. It also lists each category's walkthrough level: Pherkad, Betelgeuse, Pollux, Sheliak, Shaula and Thuban each start with "Start here" and give every step. The pages live in `scripts/home_page.py`. After editing one, push it to the running CTFd with `docker compose run --rm --entrypoint python ctfcli scripts/home_page.py main`, or `demo` for the demo (see the script for that command).
 
 ## First-time setup
 
@@ -78,7 +81,7 @@ Put every player on a team. A player without one gets stuck on CTFd's "join a te
 
 ## Demo CTF
 
-`demo\` holds a separate small CTF for showing people how STARS works: 2 Easy challenges per category, 10 in all. None of them are in the real event, so it's safe to demo in front of players. Its navbar is purple so you can tell the two apart.
+`demo\` holds a separate small CTF for showing people how STARS works: 2 Easy challenges per category, 12 in all. None of them are in the real event, so it's safe to demo in front of players. Its navbar is purple so you can tell the two apart.
 
 **No login needed.** Anyone who opens the demo is signed in automatically as `demo1` on the **Demo Team**, so everyone who opens it shares that one team. A challenge solved by one person shows as solved for everyone, and wrong flags count against everyone's 3 tries. The scoreboard is hidden, as in the real event. To require logins again, empty `STARS_DEMO_AUTOLOGIN` in `demo\docker-compose.yml` and run `scripts\demo.ps1 start`.
 
@@ -90,6 +93,7 @@ It has its own CTFd, accounts and scores, and runs beside the real CTF on the sa
 | Ursa Minor (Linux), and SSH into Scorpius | `ssh <star>@<host> -p 2221` |
 | Orion (Web) | `http://<host>:8091` and `8092` |
 | Scorpius (Pwn) | `nc <host> 9021` and `9022` |
+| Draco (Reversing) | `ssh <star>@<host> -p 2223`, password `draco` |
 
 ```powershell
 scripts\demo.ps1 start   # start it          (Linux: bash scripts/demo.sh start)
@@ -133,7 +137,10 @@ All of these only change the addresses in CTFd, so they're safe during an event.
 4. For another Linux level on the SSH box:
    - Add `challenges/ursa-minor (linux)/ssh-box/levels/<star>.sh`, using `polaris.sh` as the pattern.
    - Run `docker compose up -d --build ssh-box`.
-5. Register and install it. Keep the quotes, because the folder names contain spaces:
+5. For another Draco level:
+   - Add a folder `challenges/draco (reversing)/draco-box/levels/<star>/` with the program's source and a `setup.sh`. Use `eltanin` as the pattern for a C program and `rastaban` for a Python one. `setup.sh` creates the player account, builds the program into its home folder, and fails the build if the level can't be solved.
+   - Run `docker compose up -d --build draco-box`.
+6. Register and install it. Keep the quotes, because the folder names contain spaces:
    ```powershell
    docker compose run --rm ctfcli challenge add "challenges/<constellation> (<skill>)/<star>"
    docker compose run --rm ctfcli challenge install "challenges/<constellation> (<skill>)/<star>"
@@ -154,6 +161,7 @@ Each flag lives in `challenge.yml` and in one other place, and they have to matc
 | All of Gemini | `gemini (crypto)/make_files.py` | `python "challenges/gemini (crypto)/make_files.py"` |
 | All of Lyra | `lyra (forensics)/make_files.py` | `python "challenges/lyra (forensics)/make_files.py"` |
 | All of Scorpius | `<star>/src/flag.txt` | `docker compose up -d --build <star>` |
+| All of Draco | `draco-box/levels/<star>/setup.sh` | `docker compose up -d --build draco-box` |
 
 For Gemini and Lyra, run `ctfcli challenge sync` afterwards to upload the new files. Sulafat's flag is drawn on an image, so it can only use capital letters and the characters already in the script's font.
 
@@ -186,8 +194,8 @@ extra:
 ## Troubleshooting
 
 - **Other devices can't connect:** Check they're on the same network. Guest networks and some routers block devices from reaching each other. Then check the IP with `ipconfig` (Linux: `ip -4 addr`). On Linux, also check the firewall (see [Linux](#linux)).
-- **The SSH box is stuck, for example after a fork bomb:** `docker compose restart ssh-box`
-- **`REMOTE HOST IDENTIFICATION HAS CHANGED` when connecting:** Rebuilding the SSH box gives it new keys, so anyone who connected before sees this. They can clear it with `ssh-keygen -R "[<host>]:2220"`. Avoid rebuilding it during an event.
+- **The SSH box is stuck, for example after a fork bomb:** `docker compose restart ssh-box` (or `draco-box` for Draco)
+- **`REMOTE HOST IDENTIFICATION HAS CHANGED` when connecting:** Rebuilding an SSH box gives it new keys, so anyone who connected before sees this. They can clear it with `ssh-keygen -R "[<host>]:2220"`, or `2222` for the Draco box. Avoid rebuilding either during an event.
 - **A challenge port doesn't respond:** Check `docker compose ps`, then `docker compose logs <service>`.
 
 ## Linux
@@ -198,9 +206,9 @@ Everything runs the same on Linux. Every Windows script has a bash version in `s
 - **Docker at boot:** `sudo systemctl enable --now docker`, so auto-host can start the CTF after a reboot.
 - **Firewall:** if players can't connect and you use `ufw`, open the ports:
   ```bash
-  sudo ufw allow 8000/tcp && sudo ufw allow 2220/tcp && sudo ufw allow 8081:8086/tcp && sudo ufw allow 9001:9006/tcp
+  sudo ufw allow 8000/tcp && sudo ufw allow 2220/tcp && sudo ufw allow 2222/tcp && sudo ufw allow 8081:8086/tcp && sudo ufw allow 9001:9006/tcp
   # The demo CTF:
-  sudo ufw allow 8100/tcp && sudo ufw allow 2221/tcp && sudo ufw allow 8091:8092/tcp && sudo ufw allow 9021:9022/tcp
+  sudo ufw allow 8100/tcp && sudo ufw allow 2221/tcp && sudo ufw allow 2223/tcp && sudo ufw allow 8091:8092/tcp && sudo ufw allow 9021:9022/tcp
   ```
 - **Network address:** setup and auto-host use the address of the network card that reaches the internet. On a VPN, pass your Wi-Fi or LAN address with `--ip`.
 

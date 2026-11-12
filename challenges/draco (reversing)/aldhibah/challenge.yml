@@ -1,0 +1,28 @@
+version: "0.1"
+name: "Aldhibah"
+author: "STARS"
+category: "Draco (Reversing)"
+type: standard
+value: 100
+attempts: 3
+description: |-
+  Aldhibah, the dragon, is asleep. Its program will tell you the flag, but only once the dragon wakes in a thousand years, and only if you're the dragon's rider. You aren't.
+
+  You don't have a thousand years, and you can't become the rider. But a debugger can do more than watch a program: it can change what the program does while it runs.
+
+  **Your goal:** make `aldhibah` skip the wait and accept you as its rider, so that it prints the flag.
+
+  gdb may warn that it can't find `aldhibah.c`. That's normal: you have the program, not the code it was written from.
+
+  Log in with the command below and the password `draco`.
+connection_info: ssh aldhibah@192.168.68.103 -p 2222
+flags:
+  - "STARS{4ldh1b4h_w0k3_th3_dr4g0n}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "In `gdb ./aldhibah`, `info functions` lists the program's functions. `break` pauses at one, and `return` leaves it straight away, skipping whatever it was about to do. `return 1` also makes the function hand back 1, which here means yes."
+    cost: 10
+  - content: "Type `break wait_for_dragon`, `break is_rider`, then `run`. At the first pause, type `return`, answer `y`, then `continue`. At the second, type `return 1`, answer `y`, then `continue`."
+    cost: 10
+state: visible

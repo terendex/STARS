@@ -10,7 +10,7 @@ description: |-
 
   The keyword is five letters long. It's the word for what Castor and Pollux are to each other.
 
-  **Your goal:** decrypt `message.txt` with the keyword and read the flag. A wrong keyword just gives gibberish, and it doesn't use up any of your flag attempts.
+  **Your goal:** decrypt `message.txt` (download it below) with the keyword and read the flag. A wrong keyword just gives gibberish, and it doesn't use up any of your flag attempts.
 
   **Tools you may need to solve this level:** CyberChef (`Vigenère Decode`)
 files:
