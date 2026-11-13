@@ -70,15 +70,15 @@ With auto-host installed, the CTF starts when you sign in (Windows) or when the 
 
 ## Registering players
 
-Players can't register themselves, so make their teams and accounts before the event. List them in `TEAMS.txt` in this folder, one block per team: the team's name, then one player per line as `Surname, First names` (or just the surname), with a blank line between teams. A team has at most 3 players, and the first is its captain. Git ignores `TEAMS.txt`, so players' names stay on your PC. Then run:
+Players can't register themselves, so make their teams and accounts before the event. Say how many teams you want:
 
 ```
-docker compose run --rm --entrypoint python ctfcli scripts/make-teams.py TEAMS.txt
+docker compose run --rm --entrypoint python ctfcli scripts/make-teams.py 15
 ```
 
-Each player logs in with their surname in lowercase, without spaces or punctuation: `Dela Cruz, Juan` logs in as `delacruz`. If two players share a surname, give one of them a login name in brackets, like `Santos, Juan [jsantos]`. Nobody needs an email.
+Teams are named with NATO call signs (Alpha, Bravo, Charlie, and so on), and each gets 3 accounts with random names, like `otter42`. The first player is the captain, and nobody needs an email. No account belongs to anyone in particular, so on the day you can give any team's logins to any group. Running the script again adds more teams after the last call sign.
 
-The passwords go into `LOGINS.txt`, which also stays out of git, and aren't printed. Each is two words and a number, like `maple-otter-318`, so it's easy to type. Hand each player their login name and password. They're already on their team, so they don't need the team's password. To add teams or players later, add them to `TEAMS.txt` and run the script again: it only adds what's new. It checks everything first, and changes nothing if a team would have too many players or a login name is already someone else's.
+The passwords go into `LOGINS.txt`, which stays out of git, and aren't printed. Each is two words and a number, like `maple-anvil-318`, so it's easy to type. Give each player a name and its password. Players log in with the name, in any capitals. They're already on their team, so they don't need the team's password.
 
 On Windows, Docker Desktop makes every player reach CTFd from the same address, so CTFd's login limit covers the whole room. Once 10 people have logged in within a few seconds of each other, it answers "Too many requests" until 5 seconds pass with no new login. Have teams log in one at a time, or tell players to wait a few seconds and try again.
 
