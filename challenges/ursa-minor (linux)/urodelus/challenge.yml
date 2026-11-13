@@ -15,7 +15,7 @@ description: |-
   Log in with the command below and the password `dipperhandle`.
 
   **Commands you may need to solve this level:** `cut`, `sort`, `uniq`
-connection_info: ssh urodelus@192.168.68.103 -p 2220
+connection_info: ssh urodelus@192.168.68.104 -p 2220
 flags:
   - "STARS{ur0d3lus_0n3_0f_4_k1nd}"
 tags:

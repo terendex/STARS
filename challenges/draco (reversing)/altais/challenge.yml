@@ -17,7 +17,7 @@ description: |-
   Log in with the command below and the password `draco`.
 
   **Commands you may need to solve this level:** `gdb`
-connection_info: ssh altais@192.168.68.103 -p 2222
+connection_info: ssh altais@192.168.68.104 -p 2222
 flags:
   - "STARS{4lt41s_c4ught_1n_m3m0ry}"
 tags:

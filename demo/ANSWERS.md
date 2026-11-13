@@ -8,9 +8,9 @@ Nobody needs to log in: everyone who opens the demo plays as `demo1` on the **De
 
 The 3-wrong-flags limit is shared too, so 3 wrong guesses from anyone lock that challenge for everyone. To unlock it, delete one of the Demo Team's wrong submissions for it in **Admin Panel > Submissions**, then wait a minute before trying again. To clear everything between showings, use **Admin Panel > Config > Reset** and reset submissions only.
 
-The demo CTFd is at `http://192.168.68.103:8100`.
+The demo CTFd is at `http://192.168.68.104:8100`.
 
-The commands use `192.168.68.103`. If your IP has changed, use the new one.
+The commands use `192.168.68.104`. If your IP has changed, use the new one.
 
 ## Ursa Minor (Linux)
 
@@ -23,7 +23,7 @@ Each star starts the same way: log in, then enter the password from the table wh
 
 ### Anwar
 
-1. Log in: `ssh anwar@192.168.68.103 -p 2221`
+1. Log in: `ssh anwar@192.168.68.104 -p 2221`
 2. List the files with `ls`. You'll see `'anwar al farkadain.txt'`. The quotes are `ls` showing you that the name has spaces in it.
 3. Try `cat anwar al farkadain.txt`. It fails with three `No such file or directory` errors, one for each word, because `cat` reads the spaces as gaps between three separate file names. This mistake is the point of the challenge, so it's worth showing.
 4. Read it with `cat "anwar al farkadain.txt"`. That's the flag.
@@ -32,7 +32,7 @@ Two other ways that work: `cat anwar\ al\ farkadain.txt`, or type `cat anw` and 
 
 ### Dingolay
 
-1. Log in: `ssh dingolay@192.168.68.103 -p 2221`
+1. Log in: `ssh dingolay@192.168.68.104 -p 2221`
 2. List the files with `ls`. You'll see `sky_survey.log`.
 3. See why scrolling won't work with `wc -l sky_survey.log`. It prints `20000`.
 4. Search for the flag with `grep "STARS{" sky_survey.log`. It prints one line ending in `note: STARS{...}`. That's the flag.
@@ -46,24 +46,24 @@ Two other ways that work: `cat anwar\ al\ farkadain.txt`, or type `cat anw` and 
 | Saiph | ★ Easy | 30 | `:8091` | `STARS{s41ph_s3nds_h34d3rs}` |
 | Meissa | ★ Easy | 30 | `:8092` | `STARS{m31ss4_3ntry_z3r0}` |
 
-Open each address in a browser. The `:8091` means `http://192.168.68.103:8091`. I checked both against the live sites.
+Open each address in a browser. The `:8091` means `http://192.168.68.104:8091`. I checked both against the live sites.
 
 ### Saiph
 
 The flag isn't on the page or in its source. The server sends it in a response header.
 
-1. Open `http://192.168.68.103:8091`. It only shows a status message.
+1. Open `http://192.168.68.104:8091`. It only shows a status message.
 2. Press F12 to open the developer tools and go to the **Network** tab.
 3. Reload the page (F5), then click the first request in the list, which is the page itself.
 4. Under **Headers**, find **Response Headers**. The `X-Archive-Key` header is the flag.
 
-Command-line alternative: `curl -I http://192.168.68.103:8091` prints the headers, including `X-Archive-Key: STARS{...}`. In PowerShell, type `curl.exe`, because plain `curl` there is a different command.
+Command-line alternative: `curl -I http://192.168.68.104:8091` prints the headers, including `X-Archive-Key: STARS{...}`. In PowerShell, type `curl.exe`, because plain `curl` there is a different command.
 
 ### Meissa
 
-1. Open `http://192.168.68.103:8092`. It lists Entry 1 to Entry 5.
-2. Click **Entry 1**. The address becomes `http://192.168.68.103:8092/entry/1`.
-3. Change the number at the end to `0`: `http://192.168.68.103:8092/entry/0`. The page shows **Entry 0: Staff only** with `Archive key: STARS{...}`. That's the flag.
+1. Open `http://192.168.68.104:8092`. It lists Entry 1 to Entry 5.
+2. Click **Entry 1**. The address becomes `http://192.168.68.104:8092/entry/1`.
+3. Change the number at the end to `0`: `http://192.168.68.104:8092/entry/0`. The page shows **Entry 0: Staff only** with `Archive key: STARS{...}`. That's the flag.
 
 Numbers above 5 show "There's no entry with that number", which is a useful "close but wrong" to show players.
 
@@ -130,13 +130,13 @@ Searching the file for `STARS` in Notepad finds nothing, because the metadata is
 | Fang | ★ Easy | 30 | `STARS{f4ng_3mpty_p4ssc0d3}` |
 | Larawag | ★ Easy | 30 | `STARS{l4r4w4g_c0mm4nd_1nj3ct10n}` |
 
-Connect with `ssh <star>@192.168.68.103 -p 2221` and the password `scorpius`. The login drops straight into the program. On a computer that has `nc`, you can instead connect to the matching port: Fang 9021, Larawag 9022. I ran both over SSH and `nc`, and each returned its flag.
+Connect with `ssh <star>@192.168.68.104 -p 2221` and the password `scorpius`. The login drops straight into the program. On a computer that has `nc`, you can instead connect to the matching port: Fang 9021, Larawag 9022. I ran both over SSH and `nc`, and each returned its flag.
 
 ### Fang
 
 The passcode is random every time anyone connects, so it can't be guessed. The bug is in the check: `strncmp(guess, passcode, strlen(guess))` only compares as many characters as you typed. Type nothing, and it compares zero characters, which always counts as a match.
 
-1. Connect: `ssh fang@192.168.68.103 -p 2221`, password `scorpius`.
+1. Connect: `ssh fang@192.168.68.104 -p 2221`, password `scorpius`.
 2. At the `Passcode:` prompt, just press Enter.
 3. It prints `Access granted.` and the flag.
 
@@ -146,7 +146,7 @@ A wrong passcode prints `Access denied. The passcode has already changed.` A sin
 
 The greeter puts your name into the command `echo Hello, <name>` and runs it in a shell. A `;` ends one command and starts the next, so a "name" can carry a second command.
 
-1. Connect: `ssh larawag@192.168.68.103 -p 2221`, password `scorpius`.
+1. Connect: `ssh larawag@192.168.68.104 -p 2221`, password `scorpius`.
 2. At `Which star should we greet?`, enter `Vega; cat /flag.txt`.
 3. It prints `Hello, Vega`, then the flag, then `Clear skies from Larawag.`
 
@@ -161,13 +161,13 @@ This gives players a real shell inside the Larawag container. It holds only Lara
 | Giausar | ★ Easy | 30 | `STARS{g14us4r_l0ck_1n_pl41n_s1ght}` |
 | Grumium | ★ Easy | 30 | `STARS{grum1um_k33ps_1t_1ns1d3}` |
 
-Both are on the demo's Draco SSH box: `ssh <star>@192.168.68.103 -p 2223`, password `draco`. It has `strings`, `ltrace`, `gdb` and `python3` installed, like the real one. I solved both over SSH on the live box.
+Both are on the demo's Draco SSH box: `ssh <star>@192.168.68.104 -p 2223`, password `draco`. It has `strings`, `ltrace`, `gdb` and `python3` installed, like the real one. I solved both over SSH on the live box.
 
 ### Giausar
 
 A Python program with its password in plain sight. It shows that reversing can be as simple as reading the code.
 
-1. Log in: `ssh giausar@192.168.68.103 -p 2223`, password `draco`.
+1. Log in: `ssh giausar@192.168.68.104 -p 2223`, password `draco`.
 2. `cat giausar.py` shows the check `if guess == "twisting-tail":`.
 3. Run `python3 giausar.py` and type `twisting-tail`. It prints `Giausar opens its vault. STARS{...}`.
 
@@ -177,6 +177,6 @@ The flag in the file is XORed with the password, so it can't be read without the
 
 The flag is stored in the program as plain text, but the program never prints it.
 
-1. Log in: `ssh grumium@192.168.68.103 -p 2223`, password `draco`.
+1. Log in: `ssh grumium@192.168.68.104 -p 2223`, password `draco`.
 2. `./grumium` prints three lines and no flag.
 3. Run `strings grumium | grep STARS`. It prints the flag.

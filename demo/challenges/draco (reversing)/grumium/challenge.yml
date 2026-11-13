@@ -13,7 +13,7 @@ description: |-
   Log in with the command below and the password `draco`.
 
   **Commands you may need to solve this level:** `strings`, `grep`
-connection_info: ssh grumium@192.168.68.103 -p 2223
+connection_info: ssh grumium@192.168.68.104 -p 2223
 flags:
   - "STARS{grum1um_k33ps_1t_1ns1d3}"
 tags:

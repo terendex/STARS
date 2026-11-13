@@ -22,7 +22,7 @@ description: |-
   If you know `nc`, port 9002 works too.
 
   **Commands you may need to solve this level:** `ssh`
-connection_info: ssh shaula@192.168.68.103 -p 2220
+connection_info: ssh shaula@192.168.68.104 -p 2220
 files:
   - dist/shaula.c
 flags:

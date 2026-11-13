@@ -20,7 +20,7 @@ description: |-
   **Then:** type `ls` to see what files are here, and `cat` followed by a file name to read one. Paste the flag into the box below. Type `exit` to leave.
 
   **Commands you may need to solve this level:** `ssh`, `ls`, `cat`
-connection_info: ssh pherkad@192.168.68.103 -p 2220
+connection_info: ssh pherkad@192.168.68.104 -p 2220
 flags:
   - "STARS{ph3rk4d_f1rst_st3p}"
 tags:

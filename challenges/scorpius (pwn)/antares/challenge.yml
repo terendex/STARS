@@ -13,7 +13,7 @@ description: |-
   **Your goal:** make the program run `supernova`, which prints the flag.
 
   This one needs raw bytes, so a normal keyboard won't do. If you don't have `nc` on your computer, log in to any Ursa Minor account (Pherkad's works) and run `nc antares 9001` from there. It works the same way.
-connection_info: nc 192.168.68.103 9001
+connection_info: nc 192.168.68.104 9001
 files:
   - dist/antares
   - dist/antares.c

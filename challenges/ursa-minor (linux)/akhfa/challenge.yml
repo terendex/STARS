@@ -13,7 +13,7 @@ description: |-
   Log in with the command below and the password `hiddenstar`. Your home folder is read-only, so work in `/tmp`. Every team shares this login, so make a folder named after your team (for example `mkdir /tmp/yourteam`) and keep your files in it.
 
   `file` tells you what kind of file you have. `base64 -d`, `gunzip` and `tar` can each undo a layer.
-connection_info: ssh akhfa@192.168.68.103 -p 2220
+connection_info: ssh akhfa@192.168.68.104 -p 2220
 flags:
   - "STARS{4khf4_unwr4pp3d_4t_l4st}"
 tags:

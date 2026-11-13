@@ -20,7 +20,7 @@ description: |-
   **Then:** paste the flag into the box below. Type `exit` to leave.
 
   **Commands you may need to solve this level:** `ssh`, `ls`, `strings`, `grep`
-connection_info: ssh thuban@192.168.68.103 -p 2222
+connection_info: ssh thuban@192.168.68.104 -p 2222
 flags:
   - "STARS{thub4n_th3_0ld_p0l3_st4r}"
 tags:

@@ -13,7 +13,7 @@ description: |-
   Log in with the command below and the password `draco`.
 
   **Commands you may need to solve this level:** `cat`, `python3`
-connection_info: ssh giausar@192.168.68.103 -p 2223
+connection_info: ssh giausar@192.168.68.104 -p 2223
 flags:
   - "STARS{g14us4r_l0ck_1n_pl41n_s1ght}"
 tags:

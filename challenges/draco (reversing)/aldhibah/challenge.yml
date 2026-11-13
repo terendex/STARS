@@ -15,7 +15,7 @@ description: |-
   gdb may warn that it can't find `aldhibah.c`. That's normal: you have the program, not the code it was written from.
 
   Log in with the command below and the password `draco`.
-connection_info: ssh aldhibah@192.168.68.103 -p 2222
+connection_info: ssh aldhibah@192.168.68.104 -p 2222
 flags:
   - "STARS{4ldh1b4h_w0k3_th3_dr4g0n}"
 tags:

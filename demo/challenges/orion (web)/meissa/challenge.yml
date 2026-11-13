@@ -11,7 +11,7 @@ description: |-
   **Your goal:** open Meissa's log at the address below, and find the entry that isn't listed on its main page. The flag is in it.
 
   **Tools you may need to solve this level:** Your browser's address bar
-connection_info: http://192.168.68.103:8092
+connection_info: http://192.168.68.104:8092
 flags:
   - "STARS{m31ss4_3ntry_z3r0}"
 tags:
