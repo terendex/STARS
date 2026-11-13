@@ -26,8 +26,8 @@ gcc -O0 -fno-builtin -no-pie -Wl,-z,lazy \
 
 # Fail the build unless the password unlocks the flag, a wrong one doesn't,
 # and strings shows neither.
-printf '%s\n' "$PASSWORD" | "$home/eltanin" | grep -qF "$FLAG"
-if printf 'wrong\n' | "$home/eltanin" | grep -qF STARS; then echo "eltanin accepts a wrong password" >&2; exit 1; fi
+"$home/eltanin" "$PASSWORD" | grep -qF "$FLAG"
+if "$home/eltanin" wrong | grep -qF STARS; then echo "eltanin accepts a wrong password" >&2; exit 1; fi
 if strings "$home/eltanin" | grep -qF -e "$PASSWORD" -e STARS; then echo "strings finds eltanin's secrets" >&2; exit 1; fi
 
 chown -R "root:$user" "$home"

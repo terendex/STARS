@@ -42,7 +42,14 @@ def page(heading, text, buttons, steps, extra):
 {items}
         </ol>
 {extra}
-        <p>Some challenges need a terminal. On Windows, that's PowerShell: press the Windows key, type <code>powershell</code>, and press Enter. On a Mac, open Terminal.</p>
+        <h3>Using the terminal</h3>
+        <ul>
+            <li>Some challenges need a terminal. On Windows, that's PowerShell: press the Windows key, type <code>powershell</code>, and press Enter. On a Mac, open Terminal.</li>
+            <li>The first time you connect to a server, <code>ssh</code> asks whether you want to continue connecting. Type <code>yes</code>.</li>
+            <li>Passwords don't appear as you type them. That's normal, so keep typing and press Enter.</li>
+            <li>To copy a flag out of PowerShell, highlight it with the mouse, then right-click.</li>
+            <li>If a program seems stuck, press Ctrl+C to stop it. Type <code>exit</code> to leave a server.</li>
+        </ul>
     </div>
 </div>"""
 

@@ -454,19 +454,21 @@ The "start here" level, with the steps in the description. The flag is stored in
 
 ### Eltanin
 
-The program compares your password with the real one using `strcmp`. The real password is stored scrambled, so `strings` doesn't show it, but `ltrace` shows every library call along with its arguments.
+The program takes a guess after its name and compares it with the real password using `strcmp`. The real password is stored scrambled, so `strings` doesn't show it, but `ltrace` shows every library call along with its arguments.
 
 1. Log in: `ssh eltanin@192.168.68.104 -p 2222`, password `draco`.
-2. Run `ltrace ./eltanin` and type any guess, such as `hello`.
-3. One line reads `strcmp("hello", "eye-of-the-dragon")`. The second text is the password.
-4. Run `./eltanin` and type `eye-of-the-dragon`. It prints `The dragon blinks. STARS{...}`.
+2. Run `ltrace ./eltanin hello`.
+3. The first line reads `strcmp("hello", "eye-of-the-dragon")`. The second text is the password.
+4. Run `./eltanin eye-of-the-dragon`. It prints `The dragon blinks. STARS{...}`.
+
+The guess comes after the program's name, not at a prompt, on purpose: with a prompt, ltrace's output gets tangled up with the program's and players can't tell it's waiting for them.
 
 ### Rastaban
 
 A Python program that keeps its password backwards.
 
 1. Log in: `ssh rastaban@192.168.68.104 -p 2222`, password `draco`.
-2. `cat rastaban.py` shows `SECRET = "nogardehtfodaeh"` and the check `if guess == SECRET[::-1]:`. `[::-1]` reverses text, so the password is `headofthedragon`.
+2. `cat rastaban.py` shows `SECRET = "nogardehtfodaeh"` and the check `if guess == SECRET[::-1]:`. `[::-1]` reverses text, so the password is `headofthedragon`. The description suggests trying `"hello"[::-1]` in `python3` to see that, and `echo nogardehtfodaeh | rev` reverses the secret without typos.
 3. Run `python3 rastaban.py` and type `headofthedragon`. It prints `Rastaban nods. STARS{...}`.
 
 The flag in the file is XORed with the password, so it can't be read without solving the level.

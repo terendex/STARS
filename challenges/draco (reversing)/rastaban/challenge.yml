@@ -8,7 +8,9 @@ attempts: 3
 description: |-
   Rastaban, in the dragon's head, guards its flag with a password, and its program is written in Python. Python programs are plain text, so you can read every line of `rastaban.py`, including the line that checks your password.
 
-  **Your goal:** read the program, work out the password it wants, then run `python3 rastaban.py` and type it in. The program prints the flag. If you don't know what a piece of Python does, search for it.
+  **Your goal:** read the program, work out the password it wants, then run `python3 rastaban.py` and type it in. The program prints the flag.
+
+  Not sure what a piece of Python does? Try it out. Type `python3` on its own to open Python, then type the piece you're unsure about, such as `"hello"[::-1]`, and press Enter to see what it gives. Type `exit()` to leave.
 
   Log in with the command below and the password `draco`.
 
@@ -19,6 +21,6 @@ flags:
 tags:
   - "★ Easy"
 hints:
-  - content: "In Python, `[::-1]` reverses text, so `SECRET[::-1]` is `SECRET` written backwards. CyberChef's **Reverse** operation does the same."
+  - content: "`[::-1]` reverses text, so the password is `SECRET` written backwards. To reverse it without typos, use the `rev` command (`echo` the text into it with `|`) or CyberChef's **Reverse** operation."
     cost: 5
 state: visible

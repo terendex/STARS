@@ -4,12 +4,15 @@
 FROM debian:13-slim
 
 # The players' tools: strings and objdump (from binutils), ltrace, gdb and python3.
-# Docker doesn't let gdb turn off address randomization, so gdb is told not to
-# try. Otherwise it prints a scary warning every time a beginner runs a program.
+# Two changes keep gdb's output short for beginners. Docker doesn't let gdb turn
+# off address randomization, so gdb is told not to try, or it prints a scary
+# warning on every run. And `gdb` means `gdb -q`, which skips the 14-line
+# license banner. Login shells read /etc/bash.bashrc, so the alias applies there.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends openssh-server less file nano xxd binutils ltrace gdb python3 \
     && rm -rf /var/lib/apt/lists/* \
-    && echo 'set disable-randomization off' >> /etc/gdb/gdbinit
+    && echo 'set disable-randomization off' >> /etc/gdb/gdbinit \
+    && echo "alias gdb='gdb -q'" >> /etc/bash.bashrc
 
 COPY sshd_config /etc/ssh/sshd_config
 COPY banner.txt /etc/ssh/banner.txt

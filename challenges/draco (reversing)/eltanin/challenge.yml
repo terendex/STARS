@@ -6,11 +6,11 @@ type: standard
 value: 30
 attempts: 3
 description: |-
-  Eltanin, the eye of the dragon, only opens up for the right password. The program `eltanin` checks your answer against the real password, but it keeps the real one scrambled, so `strings` won't find it.
+  Eltanin, the eye of the dragon, only opens up for the right password. You give the program your guess after its name, like `./eltanin hello`. It checks your guess against the real password, but it keeps the real one scrambled, so `strings` won't find it.
 
-  You don't need to read the program. Watch it work instead: `ltrace` runs a program and shows every library function it calls, along with what it passes in. One of those calls compares two pieces of text.
+  You don't need to read the program. Watch it work instead: `ltrace` runs a program and shows every library function it calls, along with what it passes in. To use it, put `ltrace` in front of the command you'd normally type. One of the calls compares two pieces of text.
 
-  **Your goal:** find the password, then run `./eltanin` and type it in. The program prints the flag.
+  **Your goal:** find the password, then give it to `./eltanin`. The program prints the flag.
 
   Log in with the command below and the password `draco`.
 
@@ -21,6 +21,6 @@ flags:
 tags:
   - "★ Easy"
 hints:
-  - content: "Run `ltrace ./eltanin` and type any guess. Find the line starting `strcmp`: it's comparing your guess with the real password."
+  - content: "Run `ltrace ./eltanin hello`. Find the line starting `strcmp`, short for string compare: it's comparing your guess with the real password."
     cost: 5
 state: visible
