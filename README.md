@@ -70,7 +70,17 @@ With auto-host installed, the CTF starts when you sign in (Windows) or when the 
 
 ## Registering players
 
-Players can't register themselves, so do this before the event, signed in as admin:
+Players can't register themselves, so make their teams and accounts before the event. Give the script the team names, and it makes each team with 3 players named after it (`nebula1`, `nebula2` and `nebula3` for Nebula), with the first as captain:
+
+```
+docker compose run --rm --entrypoint python ctfcli scripts/make-teams.py Nebula Comet Quasar Pulsar Nova
+```
+
+The passwords go into `LOGINS.txt`, which stays out of git, and aren't printed. Each is two words and a number, like `maple-otter-318`, so it's easy to type. Hand each player their name and password. They're already on their team, so they don't need the team's password. If any name is already taken, the script changes nothing, so it's safe to run again later to add more teams.
+
+On Windows, Docker Desktop makes every player reach CTFd from the same address, so CTFd's login limit covers the whole room. Once 10 people have logged in within a few seconds of each other, it answers "Too many requests" until 5 seconds pass with no new login. Have teams log in one at a time, or tell players to wait a few seconds and try again.
+
+To add a team or player by hand, sign in as admin:
 
 1. **Admin Panel > Teams**, then **+** (Create Team). Give each team a name and a password.
 2. **Admin Panel > Users**, then **+** (Create User) for each player. Give them a name, an email (a made-up one is fine) and a password.
