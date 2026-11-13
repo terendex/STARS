@@ -37,6 +37,8 @@ services:
     volumes:
       - ctfd_logs:/var/log/CTFd
       - ctfd_uploads:/var/uploads
+      # STARS's changes to CTFd: accounts don't need an email.
+      - ./ctfd-plugin:/opt/CTFd/CTFd/plugins/stars:ro
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthcheck')"]
       interval: 5s

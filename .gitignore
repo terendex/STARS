@@ -4,6 +4,9 @@
 demo/.ctf/config
 LOGINS.txt
 
+# Players' names (see scripts/make-teams.py).
+TEAMS.txt
+
 logs/
 __pycache__/
 *.pyc
