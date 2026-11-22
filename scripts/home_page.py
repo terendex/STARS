@@ -67,8 +67,8 @@ def steps(scoring, sharing, clock=False):
         f"Stuck? Each challenge has hints, but they cost points, so try first. {sharing}",
     ]
     if clock:
-        found.insert(0, "Watch the <b>mission clock</b> at the bottom of the screen. The challenges open when "
-                     "your organizer starts it, and once it reaches zero, nobody can submit flags.")
+        found.insert(0, "The challenges open when your organizer starts the clock, and flag submissions "
+                     "close when time is up.")
     return found
 
 
@@ -78,7 +78,7 @@ START_LIST = "\n".join(
 
 PAGES = {
     "main": page(
-        "STARS CTF",
+        "2nd Star",
         "Log in with the account your organizer gave you, then open Challenges.",
         [("Log in", "/login", "btn-primary"), ("Challenges", "/challenges", "btn-outline-secondary")],
         steps(
@@ -138,6 +138,8 @@ if __name__ == "__main__":
     reply = api.get(f"{url}/api/v1/pages", timeout=20)
     reply.raise_for_status()
     index = next(row for row in reply.json()["data"] if row["route"] == "index")
-    api.patch(f"{url}/api/v1/pages/{index['id']}", json={"content": PAGES[sys.argv[1]]},
+    # The page's title is the browser tab's name, so it follows the CTF's name.
+    name = api.get(f"{url}/api/v1/configs/ctf_name", timeout=20).json()["data"]["value"]
+    api.patch(f"{url}/api/v1/pages/{index['id']}", json={"content": PAGES[sys.argv[1]], "title": name},
               timeout=20).raise_for_status()
     print(f"Updated the home page of the {sys.argv[1]} CTFd.")

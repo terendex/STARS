@@ -108,6 +108,8 @@ try {
     if (-not $NoAutoHost) {
         & (Join-Path $PSScriptRoot 'install-auto-host.ps1')
     }
+    # Start STARS and Stop STARS on the desktop: nothing starts STARS by itself.
+    & (Join-Path $PSScriptRoot 'install-shortcuts.ps1')
 
     Write-Host ''
     Write-Host "Done. The CTF is on http://${Ip}:8000"

@@ -15,9 +15,9 @@ A Jeopardy-style CTF hosted from one PC. Each category is a constellation and ea
 | Scorpius (Pwn) | `ssh <star>@<host> -p 2220`, or `nc <host> 9002` to `9006` |
 | Antares (Pwn, Hard) | `nc <host> 9001` |
 | Draco (Reversing), its own SSH box | `ssh <star>@<host> -p 2222`, password `draco` |
-| The mission clock, for the projector | `http://localhost:8000/timer` on the CTF PC |
+| The mission clock, for the projector | `http://localhost:8001/timer`, on the CTF PC only |
 
-Every category has 5 Easy, 4 Medium and 1 Hard challenge, except Scorpius, which has 3 Easy, 2 Medium and 1 Hard: 56 challenges in all. These are the second orientation's challenges, and every flag changed from the first. The first orientation's 36 are kept as [STARS Classic](#stars-classic). Draco's SSH box has `strings`, `ltrace`, `gdb`, `objdump` and `python3` installed, so players don't need to install anything for it. Every hint costs points: the first one on a challenge is 5 on Easy and Medium and 10 on Hard. CTFd won't sell a hint that costs more than a team's current score, so a team on 0 points has to solve something first. Easy and Medium descriptions also end with a line listing the commands or tools that help, as OverTheWire does. Hard ones don't.
+Every category has 5 Easy, 4 Medium and 1 Hard challenge, except Scorpius, which has 3 Easy, 2 Medium and 1 Hard: 56 challenges in all. The real CTF is called **2nd Star**: the second orientation's challenges, with every flag changed from the first. The first orientation's 36 are kept as [STARS Classic](#stars-classic). Draco's SSH box has `strings`, `ltrace`, `gdb`, `objdump` and `python3` installed, so players don't need to install anything for it. Every hint costs points: the first one on a challenge is 5 on Easy and Medium and 10 on Hard. CTFd won't sell a hint that costs more than a team's current score, so a team on 0 points has to solve something first. Easy and Medium descriptions also end with a line listing the commands or tools that help, as OverTheWire does. Hard ones don't.
 
 Players can't sign up or make teams. You create every account and team (see [Registering players](#registering-players)), and players only see the login page and the challenges. They solve a challenge on its port and paste the flag into CTFd, which is what awards the points. Solves and hints belong to the team: once one member solves a challenge, it's marked solved for the others and CTFd won't take it again. Wrong flags are shared too: each team gets 3 per challenge, then CTFd locks that challenge for them. To unlock it, delete one of the team's wrong submissions for it in **Admin Panel > Submissions**, then have them wait a minute before trying again.
 
@@ -53,7 +53,7 @@ The first run downloads and builds everything, so it takes a few minutes. It:
 4. Installs all 56 challenges.
 5. Opens the CTF on this PC's network address.
 6. Sets up the [demo CTF](#demo-ctf).
-7. Turns on [auto-host](#if-your-ip-changes), so the CTF follows your network.
+7. Turns on [auto-host](#if-your-ip-changes), so the CTF follows your network, and puts **Start STARS** and **Stop STARS** buttons on the desktop (Windows). Nothing starts STARS by itself after that: see [Running it](#running-it).
 
 The admin password goes into `LOGINS.txt`. Running setup again is safe, because anything already set up is skipped. Options: `-Ip <address>` / `--ip <address>` to choose the address yourself, `-NoDemo` / `--no-demo`, and `-NoAutoHost` / `--no-auto-host`.
 
@@ -61,38 +61,51 @@ When it's done, [register the players](#registering-players), then test from a p
 
 ## Running it
 
-Run these from this folder.
+STARS never starts by itself when the PC starts, and Docker doesn't restart its containers. Use the two buttons on the desktop:
+
+- **Start STARS** starts Docker Desktop if it's closed, then the real CTF on this PC's current network. When it's done, its window shows the players' address and the Mission Clock's.
+- **Stop STARS** stops the real CTF, STARS Classic and the demo. Accounts, scores and the clock are kept.
+
+First-time setup puts the buttons there. To add them again, for example after moving this folder, run `scripts\install-shortcuts.ps1`. STARS Classic and the demo start with their own scripts (see [Demo CTF](#demo-ctf) and [STARS Classic](#stars-classic)).
+
+The same from a terminal, in this folder:
 
 ```powershell
-docker compose up -d     # start
-docker compose stop      # stop, keeping scores and accounts
-docker compose logs -f   # watch logs
+scripts\start-stars.ps1   # start (or: docker compose up -d, if the IP hasn't changed)
+scripts\stop-stars.ps1    # stop, keeping scores and accounts
+docker compose logs -f    # watch logs
 ```
 
-With auto-host installed, the CTF starts when you sign in (Windows) or when the PC boots (Linux). Without it, nothing starts after a reboot, so run `docker compose up -d` before the event. Either way, disable sleep on the PC.
+If something stops during the event, **Start STARS** (or `docker compose up -d`) brings it back. Disable sleep on the PC while it's running. To have the CTF start whenever you sign in instead, run `scripts\install-auto-host.ps1 -StartAtSignIn` (Linux: `bash scripts/install-auto-host.sh --start-at-boot`). The buttons are Windows only; on Linux, use `docker compose up -d` and `docker compose stop`.
 
 ## Mission clock
 
-The mission clock decides when players can play. While it's running, players see the challenges and can submit flags, with a countdown bar along the bottom of every page. Before it starts, CTFd says the CTF hasn't started yet. When it reaches zero, flag submissions close, and the challenges page shows TIME'S UP. Admins can always see and submit everything, so you can test while it's stopped.
+The mission clock decides when players can play. While it's running, players see the challenges and can submit flags. Before it starts, CTFd says the CTF hasn't started yet, and when it reaches zero, flag submissions close. Players never see a countdown, so they aren't put under pressure: their challenges page just opens when you press Start and closes at the end, by itself. Admins can always see and submit everything, so you can test while it's stopped.
 
 Sign in as admin and open **Admin Panel > Mission Clock**. It has:
 
-- **Duration:** type hours, minutes and seconds, or pick a preset (30 minutes to 3 hours).
-- **START:** starts the countdown from the duration. Players' challenge pages open by themselves.
-- **RESTART:** starts the countdown again from the full duration. It doesn't touch scores; to clear those, see [Resetting](#resetting).
-- **+5 MIN / −5 MIN:** moves the end time while it's running. Adding time after it has ended reopens it.
-- **END NOW:** closes submissions straight away.
-- **STANDBY:** stops the clock and hides the challenges until you press START. Put the clock in standby before players arrive.
-- **OPEN:** turns the clock off, so the CTF is open with no time limit. That's how it was at the first orientation.
-- **Music:** on or off, for the projector page.
+- **Length:** type hours, minutes and seconds, or pick a preset (30 minutes to 3 hours).
+- **Start:** opens the challenges and starts the countdown from the length.
+- **Restart:** starts the countdown again from the full length. It doesn't touch scores; to clear those, see [Resetting](#resetting).
+- **+5 min / −5 min:** moves the end time while it's running. Adding time after it has ended reopens it.
+- **End now:** closes submissions straight away.
+- **Standby:** stops the clock and hides the challenges until you press Start. Put the clock in standby before players arrive.
+- **No time limit:** turns the clock off, so the CTF is open for as long as you like. That's how it was at the first orientation.
+- **Music:** where the music plays: **This page** (the Mission Clock page), **Projector page**, or **Off**. Only the chosen page plays, so it never plays twice.
+- **Full screen** (or press F): fills your screen with the countdown, for showing it on the projector.
 
-**On the projector,** open `http://localhost:8000/timer` on the CTF PC. It's a full-screen hacker-style countdown: press F for full screen. It also plays the music, so click the screen once when it asks, because browsers only allow sound after a click.
+**On the projector,** either press **Full screen** on the Mission Clock page, or open `http://localhost:8001/timer` on the CTF PC, which shows the same countdown with no controls (`localhost:8001` only works on the CTF PC itself). Both have **Full screen** and the F key.
 
-**Music:** when the clock starts or restarts, the projector page plays the tracks of a Spotify album in a new random order, moving to another random track when one ends. N skips a track. It pauses when the clock ends or goes back to standby. It needs:
+**Music:** while the clock runs, the chosen page plays the tracks of a Spotify album in a new random order, moving to another random track when one ends, and a new order on every Start or Restart. N or **Skip** skips a track. It pauses when the clock ends or goes back to standby. Browsers only allow sound after a click on the page:
+
+- With **This page**, pressing Start is that click, so the music starts with the clock. Only the browser where you pressed Start plays. If you reload the page while the clock runs, press **Turn on sound**.
+- With **Projector page**, click the projector page once when it says so, before or after Start.
+
+It also needs:
 
 - **Internet on the CTF PC.** Without it, the page says so, and the clock still works.
-- **`localhost`, not the PC's network address.** Spotify only plays inside a secure page, and browsers treat `http://localhost` as secure but not `http://<host>`.
-- **Spotify signed in, in that browser,** for whole songs. Otherwise Spotify only plays 30-second previews.
+- **`localhost:8001`, for whole songs.** Spotify only plays whole songs on a secure page, and browsers count `http://localhost` as secure but not `http://<host>`. So for whole songs, open the Mission Clock as `http://localhost:8001/admin/stars-timer` (sign in there once) or the projector page as `http://localhost:8001/timer`. On `http://<host>:8000`, the music only plays previews, and the Mission Clock page says so.
+- **Spotify signed in, in that browser,** for whole songs. Otherwise Spotify only plays short previews.
 
 The tracks are listed in `ctfd-plugin/assets/playlist.json`. To use another album or playlist, run `python scripts/set-playlist.py <Spotify link>`, then refresh the projector page. It only needs Python, no extra packages.
 
@@ -162,7 +175,7 @@ It has its own CTFd, accounts, scores and ports, and runs beside the real CTF on
 | Orion (Web) | `http://<host>:8201` to `8206` |
 | Scorpius (Pwn) | `nc <host> 9032` to `9036` (Antares: `9031`) |
 | Draco (Reversing) | `ssh <star>@<host> -p 2232`, password `draco` |
-| Its mission clock, for the projector | `http://localhost:8200/timer`, and **Admin Panel > Mission Clock** in Classic's CTFd |
+| Its mission clock, for the projector | `http://localhost:8002/timer` on the CTF PC, and **Admin Panel > Mission Clock** in Classic's CTFd |
 
 ```powershell
 scripts\classic.ps1 setup      # first time only   (Linux: bash scripts/classic.sh setup)
@@ -180,18 +193,15 @@ Classic doesn't start when you sign in, and first-time setup doesn't set it up, 
 
 Your IP comes from the router, so it changes when you join another network, and sometimes on the same one. The ports stay the same.
 
-**Automatically:** run `scripts\install-auto-host.ps1` once. It sets up two tasks that run as you, hidden, with no admin rights:
+**Automatically:** run `scripts\install-auto-host.ps1` once (first-time setup does it for you). It sets up a task that runs as you, hidden, with no admin rights. When Windows connects to a network, and every 5 minutes, it moves the CTF to your new IP, and updates the addresses in CTFd and `ANSWERS.md`.
 
-- When you sign in, they start Docker Desktop and the CTF.
-- When Windows connects to a network, and every 5 minutes, they move the CTF to your new IP. They also update the addresses in CTFd and `ANSWERS.md`.
+It never starts the CTF. A CTF that isn't running stays off, and only its files are updated, so it starts on the right address next time. If Docker Desktop is closed, the task does nothing. Everything it does is logged to `logs\auto-host.log`. To turn it off, run `scripts\install-auto-host.ps1 -Remove`. `-StartAtSignIn` adds a second task that starts Docker Desktop and the CTF when you sign in.
 
-A CTF you've stopped with `docker compose stop` stays stopped until you next sign in, and if Docker Desktop is closed, the tasks do nothing. Everything they do is logged to `logs\auto-host.log`. To turn them off, run `scripts\install-auto-host.ps1 -Remove`.
-
-The tasks follow **any** network this PC joins, so the CTF opens to everyone on it, including public Wi-Fi. Stop the CTF or remove the tasks before you join an untrusted network.
+The task follows **any** network this PC joins, so a running CTF opens to everyone on it, including public Wi-Fi. Stop the CTF before you join an untrusted network.
 
 **By hand:** run `scripts\set-host.ps1 -Ip <new IP>`.
 
-**On Linux:** `bash scripts/install-auto-host.sh` adds two cron jobs for your account: one starts the CTF at boot, and one moves it to your new IP within 5 minutes of a network change. Remove them with `bash scripts/install-auto-host.sh --remove`. By hand, run `bash scripts/set-host.sh <new IP>`.
+**On Linux:** `bash scripts/install-auto-host.sh` adds a cron job for your account that moves the CTF to your new IP within 5 minutes of a network change. `--start-at-boot` adds a second one that starts the CTF at boot. Remove them with `bash scripts/install-auto-host.sh --remove`. By hand, run `bash scripts/set-host.sh <new IP>`.
 
 All of these only change the addresses in CTFd, so they're safe during an event. Students still need the new address, so tell them `http://<new IP>:8000`. To keep the same address at a venue, reserve it for this PC in the router's DHCP settings.
 
@@ -272,8 +282,8 @@ Admin accounts are hidden, so their solves don't lower anyone's points. CTFd onl
 - **Other devices can't connect:** Check they're on the same network. Guest networks and some routers block devices from reaching each other. Then check the IP with `ipconfig` (Linux: `ip -4 addr`). On Linux, also check the firewall (see [Linux](#linux)).
 - **The SSH box is stuck, for example after a fork bomb:** `docker compose restart ssh-box` (or `draco-box` for Draco)
 - **`REMOTE HOST IDENTIFICATION HAS CHANGED` when connecting:** The SSH box got new keys, so anyone who connected before sees this. They can clear it with `ssh-keygen -R "[<host>]:2220"`, or `2222` for the Draco box. To stop it happening, see [Keeping the SSH keys](#keeping-the-ssh-keys).
-- **A challenge port doesn't respond:** Check `docker compose ps`, then `docker compose logs <service>`.
-- **Players see "STARS has not started yet" or "STARS has ended":** that's the [mission clock](#mission-clock). Start it, or press OPEN to turn it off.
+- **A challenge port doesn't respond:** Check `docker compose ps`, then `docker compose logs <service>`. Containers don't restart by themselves, so `docker compose up -d` starts anything that stopped.
+- **Players see "2nd Star has not started yet" or "2nd Star has ended":** that's the [mission clock](#mission-clock). Press Start, or **No time limit** to turn it off.
 
 ### Keeping the SSH keys
 
@@ -305,10 +315,10 @@ Copy the key files one by one, as here. Copying the whole `/etc/ssh` folder fail
 
 ## Linux
 
-Everything runs the same on Linux. Every Windows script has a bash version in `scripts\`: `setup.sh`, `set-host.sh`, `demo.sh`, `classic.sh`, `install-auto-host.sh` and `auto-host.sh`. Run them with `bash scripts/<name>.sh`.
+Everything runs the same on Linux. Every Windows script except the desktop buttons has a bash version in `scripts\`: `setup.sh`, `set-host.sh`, `demo.sh`, `classic.sh`, `install-auto-host.sh` and `auto-host.sh`. Run them with `bash scripts/<name>.sh`.
 
 - **Docker without sudo:** the scripts and the cron jobs run as you, so add yourself to the `docker` group with `sudo usermod -aG docker "$USER"`, then log out and back in.
-- **Docker at boot:** `sudo systemctl enable --now docker`, so auto-host can start the CTF after a reboot.
+- **Docker at boot:** `sudo systemctl enable --now docker`, if you use `--start-at-boot` so the CTF starts after a reboot.
 - **Firewall:** if players can't connect and you use `ufw`, open the ports:
   ```bash
   sudo ufw allow 8000/tcp && sudo ufw allow 2220/tcp && sudo ufw allow 2222/tcp && sudo ufw allow 8081:8090/tcp && sudo ufw allow 9001:9006/tcp

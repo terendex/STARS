@@ -11,16 +11,23 @@
    or signing in there would sign you out of the real CTF on :8000.
 
 3. The mission clock. The admin sets a length and presses Start on
-   Admin Panel > Mission Clock, and the clock counts down on every player page
-   and on the projector page /timer, which can also play music. It's built on
-   CTFd's own start and end times, so CTFd itself does the locking: before Start,
-   players can't open the challenges, and once the clock reaches zero, nobody can
-   submit a flag. Admins are never locked out, so they can still test.
+   Admin Panel > Mission Clock, and the countdown shows there and on the
+   projector page /timer. The music plays on one of them, chosen on the admin
+   page, so it never plays twice. Players don't see a
+   countdown: assets/clock-watch.js only reloads their challenges page when the
+   clock starts or ends. It's built on CTFd's own start and end times, so CTFd
+   itself does the locking: before Start, players can't open the challenges, and
+   once the clock reaches zero, nobody can submit a flag. Admins are never locked
+   out, so they can still test.
+
+   STARS_PROJECTOR_URL is the projector page's address on the CTF PC, which the
+   admin page links to (see docker-compose.yml).
 
    Where the clock lives, in CTFd's config table:
      start, end            CTFd's own CTF start and end (unix seconds)
      stars_timer_duration  the length chosen on the admin page, in seconds
-     stars_music           "1" to play the playlist on /timer, "0" for silence
+     stars_music           where the playlist plays: "admin" (the Mission Clock
+                           page), "projector" (/timer) or "0" for silence
    Standby is a start time far in the future (STANDBY), which CTFd reads as
    "hasn't started yet". The same times show in Admin Panel > Config > Start
    and End Time, and changing them there works too.
@@ -73,8 +80,15 @@ def clock():
         "start": start if start and start < STANDBY else None,
         "end": end or None,
         "duration": duration,
-        "music": str(get_config("stars_music", "1")) != "0",
+        "music": music_mode(),
     }
+
+
+def music_mode():
+    """Where the music plays: "admin", "projector", or "0" for nowhere. Older
+    installs stored "1" for on, which meant the projector page."""
+    mode = str(get_config("stars_music", "admin"))
+    return {"1": "projector"}.get(mode, mode if mode in ("admin", "projector") else "0")
 
 
 def save(**values):
@@ -131,7 +145,10 @@ def act(action, body):
     elif action == "open":
         save(start=None, end=None)
     elif action == "music":
-        save(stars_music="1" if body.get("on") else "0")
+        mode = body.get("mode")
+        if mode not in ("admin", "projector", "0"):
+            return "Music has to be admin, projector or 0."
+        save(stars_music=mode)
     else:
         return "Unknown action."
     return None
@@ -145,7 +162,7 @@ def load(app):
         app.config["SESSION_COOKIE_NAME"] = cookie
 
     register_plugin_assets_directory(app, base_path=ASSETS)
-    register_plugin_script(ASSETS + "timer-bar.js")
+    register_plugin_script(ASSETS + "clock-watch.js")
     register_admin_plugin_menu_bar("Mission Clock", "/admin/stars-timer")
 
     blueprint = Blueprint("stars_timer", __name__, template_folder="templates")
@@ -163,7 +180,11 @@ def load(app):
     @blueprint.route("/admin/stars-timer")
     @admins_only
     def timer_admin():
-        return render_template("stars_timer_admin.html", assets=ASSETS)
+        projector = os.environ.get("STARS_PROJECTOR_URL", "").strip()
+        # The same admin page on this PC's localhost address, where Spotify can
+        # play whole songs (see docker-compose.yml).
+        local_admin = projector[: -len("/timer")] + "/admin/stars-timer" if projector.endswith("/timer") else ""
+        return render_template("stars_timer_admin.html", assets=ASSETS, projector=projector, local_admin=local_admin)
 
     @blueprint.route("/admin/stars-timer/action", methods=["POST"])
     @admins_only

@@ -8,7 +8,7 @@ CTFd checks flags automatically and they're case-sensitive, so this sheet is for
 
 **Scoring.** Points are dynamic and shared, the same as the real CTF. ★ Easy challenges start at 30, ★★ Medium at 60 and ★★★ Hard at 100. Every new solve takes 1, 3 or 5 points off that challenge for every team that has it, down to a floor of 15, 30 or 50. A team that solved everything before anyone else would have 1860 points, 310 per category. The "Points" column below is the starting value. Every hint costs points, so a team that used them can solve everything and still finish lower. CTFd won't sell a hint that costs more than a team's current score, so a team on 0 points has to solve something first.
 
-**Mission clock.** Players can only see the challenges and submit flags while Classic's mission clock is running. Start it from Classic's **Admin Panel > Mission Clock**, and show `http://localhost:8200/timer` on the projector. Classic's clock is separate from the real CTF's.
+**Mission clock.** Players can only see the challenges and submit flags while Classic's mission clock is running. Start it from Classic's **Admin Panel > Mission Clock**, and show `http://localhost:8002/timer` on the projector, opened on the CTF PC. Classic's clock is separate from the real CTF's.
 
 Each team gets 3 wrong flags per challenge, shared by its members, and a typo counts. After the third, CTFd locks that challenge for the team. To unlock it, delete one of the team's wrong submissions for it in **Admin Panel > Submissions**, then wait a minute before they try again.
 

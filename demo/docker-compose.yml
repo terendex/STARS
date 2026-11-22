@@ -8,7 +8,9 @@ name: stars-demo
 
 # Shared limits for anything players can touch.
 x-challenge: &challenge
-  restart: on-failure
+  # Never restarts by itself, so STARS doesn't start when Docker Desktop does.
+  # If something stops during an event, docker compose up -d brings it back.
+  restart: "no"
   read_only: true
   cap_drop: [ALL]
   security_opt: ["no-new-privileges:true"]
@@ -27,7 +29,7 @@ services:
   # --- Scoreboard ---------------------------------------------------------
   ctfd:
     image: ctfd/ctfd:3.8.9
-    restart: on-failure
+    restart: "no"
     ports:
       - "${CTF_BIND_IP}:8100:8000"
     environment:
@@ -59,7 +61,7 @@ services:
 
   db:
     image: mariadb:10.11
-    restart: on-failure
+    restart: "no"
     environment:
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MARIADB_USER: ctfd
@@ -78,7 +80,7 @@ services:
 
   cache:
     image: redis:4
-    restart: on-failure
+    restart: "no"
     volumes:
       - cache_data:/data
     networks: [ctfd_internal]

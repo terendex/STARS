@@ -35,7 +35,7 @@ LOGINS = ROOT / "LOGINS.txt"
 
 PROFILES = {
     "main": {
-        "ctf_name": "STARS",
+        "ctf_name": "2nd Star",
         "ctf_description": "56 challenges in six categories",
         "theme_color": None,
         "home": PAGES["main"],

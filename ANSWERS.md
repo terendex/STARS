@@ -2,7 +2,7 @@
 
 **Organizers only. Don't share this file or show it on screen during the event.**
 
-This is the second orientation's set: 56 challenges, and every flag is new. The first orientation's 36 are in `classic/ANSWERS.md`, for STARS Classic.
+This is the second orientation's set, named 2nd Star in CTFd: 56 challenges, and every flag is new. The first orientation's 36 are in `classic/ANSWERS.md`, for STARS Classic.
 
 CTFd checks flags automatically. They're case-sensitive, except on the challenges marked *capitals don't matter*, where the flag is read off a picture or decoded as capital letters. So this sheet is for checking challenges and helping players. I solved every one of them as a player would on a full test copy of the CTF, then submitted every flag to a test CTFd.
 
@@ -18,7 +18,7 @@ The first team to solve a challenge gets its starting value. After that, every n
 
 Every hint costs points, so a team that used them can solve everything and still finish lower. CTFd won't sell a hint that costs more than a team's current score, so a team on 0 points has to solve something first.
 
-**Mission clock.** Players can only see the challenges and submit flags while the mission clock is running. Start it from **Admin Panel > Mission Clock**, and show `http://localhost:8000/timer` on the projector. See "Mission clock" in README.md.
+**Mission clock.** Players can only see the challenges and submit flags while the mission clock is running. Start it from **Admin Panel > Mission Clock**, and show `http://localhost:8001/timer` on the projector, opened on the CTF PC. See "Mission clock" in README.md.
 
 Each team gets 3 wrong flags per challenge, shared by its members, and a typo counts. After the third, CTFd locks that challenge for the team. To unlock it, delete one of the team's wrong submissions for it in **Admin Panel > Submissions**, then wait a minute before they try again. CTFd also stops a team for a minute if it sends more than 10 wrong flags in a minute.
 
@@ -408,7 +408,7 @@ A substitution cipher: every letter swapped for another, the same way all throug
 2. The top answer starts `GEMINGA IS A NEUTRON STAR IN THE CONSTELLATION GEMINI` and ends `THE FLAG FOLLOWS: STARS{G3M1NG4_FR3QU3NCY_4N4LYS1S}`.
 3. Capitals don't matter, so that's accepted as it is.
 
-By hand: the five letters before the `{` are `S`, `T`, `A`, `R` and `S`, and the most common letters stand for E, T and A. CyberChef's **Substitute** swaps letters once players have worked some out. I couldn't run quipqiup from the test machine, so try it once in a browser before the event.
+By hand: the five letters before the `{` are `S`, `T`, `A`, `R` and `S`, and the most common letters stand for E, T and A. CyberChef's **Substitute** swaps letters once players have worked some out. I checked that quipqiup's top answer is the whole message, flag included.
 
 ### Eskimo
 
@@ -418,7 +418,7 @@ By hand: the five letters before the `{` are `S`, `T`, `A`, `R` and `S`, and the
 2. It shows `starwars`.
 3. The flag is `STARS{starwars}`. Capitals don't matter.
 
-To check a guess, CyberChef's **MD5** turns `starwars` into exactly that hash. I couldn't run CrackStation from the test machine, so try it once in a browser before the event.
+To check a guess, CyberChef's **MD5** turns `starwars` into exactly that hash. CrackStation's robot check stops scripts, so I couldn't test it; try it once in a browser before the event.
 
 ### Tejat
 
@@ -624,7 +624,7 @@ The program passes your input straight to `printf`, so format codes like `%s` re
 2. At the `Callsign:` prompt, enter `%31$s` and press Enter.
 3. It prints the flag on the `Transmitting:` line.
 
-To find the position from scratch (if the binary is recompiled), try `%p %p %p %p` first to confirm the bug, then step `%6$s`, `%7$s`, … upward. A crash just means that slot wasn't a text pointer; reconnect and keep going. 31 is the position from the first orientation. The program hasn't changed, but check it once after the rebuild.
+To find the position from scratch (if the binary is recompiled), try `%p %p %p %p` first to confirm the bug, then step `%6$s`, `%7$s`, … upward. A crash just means that slot wasn't a text pointer; reconnect and keep going. I checked that 31 still works on the rebuilt program.
 
 ### Antares
 

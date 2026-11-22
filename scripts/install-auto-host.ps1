@@ -1,19 +1,23 @@
 <#
 .SYNOPSIS
-Sets up the two tasks that keep the CTF on your current network, or removes
-them with -Remove.
+Sets up the task that keeps the CTF on your current network, or removes it with
+-Remove.
 
 .DESCRIPTION
-- "STARS CTF - start at sign-in" starts Docker Desktop and the CTF when you sign in.
 - "STARS CTF - follow network" moves the CTF to your new IP when Windows connects
-  to a network, and checks every 5 minutes in case it missed one.
+  to a network, and checks every 5 minutes in case it missed one. A CTF that
+  isn't running stays off; only its files are updated.
+- "STARS CTF - start at sign-in" starts Docker Desktop and the CTF when you sign
+  in. It's only added with -StartAtSignIn, so by default STARS doesn't start
+  when the PC does.
 
 Both run as you, hidden, and need no admin rights. See scripts\auto-host.ps1.
 
     scripts\install-auto-host.ps1
+    scripts\install-auto-host.ps1 -StartAtSignIn
     scripts\install-auto-host.ps1 -Remove
 #>
-param([switch]$Remove)
+param([switch]$Remove, [switch]$StartAtSignIn)
 
 $ErrorActionPreference = 'Stop'
 $signIn = 'STARS CTF - start at sign-in'
@@ -41,9 +45,11 @@ function New-HiddenAction([string]$extra) {
         -Argument "--headless powershell.exe -NoProfile -NonInteractive -File `"$script`" $extra".TrimEnd()
 }
 
-Register-ScheduledTask -TaskName $signIn -Principal $principal -Settings $settings `
-    -Action (New-HiddenAction '-AtSignIn') -Trigger (New-ScheduledTaskTrigger -AtLogOn -User $user) `
-    -Description 'Starts Docker Desktop and the STARS CTF on the current network.' | Out-Null
+if ($StartAtSignIn) {
+    Register-ScheduledTask -TaskName $signIn -Principal $principal -Settings $settings `
+        -Action (New-HiddenAction '-AtSignIn') -Trigger (New-ScheduledTaskTrigger -AtLogOn -User $user) `
+        -Description 'Starts Docker Desktop and the STARS CTF on the current network.' | Out-Null
+}
 
 # Event 10000 is Windows saying it has connected to a network. The delay lets
 # the new IP settle first.
@@ -59,5 +65,10 @@ Register-ScheduledTask -TaskName $follow -Principal $principal -Settings $settin
     -Action (New-HiddenAction '') -Trigger @($onNetwork, $everyFiveMinutes) `
     -Description 'Moves the STARS CTF to this PC''s new IP when the network changes.' | Out-Null
 
-Write-Host "Installed. The CTF now starts when you sign in and follows your network."
+if ($StartAtSignIn) {
+    Write-Host "Installed. The CTF now starts when you sign in and follows your network."
+} else {
+    Write-Host "Installed. The CTF follows your network while it's running. It doesn't start by itself:"
+    Write-Host "start Docker Desktop, then run docker compose up -d."
+}
 Write-Host "Activity is logged to logs\auto-host.log."
