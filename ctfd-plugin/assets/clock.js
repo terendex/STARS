@@ -88,6 +88,55 @@
     }
   }
 
+  // --- First bloods ----------------------------------------------------------
+  // Only ones that happen while this page is open are announced, one at a time.
+  const blood = $("blood");
+  const queue = [];
+  let seen = null;
+  let showing = false;
+
+  function announce() {
+    if (showing || !queue.length) return;
+    const next = queue.shift();
+    showing = true;
+    $("blood-team").textContent = next.team;
+    $("blood-what").textContent = `solved ${next.challenge} · ${next.category}`;
+    document.body.dataset.blood = `${next.team} | ${next.challenge}`;
+    blood.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => blood.classList.add("on")));
+    setTimeout(() => {
+      blood.classList.remove("on");
+      setTimeout(() => {
+        blood.hidden = true;
+        showing = false;
+        delete document.body.dataset.blood;
+        announce();
+      }, 450);
+    }, 8000);
+  }
+
+  async function pollBloods() {
+    try {
+      const reply = await fetch("/stars/first-bloods", { cache: "no-store", credentials: "same-origin" });
+      const list = (await reply.json()).first_bloods || [];
+      if (seen === null) {
+        seen = new Set(list.map((b) => b.id));
+        return;
+      }
+      for (const b of list) {
+        if (!seen.has(b.id)) {
+          seen.add(b.id);
+          queue.push(b);
+        }
+      }
+      announce();
+    } catch (error) {
+      // Try again on the next poll.
+    }
+  }
+  pollBloods();
+  setInterval(pollBloods, 4000);
+
   function fullscreen() {
     if (document.fullscreenElement) document.exitFullscreen();
     else document.documentElement.requestFullscreen().catch(() => {});

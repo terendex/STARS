@@ -109,6 +109,22 @@ It also needs:
 
 The tracks are listed in `ctfd-plugin/assets/playlist.json`. To use another album or playlist, run `python scripts/set-playlist.py <Spotify link>`, then refresh the projector page. It only needs Python, no extra packages.
 
+## First blood and help requests
+
+**First blood** is the first team to solve a challenge. Hidden teams and admins never count, so testing doesn't take one.
+
+- **On the projector page,** each new first blood shows at the top for 8 seconds: the team, and the challenge it solved. Only ones that happen while the page is open are shown, one at a time.
+- **Admin Panel > Statistics** has a **First Bloods** table above Player Progression: every challenge solved so far, which team solved it first, the player who did, the time, and how long after the start.
+
+**Help requests:** players press **Ask for help** in the corner of the challenges page. The challenge they have open is chosen for them, and they can say what they've tried. Each team has one request at a time; asking again changes it.
+
+- **Admin Panel > Help Queue** lists the requests, oldest first, with how long each team has waited. **On my way** tells the team someone is coming, and **Done** clears it from their screen. The page checks every 5 seconds, and plays a short sound for each new request once you've clicked anywhere on it.
+- The **Help Queue** link in the admin menu shows how many teams are waiting, on every admin page.
+- The player sees their place in the queue, then "An organizer is on the way". They can also cancel.
+- Finished requests stay listed until you press **Clear finished**. CTFd's own Reset doesn't clear them.
+
+STARS Classic has both too. The demo doesn't.
+
 ## Registering players
 
 Players can't register themselves, so make their teams and accounts before the event. Say how many teams you want:

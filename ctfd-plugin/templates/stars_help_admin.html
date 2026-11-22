@@ -1,0 +1,153 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>Help Queue</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-11">
+      <p class="text-muted" id="hq-summary">Loading</p>
+      <table class="table">
+        <thead>
+          <tr><th>Waiting</th><th>Team</th><th>Player</th><th>Challenge</th><th>What they've tried</th><th></th></tr>
+        </thead>
+        <tbody id="hq-active"></tbody>
+      </table>
+
+      <div class="d-flex align-items-center mt-5 mb-2">
+        <h5 class="mb-0 mr-auto">Finished</h5>
+        <button type="button" class="btn btn-sm btn-outline-secondary" id="hq-clear">Clear finished</button>
+      </div>
+      <table class="table table-sm text-muted">
+        <tbody id="hq-recent"></tbody>
+      </table>
+      <p class="small text-muted mb-5">Players ask from the Ask for help button on the challenges page. Each team has one request at a time. This page checks for new ones every 5 seconds, and plays a short sound for each new one once you've clicked anywhere on it.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const waited = (seconds) => {
+    seconds = Math.max(0, Math.floor(seconds));
+    return seconds < 60 ? `${seconds} s` : `${Math.floor(seconds / 60)} min`;
+  };
+  const cell = (row, text, className) => {
+    const td = document.createElement("td");
+    td.textContent = text;
+    if (className) td.className = className;
+    row.appendChild(td);
+    return td;
+  };
+  let known = null;
+  let audio = null;
+  document.addEventListener("click", () => { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); }, { once: true });
+
+  function ding() {
+    if (!audio) return;
+    const tone = audio.createOscillator();
+    const volume = audio.createGain();
+    tone.frequency.value = 880;
+    volume.gain.setValueAtTime(0.15, audio.currentTime);
+    volume.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 0.6);
+    tone.connect(volume).connect(audio.destination);
+    tone.start();
+    tone.stop(audio.currentTime + 0.6);
+  }
+
+  async function set(id, status) {
+    await fetch(`/admin/stars-help/${id}`, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json", "CSRF-Token": init.csrfNonce },
+      body: JSON.stringify({ status }),
+    });
+    load();
+  }
+
+  function button(td, text, className, onClick) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = `btn btn-sm ${className} mr-1 mb-1`;
+    b.textContent = text;
+    b.addEventListener("click", onClick);
+    td.appendChild(b);
+  }
+
+  async function load() {
+    let data;
+    try {
+      const reply = await fetch("/admin/stars-help/list", { credentials: "same-origin", cache: "no-store" });
+      data = await reply.json();
+    } catch (error) {
+      $("hq-summary").textContent = "Couldn't reach CTFd. Check you're still signed in as admin.";
+      return;
+    }
+    const now = data.now;
+    const ids = new Set(data.active.filter((r) => r.status === "open").map((r) => r.id));
+    if (known && [...ids].some((id) => !known.has(id))) ding();
+    known = ids;
+
+    const coming = data.active.length - data.waiting;
+    $("hq-summary").textContent = data.active.length
+      ? `${data.waiting} waiting${coming ? `, ${coming} with an organizer on the way` : ""}. Oldest first.`
+      : "Nobody is waiting for help.";
+    document.title = data.waiting ? `(${data.waiting}) Help Queue` : "Help Queue";
+
+    const active = $("hq-active");
+    active.replaceChildren();
+    for (const r of data.active) {
+      const tr = document.createElement("tr");
+      if (r.status === "coming") tr.className = "table-success";
+      cell(tr, waited(now - r.created), "text-nowrap");
+      cell(tr, r.team, "font-weight-bold");
+      cell(tr, r.player);
+      cell(tr, r.challenge || "Not about one challenge");
+      cell(tr, r.message, "small");
+      const actions = cell(tr, "", "text-nowrap");
+      if (r.status === "open") button(actions, "On my way", "btn-primary", () => set(r.id, "coming"));
+      button(actions, "Done", "btn-outline-success", () => set(r.id, "done"));
+      active.appendChild(tr);
+    }
+
+    const recent = $("hq-recent");
+    recent.replaceChildren();
+    for (const r of data.recent) {
+      const tr = document.createElement("tr");
+      cell(tr, r.status === "done" ? "Helped" : "Cancelled by the team");
+      cell(tr, r.team);
+      cell(tr, r.player);
+      cell(tr, r.challenge || "Not about one challenge");
+      const actions = cell(tr, "", "text-right");
+      if (r.status === "done") button(actions, "Reopen", "btn-link", () => set(r.id, "open"));
+      recent.appendChild(tr);
+    }
+    if (!data.recent.length) {
+      const tr = document.createElement("tr");
+      cell(tr, "None yet.");
+      recent.appendChild(tr);
+    }
+  }
+
+  $("hq-clear").addEventListener("click", async () => {
+    await fetch("/admin/stars-help/clear", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json", "CSRF-Token": init.csrfNonce },
+      body: "{}",
+    });
+    load();
+  });
+
+  load();
+  setInterval(load, 5000);
+})();
+</script>
+{% endblock %}

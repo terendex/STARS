@@ -68,3 +68,16 @@ body.stop .fill { background: var(--stop); }
 @media (max-width: 760px) {
   .music { left: 16px; right: 16px; width: auto; }
 }
+
+/* First blood: shown for a few seconds at the top when a challenge is solved
+   for the first time. */
+.blood {
+  position: fixed; top: 1.5vh; left: 50%; z-index: 4;
+  width: min(80vw, 1100px); padding: 1.1vh 3vw; text-align: center;
+  background: #1b1e24; border: 1px solid var(--line); border-top: 4px solid var(--stop); border-radius: 8px;
+  opacity: 0; transform: translate(-50%, -10px); transition: opacity 0.4s, transform 0.4s;
+}
+.blood.on { opacity: 1; transform: translate(-50%, 0); }
+.blood-label { color: var(--stop); font-weight: 700; font-size: clamp(14px, 1.5vw, 26px); }
+.blood-team { font-size: clamp(26px, 3.6vw, 64px); font-weight: 700; line-height: 1.15; }
+.blood-what { color: var(--muted); font-size: clamp(15px, 1.6vw, 28px); }

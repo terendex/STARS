@@ -31,6 +31,8 @@
    Standby is a start time far in the future (STANDBY), which CTFd reads as
    "hasn't started yet". The same times show in Admin Panel > Config > Start
    and End Time, and changing them there works too.
+
+4. First bloods and the help queue: see extras.py.
 """
 import os
 import time
@@ -42,6 +44,7 @@ from CTFd.cache import clear_challenges, clear_config, clear_standings
 from CTFd.forms import users
 from CTFd.plugins import (
     register_admin_plugin_menu_bar,
+    register_admin_plugin_script,
     register_plugin_assets_directory,
     register_plugin_script,
 )
@@ -163,7 +166,10 @@ def load(app):
 
     register_plugin_assets_directory(app, base_path=ASSETS)
     register_plugin_script(ASSETS + "clock-watch.js")
+    register_plugin_script(ASSETS + "help.js")
+    register_admin_plugin_script(ASSETS + "admin-extras.js")
     register_admin_plugin_menu_bar("Mission Clock", "/admin/stars-timer")
+    register_admin_plugin_menu_bar("Help Queue", "/admin/stars-help")
 
     blueprint = Blueprint("stars_timer", __name__, template_folder="templates")
 
@@ -196,3 +202,7 @@ def load(app):
         return jsonify({"success": True, "clock": clock()})
 
     app.register_blueprint(blueprint)
+
+    # First bloods and the help queue (extras.py).
+    from .extras import register
+    register(app, ASSETS)
