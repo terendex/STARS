@@ -1,0 +1,35 @@
+version: "0.1"
+name: "11 UMi"
+author: "STARS"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  11 Ursae Minoris is an orange giant with a planet of its own. The observatory set up a beacon for it on a **private network** that only the server can reach. Your own computer can't, so this has to be done after you log in.
+
+  The beacon's address is the name `beacon`. It listens on **one port** somewhere between **4000 and 4999** and sends the flag to anyone who connects to that port. Trying a thousand ports by hand would take forever, but there are tools that check whole ranges of ports at once. That's called a **port scan**.
+
+  **Your goal:** find the one open port on `beacon`, connect to it, and read the flag it sends. After it prints, press **Ctrl+C** to get back to the prompt.
+
+  Log in with the command below and the password `beaconhunt`. The account is named `umi11`.
+
+  **Commands you may need to solve this level:** `nc`, `grep`
+connection_info: ssh umi11@192.168.68.103 -p 2220
+flags:
+  - "STARS{11um1_b34c0n_kn0ck_kn0ck}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "`nc -z` checks whether a port is open without sending anything, and it accepts a range like `4000-4999`. Add `-v` to see a result for every port."
+    cost: 10
+  - content: "`nc -zv beacon 4000-4999 2>&1 | grep succeeded` prints only the open port (`2>&1` lets `grep` see nc's messages). Then `nc beacon <that port>`."
+    cost: 10
+state: visible

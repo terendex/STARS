@@ -4,11 +4,18 @@ author: "STARS"
 category: "Gemini (Crypto)"
 type: standard
 value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
 attempts: 3
 description: |-
   Wasat means "middle", and it sits between the twins. Its message uses a **Vigenère cipher**, which is like a Caesar cipher except that each letter is shifted by a different amount, set by a keyword.
 
-  The keyword is five letters long. It's the word for what Castor and Pollux are to each other.
+  The keyword is five letters long: the name of Castor and Pollux's famous sister in Greek myth, whose face "launched a thousand ships".
 
   **Your goal:** decrypt `message.txt` (download it below) with the keyword and read the flag. A wrong keyword just gives gibberish, and it doesn't use up any of your flag attempts.
 
@@ -16,12 +23,12 @@ description: |-
 files:
   - dist/message.txt
 flags:
-  - "STARS{w4s4t_k3pt_th3_k3y}"
+  - "STARS{w4s4t_s1st3r_kn0ws_th3_k3y}"
 tags:
   - "★★ Medium"
 hints:
-  - content: "Can't guess it? Work it out instead. The cipher only changes letters, so the `{` is still there, and the five letters right before it decrypt to `STARS`. Put just those five letters through **Vigenère Decode** with `STARS` as the key, and the output is the keyword."
+  - content: "Can't find her name? Work it out instead. The cipher only changes letters, so the `{` is still there, and the five letters right before it decrypt to `STARS`. Put just those five letters through **Vigenère Decode** with `STARS` as the key, and the output is the keyword."
     cost: 5
-  - content: "The keyword is `TWINS`."
+  - content: "The keyword is `HELEN`."
     cost: 5
 state: visible

@@ -1,12 +1,12 @@
 #!/bin/bash
 # Edasich (Medium): a Python program that scrambles the password in three steps
-# (reverse, shift 3 letters, Base64). Players undo them in the opposite order,
-# for example with CyberChef: From Base64, ROT13 by 23, Reverse.
+# (shift 5 letters, reverse, hex). Players undo them in the opposite order,
+# for example with CyberChef: From Hex, Reverse, ROT13 by 21.
 set -euo pipefail
 
 user=edasich
-FLAG='STARS{3d4s1ch_und0n3_1n_r3v3rs3}'
-PASSWORD='coilsofthedragon'
+FLAG='STARS{3d4s1ch_unw0und_th3_c01ls}'
+PASSWORD='tailofthedragon'
 
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"
 echo "$user:draco" | chpasswd
@@ -34,15 +34,14 @@ EOF
 printf '%s\n' "$PASSWORD" | python3 "$home/edasich.py" | grep -qF "$FLAG"
 if grep -qF -e STARS -e "$PASSWORD" "$home/edasich.py"; then echo "edasich.py shows its secrets" >&2; exit 1; fi
 python3 - "$PASSWORD" "$home/edasich.py" <<'EOF'
-import base64
 import re
 import sys
 
 password, target = sys.argv[1:]
 stored = re.search(r'SCRAMBLED = "([^"]+)"', open(target).read()).group(1)
-letters = base64.b64decode(stored).decode()
+letters = bytes.fromhex(stored).decode()[::-1]
 abc = "abcdefghijklmnopqrstuvwxyz"
-undone = "".join(abc[(abc.index(c) + 23) % 26] for c in letters)[::-1]
+undone = "".join(abc[(abc.index(c) + 21) % 26] for c in letters)
 assert undone == password, undone
 EOF
 

@@ -22,18 +22,18 @@ int main(int argc, char *argv[])
     char password[64], flag[64];
 
     if (argc != 2) {
-        puts("Eltanin, the eye of the dragon, is watching you.");
+        puts("Eltanin, the brightest star in the dragon, keeps one eye open.");
         puts("Give it the password after its name, like this: ./eltanin hello");
         return 1;
     }
 
     unscramble(password_bytes, sizeof password_bytes, password);
     if (strcmp(argv[1], password) != 0) {
-        puts("The dragon doesn't know you.");
+        puts("The dragon's eye narrows. That isn't the password.");
         return 1;
     }
 
     unscramble(flag_bytes, sizeof flag_bytes, flag);
-    printf("The dragon blinks. %s\n", flag);
+    printf("The dragon's eye opens. %s\n", flag);
     return 0;
 }

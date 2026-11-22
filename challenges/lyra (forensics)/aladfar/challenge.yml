@@ -4,20 +4,27 @@ author: "STARS"
 category: "Lyra (Forensics)"
 type: standard
 value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
 attempts: 3
 description: |-
-  This observation report from Aladfar seems to be missing a line. There's a suspicious gap in the middle, as if someone wrote it in invisible ink.
+  Aladfar's observation report was "redacted" before it was released: someone hid the secret parts under black boxes. But drawing a black box over text in a PDF doesn't delete the text. It only covers it up.
 
-  **Your goal:** reveal the missing line in `aladfar_report.pdf` (download it below). The flag is on it.
+  **Your goal:** recover the line hidden under the long black box in `aladfar_report.pdf` (download it below). The flag is on it.
 
-  **Tools you may need to solve this level:** A PDF viewer (your browser works), or `pdftotext`
+  **Tools you may need to solve this level:** A PDF viewer (your browser works), Notepad
 files:
   - dist/aladfar_report.pdf
 flags:
-  - "STARS{4l4df4r_wh1t3_1nk}"
+  - "STARS{4l4df4r_r3d4ct3d_b4dly}"
 tags:
   - "★ Easy"
 hints:
-  - content: "Open the PDF in your browser and press Ctrl+A to select everything. Highlighting shows text that's the same color as the page."
+  - content: "Open the PDF in your browser, press **Ctrl+A** to select everything, then **Ctrl+C** to copy it. Paste into Notepad, and the text under the boxes is there."
     cost: 5
 state: visible

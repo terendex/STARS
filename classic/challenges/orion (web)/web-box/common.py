@@ -1,0 +1,82 @@
+from flask import render_template_string
+
+PAGE = """<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      box-sizing: border-box;
+      font-family: system-ui, sans-serif;
+      color: #dce6f5;
+      background: #0a1020 radial-gradient(circle at 75% 20%, #1c2c52, #0a1020 60%);
+    }
+    main {
+      width: 100%;
+      max-width: 560px;
+      padding: 28px;
+      box-sizing: border-box;
+      background: #121b30;
+      border: 1px solid #2a3a5e;
+      border-radius: 10px;
+    }
+    h1 { margin: 0 0 4px; font-size: 22px; }
+    p { line-height: 1.5; }
+    .subtitle { margin: 0 0 20px; color: #93a4c4; font-size: 14px; }
+    label { display: block; margin: 12px 0 4px; font-size: 14px; }
+    input {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      color: inherit;
+      font: inherit;
+      background: #0a1020;
+      border: 1px solid #2a3a5e;
+      border-radius: 6px;
+    }
+    button {
+      width: 100%;
+      margin-top: 16px;
+      padding: 10px;
+      color: #0a1020;
+      font: inherit;
+      font-weight: 600;
+      background: #9fc3ff;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    a { color: #9fc3ff; }
+    code { overflow-wrap: anywhere; }
+    .error { color: #ff9d9d; font-size: 14px; overflow-wrap: anywhere; }
+    .key { padding: 12px; background: #0a1020; border: 1px solid #9fc3ff; border-radius: 6px; }
+    .results { overflow-x: auto; margin-top: 20px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 8px; text-align: left; border-bottom: 1px solid #2a3a5e; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>{{ title }}</h1>
+    <p class="subtitle">{{ subtitle }}</p>
+    {{ body | safe }}
+  </main>
+</body>
+</html>
+"""
+
+
+def page(title, subtitle, body, **values):
+    return render_template_string(
+        PAGE,
+        title=title,
+        subtitle=subtitle,
+        body=render_template_string(body, **values),
+    )

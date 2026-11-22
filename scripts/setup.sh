@@ -4,7 +4,7 @@
 #   bash scripts/setup.sh
 #
 # It makes .env with new random passwords, builds and starts everything,
-# finishes CTFd's setup with the event's rules, installs all 30 challenges,
+# finishes CTFd's setup with the event's rules, installs all 56 challenges,
 # opens the CTF on this PC's network address, sets up the demo CTF, and turns on
 # auto-host so the CTF follows your network. The admin password goes into
 # LOGINS.txt. Running it again is safe: anything already set up is skipped.

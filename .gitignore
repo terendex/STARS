@@ -2,8 +2,16 @@
 .env
 .ctf/config
 demo/.ctf/config
+classic/.ctf/config
 LOGINS.txt
+
+# SSH host keys copied out of the running boxes, so a rebuild keeps the same
+# keys and returning players don't see "REMOTE HOST IDENTIFICATION HAS CHANGED".
+host-keys/
 
 logs/
 __pycache__/
 *.pyc
+
+# CTFd backups (Admin Panel > Config > Backup). They hold every account and solve.
+backups/

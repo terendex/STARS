@@ -1,0 +1,11 @@
+
+          *        .        *
+     .           STARS          .
+  *       DRACO REVERSING LAB       *
+     .                          .
+          *        .        *
+
+  Tools ready to use: strings, ltrace, gdb, python3.
+  Home folders are read-only.
+  If you need scratch space, use /tmp.
+

@@ -11,8 +11,9 @@ Run it from anywhere, for example after your Wi-Fi IP changes:
 
 With auto-host installed, this happens by itself.
 
-If the demo CTF in demo\ has been set up, its files move to the same IP too,
-and if it's running, it's republished there. A stopped demo stays stopped.
+The side CTFs move with it: the demo in demo\ and STARS Classic in classic\.
+If one has been set up, its files move to the same IP too, and if it's
+running, it's republished there. A stopped one stays stopped.
 #>
 param(
     [Parameter(Mandatory = $true)]
@@ -28,16 +29,20 @@ $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
 $utf8 = New-Object System.Text.UTF8Encoding $false
 
-$demo = Join-Path $root 'demo'
-$demoEnv = Join-Path $demo '.env'
+# The CTFs that run beside the real one, on the same IP.
+$sides = @(
+    @{ Dir = (Join-Path $root 'demo'); Name = 'Demo CTF'; Port = 8100 },
+    @{ Dir = (Join-Path $root 'classic'); Name = 'STARS Classic'; Port = 8200 }
+)
 
-foreach ($envFile in @((Join-Path $root '.env'), $demoEnv)) {
+foreach ($envFile in @((Join-Path $root '.env')) + @($sides | ForEach-Object { Join-Path $_.Dir '.env' })) {
     if (-not (Test-Path $envFile)) { continue }
     $text = [IO.File]::ReadAllText($envFile, $utf8)
     [IO.File]::WriteAllText($envFile, ($text -replace '(?m)^CTF_BIND_IP=.*$', "CTF_BIND_IP=$Ip"), $utf8)
 }
 
-$challenges = @(Join-Path $root 'challenges'; Join-Path $demo 'challenges') | Where-Object { Test-Path $_ }
+$challenges = @((Join-Path $root 'challenges')) + @($sides | ForEach-Object { Join-Path $_.Dir 'challenges' }) |
+    Where-Object { Test-Path $_ }
 Get-ChildItem $challenges -Recurse -Filter challenge.yml | ForEach-Object {
     $text = [IO.File]::ReadAllText($_.FullName, $utf8)
     $updated = [regex]::Replace(
@@ -52,7 +57,7 @@ Get-ChildItem $challenges -Recurse -Filter challenge.yml | ForEach-Object {
 }
 
 # Keep the answer sheets' commands on the same address.
-foreach ($answers in @((Join-Path $root 'ANSWERS.md'), (Join-Path $demo 'ANSWERS.md'))) {
+foreach ($answers in @((Join-Path $root 'ANSWERS.md')) + @($sides | ForEach-Object { Join-Path $_.Dir 'ANSWERS.md' })) {
     if (-not (Test-Path $answers)) { continue }
     $text = [IO.File]::ReadAllText($answers, $utf8)
     $old = [regex]::Match($text, 'The commands use `([\d.]+)`').Groups[1].Value
@@ -63,24 +68,27 @@ foreach ($answers in @((Join-Path $root 'ANSWERS.md'), (Join-Path $demo 'ANSWERS
     }
 }
 
-# Republishes the demo CTF on the new address, but only if it's running.
-function Move-Demo {
-    if (-not (Test-Path (Join-Path $demo '.ctf\config'))) { return }
+# Republishes the demo and STARS Classic on the new address, but only the ones
+# that are running.
+function Move-Sides {
     $ErrorActionPreference = 'Continue'
-    $demoCompose = @('compose', '-f', (Join-Path $demo 'docker-compose.yml'))
-    if (-not (docker @demoCompose ps --status running -q ctfd 2>$null)) { return }
+    foreach ($side in $sides) {
+        if (-not (Test-Path (Join-Path $side.Dir '.ctf\config'))) { continue }
+        $sideCompose = @('compose', '-f', (Join-Path $side.Dir 'docker-compose.yml'))
+        if (-not (docker @sideCompose ps --status running -q ctfd 2>$null)) { continue }
 
-    docker @demoCompose up -d --wait --wait-timeout 180
-    if ($LASTEXITCODE -ne 0) { throw 'docker compose up failed for the demo CTF.' }
-    docker @demoCompose run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py .
-    if ($LASTEXITCODE -ne 0) { throw 'Updating the addresses in the demo CTFd failed.' }
-    Write-Host "Demo CTF is now on http://${Ip}:8100"
+        docker @sideCompose up -d --wait --wait-timeout 180
+        if ($LASTEXITCODE -ne 0) { throw "docker compose up failed for $($side.Name)." }
+        docker @sideCompose run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py .
+        if ($LASTEXITCODE -ne 0) { throw "Updating the addresses in $($side.Name)'s CTFd failed." }
+        Write-Host "$($side.Name) is now on http://${Ip}:$($side.Port)"
+    }
 }
 
 if ($FilesOnly) {
     Write-Host "Files now use $Ip. The CTF wasn't started."
-    # The real CTF is stopped, but a running demo still has to move.
-    Move-Demo
+    # The real CTF is stopped, but a running demo or Classic still has to move.
+    Move-Sides
     return
 }
 
@@ -109,4 +117,4 @@ finally {
 }
 
 Write-Host "CTF is now on http://${Ip}:8000"
-Move-Demo
+Move-Sides

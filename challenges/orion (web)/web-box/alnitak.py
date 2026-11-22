@@ -17,11 +17,11 @@ BODY = """
 {% if searched and not error %}
 <div class="results">
   <table>
-    <tr><th>Name</th><th>Constellation</th><th>Magnitude</th></tr>
+    <tr><th>Name</th><th>Constellation</th><th>Magnitude</th><th>Distance (light years)</th></tr>
     {% for row in rows %}
-    <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td><td>{{ row[2] }}</td></tr>
+    <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td><td>{{ row[2] }}</td><td>{{ row[3] }}</td></tr>
     {% else %}
-    <tr><td colspan="3">No stars found.</td></tr>
+    <tr><td colspan="4">No stars found.</td></tr>
     {% endfor %}
   </table>
 </div>
@@ -35,7 +35,7 @@ def home():
     rows, error = [], None
     if q is not None:
         # Intentionally vulnerable to SQL injection: this is the challenge.
-        query = f"SELECT name, constellation, magnitude FROM stars WHERE name LIKE '%{q}%'"
+        query = f"SELECT name, constellation, magnitude, distance_ly FROM stars WHERE name LIKE '%{q}%'"
         db = sqlite3.connect(DB_URI, uri=True)
         try:
             rows = db.execute(query).fetchmany(200)

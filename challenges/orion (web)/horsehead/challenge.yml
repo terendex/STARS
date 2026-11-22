@@ -1,0 +1,33 @@
+version: "0.1"
+name: "Horsehead"
+author: "STARS"
+category: "Orion (Web)"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  Every time your browser asks a website for a page, it introduces itself in a line called the **User-Agent**. The Horsehead archive reads that line and only opens for the observatory's own browser, which introduces itself as `StarScope/2.0`.
+
+  You can't install StarScope, but nothing stops your requests from introducing themselves however you like.
+
+  **Your goal:** open the archive at the address below while introducing yourself as `StarScope/2.0`. The archive opens and shows the flag.
+
+  **Tools you may need to solve this level:** Your browser's developer tools (F12), or `curl.exe` in PowerShell
+connection_info: http://192.168.68.103:8090
+flags:
+  - "STARS{h0rs3h34d_us3r_4g3nt_sp00f3d}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "In Chrome or Edge, open developer tools, then the ⋮ menu > **More tools** > **Network conditions**. Untick **Use browser default** under User agent, type `StarScope/2.0`, and refresh with developer tools still open."
+    cost: 10
+  - content: "Or in PowerShell: `curl.exe -A \"StarScope/2.0\"` followed by the address. Type `curl.exe`, not `curl`."
+    cost: 10
+state: visible

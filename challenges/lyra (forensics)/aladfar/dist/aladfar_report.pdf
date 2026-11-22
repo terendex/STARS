@@ -9,14 +9,17 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
 endobj
 4 0 obj
-<< /Length 423 >>
+<< /Length 561 >>
 stream
 BT /F1 20 Tf 72 720 Td (Lyra Survey: Observation Report) Tj ET
 BT /F1 12 Tf 72 690 Td (Target: Aladfar \(Eta Lyrae\)) Tj ET
 BT /F1 12 Tf 72 670 Td (Aladfar is a blue-white star in the constellation Lyra.) Tj ET
-BT /F1 12 Tf 72 650 Td (Viewing was good all night, with no cloud cover.) Tj ET
-1 1 1 rg BT /F1 12 Tf 72 620 Td (Archive key: STARS{4l4df4r_wh1t3_1nk}) Tj ET 0 0 0 rg
-BT /F1 12 Tf 72 590 Td (End of report.) Tj ET
+BT /F1 12 Tf 72 650 Td (Observer on duty: Dr. M. Reyes) Tj ET
+BT /F1 12 Tf 72 620 Td (Archive key: STARS{4l4df4r_r3d4ct3d_b4dly}) Tj ET
+BT /F1 12 Tf 72 600 Td (Viewing was good all night, with no cloud cover.) Tj ET
+BT /F1 12 Tf 72 570 Td (End of report. Redacted before public release.) Tj ET
+0 0 0 rg 182 646 140 16 re f
+0 0 0 rg 70 616 330 16 re f
 endstream
 endobj
 5 0 obj
@@ -29,9 +32,9 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000241 00000 n 
-0000000715 00000 n 
+0000000853 00000 n 
 trailer
 << /Size 6 /Root 1 0 R >>
 startxref
-785
+923
 %%EOF

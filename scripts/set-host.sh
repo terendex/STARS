@@ -8,8 +8,9 @@
 # connection_info, republishes the ports on that address, and pushes the new
 # addresses to CTFd. --files-only rewrites the files without starting anything.
 #
-# If the demo CTF in demo/ has been set up, its files move to the same IP too,
-# and if it's running, it's republished there. A stopped demo stays stopped.
+# The side CTFs move with it: the demo in demo/ and STARS Classic in classic/.
+# If one has been set up, its files move to the same IP too, and if it's
+# running, it's republished there. A stopped one stays stopped.
 set -euo pipefail
 
 IP=${1:-}
@@ -19,9 +20,10 @@ if ! [[ $IP =~ ^[0-9]{1,3}(\.[0-9]{1,3}){3}$ ]] || [[ -n $MODE && $MODE != --fil
     exit 2
 fi
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-DEMO="$ROOT/demo"
+# The CTFs that run beside the real one, on the same IP, as folder:port.
+SIDES=("demo:8100" "classic:8200")
 
-for env_file in "$ROOT/.env" "$DEMO/.env"; do
+for env_file in "$ROOT/.env" "$ROOT/demo/.env" "$ROOT/classic/.env"; do
     if [[ -f $env_file ]]; then
         sed -i -E "s/^CTF_BIND_IP=.*/CTF_BIND_IP=$IP/" "$env_file"
     fi
@@ -33,10 +35,10 @@ while IFS= read -r -d '' yml; do
         sed -i -E "s/^(connection_info:[^0-9]*)[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/\1$IP/" "$yml"
         echo "Updated ${yml#"$ROOT"/}"
     fi
-done < <(find "$ROOT/challenges" "$DEMO/challenges" -name challenge.yml -print0 2>/dev/null)
+done < <(find "$ROOT/challenges" "$ROOT/demo/challenges" "$ROOT/classic/challenges" -name challenge.yml -print0 2>/dev/null)
 
 # Keep the answer sheets' commands on the same address.
-for answers in "$ROOT/ANSWERS.md" "$DEMO/ANSWERS.md"; do
+for answers in "$ROOT/ANSWERS.md" "$ROOT/demo/ANSWERS.md" "$ROOT/classic/ANSWERS.md"; do
     [[ -f $answers ]] || continue
     old=$(sed -nE 's/.*The commands use `([0-9.]+)`.*/\1/p' "$answers" | head -n 1)
     if [[ -n $old && $old != "$IP" ]]; then
@@ -49,23 +51,29 @@ for answers in "$ROOT/ANSWERS.md" "$DEMO/ANSWERS.md"; do
     fi
 done
 
-# Republishes the demo CTF on the new address, but only if it's running.
-move_demo() {
-    [[ -f $DEMO/.ctf/config ]] || return 0
-    local demo_compose=(docker compose -f "$DEMO/docker-compose.yml")
-    [[ -n $("${demo_compose[@]}" ps --status running -q ctfd 2>/dev/null) ]] || return 0
+# Republishes the demo and STARS Classic on the new address, but only the ones
+# that are running.
+move_sides() {
+    local side dir port side_compose
+    for side in "${SIDES[@]}"; do
+        dir="$ROOT/${side%%:*}"
+        port=${side##*:}
+        [[ -f $dir/.ctf/config ]] || continue
+        side_compose=(docker compose -f "$dir/docker-compose.yml")
+        [[ -n $("${side_compose[@]}" ps --status running -q ctfd 2>/dev/null) ]] || continue
 
-    "${demo_compose[@]}" up -d --wait --wait-timeout 180 ||
-        { echo "docker compose up failed for the demo CTF." >&2; exit 1; }
-    "${demo_compose[@]}" run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py . ||
-        { echo "Updating the addresses in the demo CTFd failed." >&2; exit 1; }
-    echo "Demo CTF is now on http://$IP:8100"
+        "${side_compose[@]}" up -d --wait --wait-timeout 180 ||
+            { echo "docker compose up failed for ${side%%:*}." >&2; exit 1; }
+        "${side_compose[@]}" run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py . ||
+            { echo "Updating the addresses in ${side%%:*}'s CTFd failed." >&2; exit 1; }
+        echo "${side%%:*} is now on http://$IP:$port"
+    done
 }
 
 if [[ $MODE == --files-only ]]; then
     echo "Files now use $IP. The CTF wasn't started."
-    # The real CTF is stopped, but a running demo still has to move.
-    move_demo
+    # The real CTF is stopped, but a running demo or Classic still has to move.
+    move_sides
     exit 0
 fi
 
@@ -82,4 +90,4 @@ else
     echo "No .ctf/config yet, so CTFd was not updated."
 fi
 echo "CTF is now on http://$IP:8000"
-move_demo
+move_sides

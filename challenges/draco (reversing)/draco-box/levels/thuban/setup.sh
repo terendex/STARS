@@ -3,7 +3,7 @@
 set -euo pipefail
 
 user=thuban
-FLAG='STARS{thub4n_th3_0ld_p0l3_st4r}'
+FLAG='STARS{thub4n_wr0t3_1t_d0wn}'
 
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"
 echo "$user:draco" | chpasswd

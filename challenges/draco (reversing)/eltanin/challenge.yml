@@ -4,9 +4,16 @@ author: "STARS"
 category: "Draco (Reversing)"
 type: standard
 value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
 attempts: 3
 description: |-
-  Eltanin, the eye of the dragon, only opens up for the right password. You give the program your guess after its name, like `./eltanin hello`. It checks your guess against the real password, but it keeps the real one scrambled, so `strings` won't find it.
+  Eltanin, the brightest star in the dragon, only opens its eye for the right password. You give the program your guess after its name, like `./eltanin hello`. It checks your guess against the real password, but it keeps the real one scrambled, so `strings` won't find it.
 
   You don't need to read the program. Watch it work instead: `ltrace` runs a program and shows every library function it calls, along with what it passes in. To use it, put `ltrace` in front of the command you'd normally type. One of the calls compares two pieces of text.
 
@@ -15,9 +22,9 @@ description: |-
   Log in with the command below and the password `draco`.
 
   **Commands you may need to solve this level:** `ltrace`
-connection_info: ssh eltanin@192.168.68.104 -p 2222
+connection_info: ssh eltanin@192.168.68.103 -p 2222
 flags:
-  - "STARS{3lt4n1n_w4tch3s_th3_c4lls}"
+  - "STARS{3lt4n1n_s4w_th3_c0mp4r1s0n}"
 tags:
   - "★ Easy"
 hints:

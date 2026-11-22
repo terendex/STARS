@@ -1,0 +1,31 @@
+version: "0.1"
+name: "Alifa"
+author: "STARS"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Alifa didn't leave its signal in a file. When you log in, the shell keeps a list of named settings called **environment variables**, and every program you start gets a copy of that list. The server put Alifa's signal into one of yours.
+
+  **Your goal:** find the environment variable that holds the flag, and read its value.
+
+  Log in with the command below and the password `inherited`.
+
+  **Commands you may need to solve this level:** `env`, `grep`
+connection_info: ssh alifa@192.168.68.103 -p 2220
+flags:
+  - "STARS{4l1f4_l1v3s_1n_th3_3nv1r0nm3nt}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "`env` prints every environment variable, one `NAME=value` per line. The `|` symbol sends that list into another command, and `grep STARS` keeps only the lines containing `STARS`."
+    cost: 5
+state: visible

@@ -7,7 +7,7 @@ __attribute__((used)) static const char flag[] = FLAG;
 
 int main(void)
 {
-    puts("Thuban was the pole star when the pyramids were built.");
-    puts("It has kept one secret ever since, and it isn't telling you.");
+    puts("Thuban guided the builders of the pyramids, long before Polaris took over.");
+    puts("It wrote its secret down somewhere in this program, then forgot to say it out loud.");
     return 0;
 }

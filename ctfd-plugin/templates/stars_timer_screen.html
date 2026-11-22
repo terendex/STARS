@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ ctf_name or "STARS" }} // Mission Clock</title>
+  <link rel="stylesheet" href="{{ assets }}clock.css">
+</head>
+<body class="state-loading">
+  <canvas id="rain" aria-hidden="true"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <main class="frame">
+    <header class="top">
+      <span class="brand">&#9612;{{ (ctf_name or "STARS") | upper }} <span class="dim">//</span> MISSION CLOCK</span>
+      <span class="sys" id="sys">SYS 00:00:00</span>
+    </header>
+
+    <div class="status" id="status">&gt; CONNECTING TO MISSION CONTROL<span class="cursor">_</span></div>
+    <div class="digits" id="digits" data-text="--:--:--">--:--:--</div>
+    <div class="progress" id="progress">[&nbsp;]</div>
+    <div class="sub" id="sub">&nbsp;</div>
+
+    <pre class="log" id="log" aria-live="polite"></pre>
+  </main>
+
+  <aside class="music" id="music" hidden>
+    <div class="music-head">
+      <span>&#9835; NOW PLAYING</span>
+      <button type="button" id="skip" title="Next random track (N)">SKIP &#9654;&#9654;</button>
+    </div>
+    <div class="music-title" id="music-title">standing by</div>
+    <div class="music-embed"><div id="spotify"></div></div>
+    <button type="button" class="music-play" id="music-play" hidden>&#9654; PRESS TO PLAY</button>
+  </aside>
+
+  <div class="arm" id="arm" hidden>
+    <div class="arm-box">
+      <div class="arm-title">[ CLICK ANYWHERE TO ARM AUDIO ]</div>
+      <div class="arm-text">Browsers keep pages silent until you click them once. The music starts by itself when the clock starts, in a new random order every time.</div>
+    </div>
+  </div>
+
+  <button type="button" class="fullscreen" id="fullscreen" title="Fullscreen (F)">[ FULLSCREEN ]</button>
+
+  <script>window.STARS_ASSETS = {{ assets | tojson }};</script>
+  <script src="{{ assets }}clock.js"></script>
+</body>
+</html>

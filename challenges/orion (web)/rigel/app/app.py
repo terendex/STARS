@@ -4,7 +4,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 DB_URI = "file:/app/observatory.db?mode=ro"
-TOP_CLEARANCE = "9"
+TOP_CLEARANCE = "7"
 
 
 def run_query(query, params=()):

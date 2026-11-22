@@ -1,0 +1,37 @@
+version: "0.1"
+name: "Kuma"
+author: "STARS"
+category: "Draco (Reversing)"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Kuma is one of the four stars in the dragon's head. Its program doesn't ask you anything. Instead, it reads a setting from its **environment**: named values, called environment variables, that the terminal hands to every program it starts.
+
+  To give a program an environment variable for one run, write it in front of the command, like `COLOR=blue ./kuma`.
+
+  You don't need to read the program to find out which setting it wants, or what value. `ltrace` runs a program and shows every library function it calls, along with what it passes in. Put `ltrace` in front of the command you'd normally type.
+
+  **Your goal:** find the setting Kuma is waiting for and the value it wants, then run `./kuma` with that setting. The program prints the flag.
+
+  Log in with the command below and the password `draco`.
+
+  **Commands you may need to solve this level:** `ltrace`
+connection_info: ssh kuma@192.168.68.103 -p 2222
+flags:
+  - "STARS{kum4_r34d_1ts_3nv1r0nm3nt}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Run `ltrace ./kuma`. `getenv` is short for get environment variable: the text in its brackets is the name Kuma asks for, and `nil` means it isn't set."
+    cost: 5
+  - content: "Now set that variable to anything, by putting `NAME=hello` (with the real name) in front of `ltrace ./kuma`. Kuma has something to compare this time: find the `strcmp` line."
+    cost: 5
+state: visible

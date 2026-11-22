@@ -1,0 +1,3 @@
+*** 11 UMi BEACON ***
+You found the right port.
+Flag: STARS{11um1_b34c0n_kn0ck_kn0ck}

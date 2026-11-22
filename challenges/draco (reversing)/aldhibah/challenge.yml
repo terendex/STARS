@@ -4,25 +4,32 @@ author: "STARS"
 category: "Draco (Reversing)"
 type: standard
 value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
 attempts: 3
 description: |-
-  Aldhibah, the dragon, is asleep. Its program will tell you the flag, but only once the dragon wakes in a thousand years, and only if you're the dragon's rider. You aren't.
+  Aldhibah, the dragon, is hibernating. Its program will tell you the flag, but only once the dragon wakes in a thousand years, and only if you're a rider of high enough rank. You aren't.
 
-  You don't have a thousand years, and you can't become the rider. But a debugger can do more than watch a program: it can change what the program does while it runs.
+  You don't have a thousand years, and you can't change your rank. But a debugger can do more than watch a program: it can change what the program does while it runs.
 
-  **Your goal:** make `aldhibah` skip the wait and accept you as its rider, so that it prints the flag.
+  **Your goal:** make `aldhibah` skip the wait and accept your rank, so that it prints the flag.
 
   gdb may warn that it can't find `aldhibah.c`. That's normal: you have the program, not the code it was written from. If you run `./aldhibah` on its own, it just waits. Press Ctrl+C to stop it.
 
   Log in with the command below and the password `draco`.
-connection_info: ssh aldhibah@192.168.68.104 -p 2222
+connection_info: ssh aldhibah@192.168.68.103 -p 2222
 flags:
-  - "STARS{4ldh1b4h_w0k3_th3_dr4g0n}"
+  - "STARS{4ldh1b4h_r4nk_s3v3n_r1d3r}"
 tags:
   - "★★★ Hard"
 hints:
-  - content: "In `gdb ./aldhibah`, `info functions` lists the program's functions. `break` pauses at one, and `return` leaves it straight away, skipping whatever it was about to do. `return 1` also makes the function hand back 1, which here means yes."
+  - content: "In `gdb ./aldhibah`, `info functions` lists the program's functions. `break` pauses at one, and `return` leaves it straight away, skipping whatever it was about to do. `return` followed by a number also makes the function hand back that number."
     cost: 10
-  - content: "Type `break wait_for_dragon`, `break is_rider`, then `run`. At the first pause, type `return`, answer `y`, then `continue`. At the second, type `return 1`, answer `y`, then `continue`."
+  - content: "Type `break hibernate`, `run`, then `return`, answer `y`, and `continue`: the dragon wakes and tells you the rank it wants. Run it again with `break rider_rank` as well, and at that pause type `return` followed by that rank, answer `y`, then `continue`."
     cost: 10
 state: visible

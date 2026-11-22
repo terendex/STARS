@@ -1,0 +1,36 @@
+version: "0.1"
+name: "Eskimo"
+author: "STARS"
+category: "Gemini (Crypto)"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  Someone leaked the login for the Eskimo Nebula observatory's vault, but the password isn't written out. It's stored as an **MD5 hash**.
+
+  A hash is like a fingerprint of a password: it's easy to make from the password, and impossible to turn back into it. But people pick the same passwords over and over, and websites have already hashed billions of common ones and kept the results in huge lookup tables. If a password is common, its hash is in there.
+
+  **Your goal:** find the password behind the hash in `vault.txt` (download it below). The flag is `STARS{password}`, with the password in place of the word `password`.
+
+  **Tools you may need to solve this level:** [CrackStation](https://crackstation.net/), CyberChef
+files:
+  - dist/vault.txt
+flags:
+  - type: static
+    content: "STARS{starwars}"
+    data: case_insensitive
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Paste the hash into [CrackStation](https://crackstation.net/), tick the box to show you're not a robot, and press **Crack Hashes**."
+    cost: 5
+  - content: "To check a guess, CyberChef's **MD5** operation turns any word into its hash. If it matches the one in `vault.txt`, that's the password."
+    cost: 5
+state: visible

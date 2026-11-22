@@ -1,0 +1,33 @@
+version: "0.1"
+name: "Eltanin"
+author: "STARS"
+category: "Draco (Reversing)"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Eltanin, the eye of the dragon, only opens up for the right password. You give the program your guess after its name, like `./eltanin hello`. It checks your guess against the real password, but it keeps the real one scrambled, so `strings` won't find it.
+
+  You don't need to read the program. Watch it work instead: `ltrace` runs a program and shows every library function it calls, along with what it passes in. To use it, put `ltrace` in front of the command you'd normally type. One of the calls compares two pieces of text.
+
+  **Your goal:** find the password, then give it to `./eltanin`. The program prints the flag.
+
+  Log in with the command below and the password `draco`.
+
+  **Commands you may need to solve this level:** `ltrace`
+connection_info: ssh eltanin@192.168.68.103 -p 2232
+flags:
+  - "STARS{3lt4n1n_w4tch3s_th3_c4lls}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Run `ltrace ./eltanin hello`. Find the line starting `strcmp`, short for string compare: it's comparing your guess with the real password."
+    cost: 5
+state: visible

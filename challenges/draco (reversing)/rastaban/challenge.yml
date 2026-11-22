@@ -4,23 +4,34 @@ author: "STARS"
 category: "Draco (Reversing)"
 type: standard
 value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
 attempts: 3
 description: |-
-  Rastaban, in the dragon's head, guards its flag with a password, and its program is written in Python. Python programs are plain text, so you can read every line of `rastaban.py`, including the line that checks your password.
+  Rastaban, in the dragon's head, guards its flag with a password, and its program is written in Python. Python programs are plain text, so you can read every line of `rastaban.py`. But the password isn't written as letters this time.
 
-  **Your goal:** read the program, work out the password it wants, then run `python3 rastaban.py` and type it in. The program prints the flag.
+  Computers store every letter as a number, called its **character code**: `A` is 65, `B` is 66, and lowercase `a` is 97. Rastaban keeps its password as a list of those numbers.
 
-  Not sure what a piece of Python does? Try it out. Type `python3` on its own to open Python, then type the piece you're unsure about, such as `"hello"[::-1]`, and press Enter to see what it gives. Type `exit()` to leave.
+  **Your goal:** turn the numbers back into the password, then run `python3 rastaban.py` and type it in. The program prints the flag.
+
+  Not sure what a piece of Python does? Try it out. Type `python3` on its own to open Python, then type the piece you're unsure about and press Enter to see what it gives. Type `exit()` to leave.
 
   Log in with the command below and the password `draco`.
 
-  **Commands you may need to solve this level:** `cat`, `python3`
-connection_info: ssh rastaban@192.168.68.104 -p 2222
+  **Tools you may need to solve this level:** `cat`, `python3`, [CyberChef](https://gchq.github.io/CyberChef/)
+connection_info: ssh rastaban@192.168.68.103 -p 2222
 flags:
-  - "STARS{r4st4b4n_r34d_th3_c0d3}"
+  - "STARS{r4st4b4n_sp34ks_1n_numb3rs}"
 tags:
   - "★ Easy"
 hints:
-  - content: "`[::-1]` reverses text, so the password is `SECRET` written backwards. To reverse it without typos, use the `rev` command (`echo` the text into it with `|`) or CyberChef's **Reverse** operation."
+  - content: "The program builds the password itself, in the line starting `password =`. In `python3`, `chr(97)` gives `'a'`. Paste that line's right-hand side, with `CODES` swapped for the list of numbers in its square brackets, and Python shows the password."
+    cost: 5
+  - content: "Or use CyberChef: paste just the numbers into Input, add **From Decimal**, and set its **Delimiter** to `Comma`."
     cost: 5
 state: visible

@@ -1,0 +1,37 @@
+version: "0.1"
+name: "Alrakis"
+author: "STARS"
+category: "Draco (Reversing)"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  Alrakis guards the dragon's treasure, and only the right code, a number, opens it. The number isn't stored as text anywhere, so `strings` won't find it. It's written straight into the program's instructions.
+
+  A debugger can show you those instructions. In `gdb`, `info functions` lists the program's functions, and `disassemble` followed by a function's name shows it as **assembly**: the small, simple steps the processor actually runs, one per line.
+
+  **Your goal:** find the code in Alrakis's instructions, then run `./alrakis` and type it in. The program prints the flag.
+
+  Alrakis understands numbers written in hexadecimal (starting with `0x`, like `0x1f`) as well as ordinary ones, so you don't need to convert anything.
+
+  Log in with the command below and the password `draco`.
+
+  **Commands you may need to solve this level:** `gdb`
+connection_info: ssh alrakis@192.168.68.103 -p 2222
+flags:
+  - "STARS{4lr4k1s_r34d_th3_4ss3mbly}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Start with `gdb ./alrakis`, then `disassemble check_code`. The instruction that compares two values is `cmp`, and numbers written into an instruction start with `$`."
+    cost: 5
+  - content: "The number after `$` on the `cmp` line is the code. Type `quit` to leave gdb, run `./alrakis`, and type the number with its `0x` but without the `$`."
+    cost: 5
+state: visible

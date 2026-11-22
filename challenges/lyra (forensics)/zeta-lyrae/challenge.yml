@@ -1,0 +1,36 @@
+version: "0.1"
+name: "Zeta Lyrae"
+author: "STARS"
+category: "Lyra (Forensics)"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  Someone at the Zeta Lyrae observatory opened a web page over plain HTTP, and we recorded the traffic. Web pages arrive in pieces: the page itself, then every picture and file it needs, each sent in its own request. Anything sent over plain HTTP can be pulled back out of a recording like this one.
+
+  One of the pictures that came down the wire is tonight's staff-only photo, and the flag is written on it.
+
+  **Your goal:** rebuild the pictures from `zeta_lyrae_capture.pcap` (download it below) and find the one with the flag. Capitals don't matter.
+
+  **Tools you may need to solve this level:** [Wireshark](https://www.wireshark.org/)
+files:
+  - dist/zeta_lyrae_capture.pcap
+flags:
+  - type: static
+    content: "STARS{CARVED_FROM_THE_WIRE}"
+    data: case_insensitive
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Wireshark can save every file it saw sent over HTTP. Look in the **File** menu, under **Export Objects**."
+    cost: 10
+  - content: "**File > Export Objects > HTTP** lists four files. Save the PNG pictures and open each one."
+    cost: 10
+state: visible

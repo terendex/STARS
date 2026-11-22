@@ -4,6 +4,13 @@ author: "STARS"
 category: "Gemini (Crypto)"
 type: standard
 value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
 attempts: 3
 description: |-
   Tejat shares its patch of sky with a neighbor once called Tejat Prior, and the two relay messages to each other using **RSA**, the system that protects much of the web. Each station publishes a number `n`, made by multiplying two secret primes. Anyone who can split `n` back into those primes can work out the private key and read that station's messages.
@@ -18,7 +25,7 @@ description: |-
 files:
   - dist/transmission.txt
 flags:
-  - "STARS{t3j4t_tw1ns_sh4r3d_4_pr1m3}"
+  - "STARS{t3j4t_gcd_spl1ts_th3_tw1ns}"
 tags:
   - "★★★ Hard"
 hints:

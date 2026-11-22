@@ -1,27 +1,28 @@
 #!/bin/bash
-# Kochab: one real record among hundreds of decoys. Every decoy carries a fake
-# flag, so a plain grep isn't enough: players have to filter by size and owner.
+# Kochab: one real record among hundreds of decoys, spread over 12 folders.
+# Every decoy carries a fake flag, so a plain grep isn't enough: players have
+# to filter by size and owner.
 set -euo pipefail
 
 user=kochab
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"
-echo "$user:guardian" | chpasswd
-useradd -M -s /usr/sbin/nologin astronomer
+echo "$user:guardians" | chpasswd
+useradd -M -s /usr/sbin/nologin cartographer
 
 home="/home/$user"
-catalog="$home/catalog"
-mkdir -p "$catalog"
+charts="$home/charts"
+mkdir -p "$charts"
 
-FLAG='STARS{k0ch4b_gu4rd14n_0f_th3_p0l3}'
-TARGET_SIZE=1337
-TARGET_OWNER=astronomer
-RECORDS=600
-RANDOM=1337
+FLAG='STARS{k0ch4b_m4pp3d_th3_n0rth}'
+TARGET_SIZE=2048
+TARGET_OWNER=cartographer
+RECORDS=900
+RANDOM=2048
 
 write_record() {
     local file=$1 owner=$2 size=$3 flag=$4
     local header
-    header=$(printf 'HD %s\nflag: %s\nspectrum: ' "$(basename "$file" .rec)" "$flag")
+    header=$(printf 'HIP %s\nflag: %s\nchart: ' "$(basename "$file" .chart)" "$flag")
     local pad=$(( size - ${#header} ))
     {
         printf '%s' "$header"
@@ -32,19 +33,21 @@ write_record() {
 }
 
 for (( i = 0; i < RECORDS; i++ )); do
-    file="$catalog/HD$(( 100000 + i * 137 )).rec"
+    sector=$(printf 'sector-%02d' $(( i % 12 + 1 )))
+    mkdir -p "$charts/$sector"
+    file="$charts/$sector/HIP$(( 200000 + i * 211 )).chart"
     fake="STARS{$(head -c 12 /dev/urandom | od -An -tx1 | tr -d ' \n')}"
     owner=root
-    size=$(( 900 + RANDOM % 1000 ))
+    size=$(( 1500 + RANDOM % 1100 ))
     [ "$size" -eq "$TARGET_SIZE" ] && size=$(( size + 1 ))
 
-    if (( i == 412 )); then
+    if (( i == 637 )); then
         write_record "$file" "$TARGET_OWNER" "$TARGET_SIZE" "$FLAG"
         continue
-    elif (( i % 25 == 0 )); then
+    elif (( i % 30 == 0 )); then
         # Right size, wrong owner.
         size=$TARGET_SIZE
-    elif (( i % 5 == 0 )); then
+    elif (( i % 4 == 0 )); then
         # Right owner, wrong size.
         owner=$TARGET_OWNER
     fi
@@ -52,9 +55,9 @@ for (( i = 0; i < RECORDS; i++ )); do
 done
 
 # Fail the build if the challenge doesn't have exactly one answer.
-matches=$(find "$catalog" -type f -size "${TARGET_SIZE}c" -user "$TARGET_OWNER" | wc -l)
+matches=$(find "$charts" -type f -size "${TARGET_SIZE}c" -user "$TARGET_OWNER" | wc -l)
 [ "$matches" -eq 1 ]
-grep -q "$FLAG" "$(find "$catalog" -type f -size "${TARGET_SIZE}c" -user "$TARGET_OWNER")"
+grep -q "$FLAG" "$(find "$charts" -type f -size "${TARGET_SIZE}c" -user "$TARGET_OWNER")"
 
-chown "root:$user" "$home" "$catalog"
-chmod 750 "$home" "$catalog"
+chown "root:$user" "$home" "$charts" "$charts"/sector-*
+chmod 750 "$home" "$charts" "$charts"/sector-*

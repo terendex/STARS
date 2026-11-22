@@ -4,6 +4,13 @@ author: "STARS"
 category: "Scorpius (Pwn)"
 type: standard
 value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
 attempts: 3
 description: |-
   Acrab's radio relay repeats your callsign back to you. In C, `printf` treats codes like `%p` and `%s` as instructions to read data from memory, and this program passes your input straight to it. This is called a **format string** bug.
@@ -15,11 +22,11 @@ description: |-
   The program's source code is attached below as a download. Reading it is how you find the weakness.
 
   **Commands you may need to solve this level:** `ssh`, `nc`
-connection_info: ssh acrab@192.168.68.104 -p 2220
+connection_info: ssh acrab@192.168.68.103 -p 2220
 files:
   - dist/acrab.c
 flags:
-  - "STARS{4cr4b_f0rm4t_str1ng_l34k}"
+  - "STARS{4cr4b_l34k3d_th3_st4ck}"
 tags:
   - "★★ Medium"
 hints:

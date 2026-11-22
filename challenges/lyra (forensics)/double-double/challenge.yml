@@ -4,6 +4,13 @@ author: "STARS"
 category: "Lyra (Forensics)"
 type: standard
 value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
 attempts: 3
 description: |-
   Epsilon Lyrae is nicknamed the Double Double, because what looks like one star turns out to be four. This image hides something just as well.
@@ -14,12 +21,12 @@ description: |-
 files:
   - dist/double_double.png
 flags:
-  - "STARS{d0ubl3_d0ubl3_b1ts_1n_th3_r3d}"
+  - "STARS{d0ubl3_d0ubl3_gr33n_b1ts}"
 tags:
   - "★★★ Hard"
 hints:
-  - content: "The flag is in the lowest bit of the **red** values only, starting at the top-left pixel and going left to right."
+  - content: "The flag is in the lowest bit of the **green** values only, starting at the top-left pixel and going left to right, row by row."
     cost: 10
-  - content: "Join the bits into groups of 8 and turn each group into a character. Online tools like Aperi'Solve can do this, or Python with the Pillow library."
+  - content: "Each group of 8 bits is one character. CyberChef's **Extract LSB** does all of it: drop the PNG into Input, set **Colour Pattern #1** to `G`, and the flag is at the start of the Output. Python with the Pillow library works too."
     cost: 20
 state: visible

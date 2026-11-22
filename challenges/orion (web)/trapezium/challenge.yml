@@ -1,0 +1,33 @@
+version: "0.1"
+name: "Trapezium"
+author: "STARS"
+category: "Orion (Web)"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The Trapezium is a cluster of young stars at the heart of the Orion Nebula. Its website loads each page's text from a file in a folder called `pages`, and the address says which file to open: `?page=welcome.txt`. The site opens whatever name you give it, without checking where that file is.
+
+  The flag is in a file called `flag.txt`, which is kept **one folder above** `pages`. Reaching outside the folder you're meant to stay in is called **path traversal**.
+
+  **Your goal:** change the address so the site opens `flag.txt` instead of a page.
+
+  **Tools you may need to solve this level:** Your browser's address bar
+connection_info: http://192.168.68.103:8089
+flags:
+  - "STARS{tr4p3z1um_cl1mb3d_0ut_0f_th3_f0ld3r}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Ask for a page that doesn't exist, like `?page=nothing.txt`. The error shows the full path the site tried to open."
+    cost: 5
+  - content: "In a path, `..` means the folder above, just like `cd ..` on Linux. Try `?page=../` followed by the file's name."
+    cost: 10
+state: visible

@@ -4,6 +4,13 @@ author: "STARS"
 category: "Scorpius (Pwn)"
 type: standard
 value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
 attempts: 3
 description: |-
   Antares, the red heart of Scorpius, is near the end of its life. Its core monitor takes a fusion reading and logs it, but it's never been told what to do with a reading that's too big.
@@ -13,12 +20,12 @@ description: |-
   **Your goal:** make the program run `supernova`, which prints the flag.
 
   This one needs raw bytes, so a normal keyboard won't do. If you don't have `nc` on your computer, log in to any Ursa Minor account (Pherkad's works) and run `nc antares 9001` from there. It works the same way.
-connection_info: nc 192.168.68.104 9001
+connection_info: nc 192.168.68.103 9001
 files:
   - dist/antares
   - dist/antares.c
 flags:
-  - "STARS{4nt4r3s_w3nt_sup3rn0v4}"
+  - "STARS{4nt4r3s_c0r3_c0ll4ps3d}"
 tags:
   - "★★★ Hard"
 hints:

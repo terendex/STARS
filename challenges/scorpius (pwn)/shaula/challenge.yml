@@ -4,11 +4,18 @@ author: "STARS"
 category: "Scorpius (Pwn)"
 type: standard
 value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
 attempts: 3
 description: |-
   Start here if you've never done pwn. "Pwn" means finding a weakness in a running program and making it do something it shouldn't. This is the gentlest possible start.
 
-  The Shaula Sky Tour shows you a menu with three choices, but its source code, the code the program was written from, tells a different story.
+  The Shaula Night Tour shows you a menu with three choices, but its source code, the code the program was written from, tells a different story.
 
   **Your goal:** use what you find in the source code to make the program print the flag.
 
@@ -22,11 +29,11 @@ description: |-
   If you know `nc`, port 9002 works too.
 
   **Commands you may need to solve this level:** `ssh`
-connection_info: ssh shaula@192.168.68.104 -p 2220
+connection_info: ssh shaula@192.168.68.103 -p 2220
 files:
   - dist/shaula.c
 flags:
-  - "STARS{sh4ul4_h1dd3n_m3nu}"
+  - "STARS{sh4ul4_s3cr3t_m3nu_314}"
 tags:
   - "★ Easy"
 hints:

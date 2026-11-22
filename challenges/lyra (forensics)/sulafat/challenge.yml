@@ -4,22 +4,33 @@ author: "STARS"
 category: "Lyra (Forensics)"
 type: standard
 value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
 attempts: 3
 description: |-
-  We recovered `notes.txt` from Sulafat's archive, but it won't read properly. A file's extension (the `.txt` part of its name) is only a label, and it can be wrong.
+  We recovered `sulafat.png` from Sulafat's archive, but no program will open it. Every kind of file starts with the same few bytes, called its **file signature** (or "magic bytes"), so programs can tell what it is. Every PNG picture starts with the same 8 bytes.
 
-  **Your goal:** work out what kind of file `notes.txt` (download it below) really is, then open it as that kind of file. The flag is in it.
+  The first **4 bytes** of this file were wiped to zeros. The rest of the picture is fine.
 
-  Open it in a text editor and look at the very first characters. Most file types begin with their own signature.
+  **Your goal:** look up what the first bytes of a PNG should be, put them back with a hex editor, then open the picture. The flag is written in it. Capitals don't matter.
 
-  **Tools you may need to solve this level:** A text editor such as Notepad
+  **Tools you may need to solve this level:** a hex editor, such as [HexEd.it](https://hexed.it/) in your browser
 files:
-  - dist/notes.txt
+  - dist/sulafat.png
 flags:
-  - "STARS{SULAFAT_WRONG_EXTENSION}"
+  - type: static
+    content: "STARS{FIX_THE_MAGIC_BYTES}"
+    data: case_insensitive
 tags:
   - "★ Easy"
 hints:
-  - content: "The file starts with `PNG`. Rename it so it ends in `.png` and open it. If Windows hides extensions, turn them on in File Explorer's **View** menu."
+  - content: "Search for \"PNG file signature\". It starts `89 50 4E 47`. In HexEd.it, open the file and type those four values over the `00 00 00 00` at the very start."
+    cost: 5
+  - content: "In HexEd.it, use **Export** (or File > Save as) to download the fixed file, then open it in any image viewer."
     cost: 5
 state: visible

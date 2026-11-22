@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Jishui"
+author: "STARS"
+category: "Gemini (Crypto)"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Jishui's message is nothing but numbers, one word per line. Look at them closely: **none of them is bigger than 26**. It's one of the simplest codes there is, and you can crack it with pen and paper.
+
+  The message spells out the flag's words after `FLAG WORDS FOLLOW`. Write the flag yourself: put those words, joined by underscores, inside `STARS{}`. For example, the words `RED GIANT` would make the flag `STARS{RED_GIANT}`. Capitals don't matter.
+
+  **Your goal:** decode `message.txt` (download it below) and turn the flag's words into the flag.
+
+  **Tools you may need to solve this level:** pen and paper, or [dcode](https://www.dcode.fr/en)
+files:
+  - dist/message.txt
+flags:
+  - type: static
+    content: "STARS{TWENTY_SIX_STEPS}"
+    data: case_insensitive
+tags:
+  - "★ Easy"
+hints:
+  - content: "Each number is a letter's place in the alphabet: 1 is A, 2 is B, and so on. The code is called **A1Z26**. dcode's Letter Number Code tool decodes the whole file at once. CyberChef's **A1Z26 Cipher Decode** only works one line (one word) at a time."
+    cost: 5
+state: visible

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<p>Signed in as <strong>{{ username }}</strong> ({{ role }}).</p>
+<p>Clearance level: <strong>{{ clearance }}</strong></p>
+{% if key %}
+<p>Telescope key:</p>
+<p class="key"><code>{{ key }}</code></p>
+{% else %}
+<p>The telescope key is restricted to clearance level {{ top_clearance }}. Ask the observatory director.</p>
+{% endif %}
+<p><a href="/">Sign out</a></p>
+{% endblock %}

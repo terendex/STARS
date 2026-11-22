@@ -89,7 +89,7 @@ services:
     ports:
       - "${CTF_BIND_IP}:2220:2220"
       - "${CTF_BIND_IP}:2222:2222"
-      - "${CTF_BIND_IP}:8081-8086:8081-8086"
+      - "${CTF_BIND_IP}:8081-8090:8081-8090"
       - "${CTF_BIND_IP}:9001-9006:9001-9006"
     networks: [edge_public, challenges]
 
@@ -108,6 +108,11 @@ services:
       # Docker leaves these writable by default, even on a read-only container.
       - /dev/shm:ro,size=4k
       - /dev/mqueue:ro,size=4k
+
+  # 11 UMi's beacon: only reachable from the SSH box, on the private network.
+  beacon:
+    <<: *challenge
+    build: "./challenges/ursa-minor (linux)/beacon"
 
   # --- Draco: SSH box with the reversing tools ------------------------------
   # gdb and ltrace work without extra capabilities, because players only ever
@@ -152,6 +157,22 @@ services:
   alnitak:
     <<: *web
     command: ["alnitak:app"]
+
+  hatysa:
+    <<: *web
+    command: ["hatysa:app"]
+
+  tabit:
+    <<: *web
+    command: ["tabit:app"]
+
+  trapezium:
+    <<: *web
+    command: ["trapezium:app"]
+
+  horsehead:
+    <<: *web
+    command: ["horsehead:app"]
 
   # --- Scorpius ------------------------------------------------------------
   # One Dockerfile, but each image only contains its own star's flag.

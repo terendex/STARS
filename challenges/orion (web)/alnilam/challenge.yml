@@ -4,23 +4,30 @@ author: "STARS"
 category: "Orion (Web)"
 type: standard
 value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
 attempts: 3
 description: |-
-  Alnilam's dome only opens for astronomers. The site decides who you are by reading a cookie, a small note the website stores in your browser, and you can edit your own cookies.
+  Alnilam's dome only opens for commanders. The site decides who you are by reading a cookie, a small note the website stores in your browser, and you can edit your own cookies.
 
-  **Your goal:** open Alnilam's site at the address below, and make it believe you're an astronomer. The dome opens and shows the flag.
+  **Your goal:** open Alnilam's site at the address below and make it believe your rank is **commander**. The dome opens and shows the flag.
 
-  Press **F12** to open your browser's developer tools. The cookie called `pass` is under **Application** > **Cookies** (in Firefox, **Storage** > **Cookies**). Work out what its value says, change it, then refresh the page.
+  Press **F12** to open your browser's developer tools. The cookie called `badge` is under **Application** > **Cookies** (in Firefox, **Storage** > **Cookies**). Work out what its value says, change it, then refresh the page.
 
   **Tools you may need to solve this level:** Your browser's developer tools (F12), CyberChef
-connection_info: http://192.168.68.104:8085
+connection_info: http://192.168.68.103:8085
 flags:
-  - "STARS{4ln1l4m_c00k13s_c4n_l13}"
+  - "STARS{4ln1l4m_r4nk3d_up_v14_c00k13}"
 tags:
   - "★★ Medium"
 hints:
-  - content: "The cookie's value is Base64. Decode it with [CyberChef](https://gchq.github.io/CyberChef/) to read it."
+  - content: "The cookie's value is Base64. Decode it with [CyberChef](https://gchq.github.io/CyberChef/) to read it. What comes out is called JSON: names and values in quotes, inside curly brackets."
     cost: 5
-  - content: "Replace `visitor` with `astronomer`, encode it back to Base64, and paste that in as the cookie's value."
+  - content: "Change `cadet` to `commander`, keeping every quote and bracket, then use CyberChef's **To Base64** and paste the result in as the cookie's value."
     cost: 10
 state: visible

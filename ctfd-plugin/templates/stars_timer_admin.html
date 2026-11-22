@@ -1,0 +1,212 @@
+{% extends "admin/base.html" %}
+
+{% block stylesheets %}
+<style>
+  .mc { --g: #39ff7a; --gd: rgba(57, 255, 122, 0.5); --gf: rgba(57, 255, 122, 0.12); --a: #ffb000; --r: #ff3b3b;
+    font-family: "Cascadia Mono", Consolas, "Courier New", monospace; color: var(--g); }
+  .mc-wrap { background: #020a05; border: 1px solid var(--gd); box-shadow: 0 0 30px rgba(57, 255, 122, 0.12);
+    padding: 24px; margin: 24px 0; text-shadow: 0 0 6px var(--gd); }
+  .mc h1 { font-family: inherit; font-size: 22px; font-weight: 700; letter-spacing: 0.08em; margin: 0 0 18px; color: var(--g); }
+  .mc-readout { border: 1px solid var(--gf); padding: 16px; margin-bottom: 20px; text-align: center; }
+  .mc-state { font-size: 18px; font-weight: 700; letter-spacing: 0.1em; }
+  .mc-digits { font-size: 64px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 10px currentColor, 0 0 30px currentColor; }
+  .mc-note { opacity: 0.8; font-size: 14px; }
+  .mc.warn .mc-readout { color: var(--a); }
+  .mc.crit .mc-readout, .mc.ended .mc-readout { color: var(--r); }
+  .mc label { font-size: 13px; letter-spacing: 0.08em; opacity: 0.85; display: block; margin-bottom: 6px; }
+  .mc-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-bottom: 18px; }
+  .mc input[type=number] { width: 84px; background: #000; color: var(--g); border: 1px solid var(--gd);
+    padding: 6px 8px; font-weight: 700; font-size: 22px; font-family: inherit; text-align: center; }
+  .mc .sep { font-size: 26px; font-weight: 700; padding-bottom: 6px; }
+  .mc button { background: transparent; color: var(--g); border: 1px solid var(--gd); padding: 8px 16px;
+    font-weight: 700; font-size: 14px; font-family: inherit; letter-spacing: 0.08em; text-shadow: inherit; cursor: pointer; }
+  .mc button:hover:not(:disabled) { background: var(--gf); }
+  .mc button:disabled { opacity: 0.3; cursor: not-allowed; }
+  .mc button.big { font-size: 18px; padding: 12px 26px; border-width: 2px; }
+  .mc button.danger { color: var(--r); border-color: rgba(255, 59, 59, 0.6); }
+  .mc button.preset { padding: 6px 12px; font-size: 13px; }
+  .mc a { color: var(--g); text-decoration: underline; }
+  .mc-msg { min-height: 1.4em; font-size: 14px; margin-top: 6px; }
+  .mc-msg.err { color: var(--r); }
+  .mc-help { font-size: 13px; line-height: 1.7; opacity: 0.85; border-top: 1px dashed var(--gf); padding-top: 14px; margin-top: 8px; }
+  .mc-help code { color: #c8ffd9; background: var(--gf); padding: 0 4px; }
+  .mc-help div { margin-bottom: 8px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mc" id="mc">
+  <div class="mc-wrap">
+    <h1>&#9612;MISSION CLOCK</h1>
+
+    <div class="mc-readout">
+      <div class="mc-state" id="mc-state">&gt; LOADING_</div>
+      <div class="mc-digits" id="mc-digits">--:--:--</div>
+      <div class="mc-note" id="mc-note">&nbsp;</div>
+    </div>
+
+    <label>LENGTH (HOURS : MINUTES : SECONDS)</label>
+    <div class="mc-row">
+      <input type="number" id="mc-h" min="0" max="167" value="1" aria-label="Hours">
+      <span class="sep">:</span>
+      <input type="number" id="mc-m" min="0" max="59" value="0" aria-label="Minutes">
+      <span class="sep">:</span>
+      <input type="number" id="mc-s" min="0" max="59" value="0" aria-label="Seconds">
+      <button type="button" class="preset" data-preset="1800">30m</button>
+      <button type="button" class="preset" data-preset="3600">1h</button>
+      <button type="button" class="preset" data-preset="5400">1h30</button>
+      <button type="button" class="preset" data-preset="7200">2h</button>
+      <button type="button" class="preset" data-preset="10800">3h</button>
+    </div>
+
+    <div class="mc-row">
+      <button type="button" class="big" id="mc-start">[ START ]</button>
+      <button type="button" class="big" id="mc-restart">[ RESTART ]</button>
+      <button type="button" id="mc-plus">+5 MIN</button>
+      <button type="button" id="mc-minus">&minus;5 MIN</button>
+      <button type="button" class="danger" id="mc-end">END NOW</button>
+    </div>
+
+    <div class="mc-row">
+      <button type="button" id="mc-standby">STANDBY (LOCK CHALLENGES)</button>
+      <button type="button" id="mc-open">OPEN (NO CLOCK)</button>
+      <label style="margin: 0 0 0 12px; display: flex; gap: 8px; align-items: center; cursor: pointer;">
+        <input type="checkbox" id="mc-music"> PLAY MUSIC ON THE PROJECTOR PAGE
+      </label>
+    </div>
+
+    <div class="mc-msg" id="mc-msg"></div>
+
+    <div class="mc-help">
+      <div><b>Before players arrive:</b> set the length and press <b>STANDBY</b>. Players can log in and see the clock, but the challenges stay locked.</div>
+      <div><b>START</b> unlocks the challenges and starts the countdown. <b>RESTART</b> starts the full length again from now. Scores are never touched; reset those in Config &gt; Reset.</div>
+      <div><b>At zero</b> (or <b>END NOW</b>), CTFd closes flag submissions for everyone except admins. <b>+5 MIN</b> on a finished clock reopens it for 5 minutes.</div>
+      <div><b>Projector:</b> open <a href="/timer" target="_blank" rel="noopener">/timer</a> on the screen everyone can see. For full songs, open it on this PC as <code>http://localhost:&lt;port&gt;/timer</code>, signed in to Spotify in that browser, and click it once to arm the sound. Elsewhere Spotify only plays 30-second previews.</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const pad = (n) => String(n).padStart(2, "0");
+  const hms = (s) => { s = Math.max(0, Math.ceil(s)); return `${pad(Math.floor(s / 3600))}:${pad(Math.floor((s % 3600) / 60))}:${pad(s % 60)}`; };
+  const at = (unix) => new Date(unix * 1000).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+  let clock = null, offset = 0, filled = false;
+  const now = () => Date.now() / 1000 + offset;
+
+  function length() {
+    return (+$("mc-h").value || 0) * 3600 + (+$("mc-m").value || 0) * 60 + (+$("mc-s").value || 0);
+  }
+  function setLength(total) {
+    $("mc-h").value = Math.floor(total / 3600);
+    $("mc-m").value = Math.floor((total % 3600) / 60);
+    $("mc-s").value = total % 60;
+  }
+  document.querySelectorAll("[data-preset]").forEach((b) => b.addEventListener("click", () => setLength(+b.dataset.preset)));
+
+  function show(next) {
+    offset = next.now - Date.now() / 1000;
+    clock = next;
+    if (!filled) { setLength(next.duration); filled = true; }
+    $("mc-music").checked = next.music;
+    render();
+  }
+
+  function render() {
+    if (!clock) return;
+    let state = clock.state;
+    if (state === "running" && clock.end - now() <= 0) state = "ended";
+    const box = $("mc");
+    box.classList.remove("warn", "crit", "ended");
+    const running = state === "running";
+    if (state === "standby") {
+      $("mc-state").textContent = "> STANDBY: CHALLENGES LOCKED";
+      $("mc-digits").textContent = hms(clock.duration);
+      $("mc-note").textContent = "Press START when everyone is ready.";
+    } else if (state === "scheduled") {
+      $("mc-state").textContent = "> SCHEDULED START";
+      $("mc-digits").textContent = hms(clock.start - now());
+      $("mc-note").textContent = `Set in Config > Start and End Time. Challenges unlock at ${at(clock.start)}.`;
+    } else if (running) {
+      const left = clock.end - now();
+      $("mc-state").textContent = "> RUNNING";
+      $("mc-digits").textContent = hms(left);
+      $("mc-note").textContent = `Started ${at(clock.start)}. Flag submissions close at ${at(clock.end)}.`;
+      if (left <= 60) box.classList.add("crit"); else if (left <= 600) box.classList.add("warn");
+    } else if (state === "ended") {
+      box.classList.add("ended");
+      $("mc-state").textContent = "> TIME'S UP: SUBMISSIONS CLOSED";
+      $("mc-digits").textContent = "00:00:00";
+      $("mc-note").textContent = clock.end ? `Ended ${at(clock.end)}.` : "";
+    } else {
+      $("mc-state").textContent = "> OPEN: NO CLOCK";
+      $("mc-digits").textContent = "--:--:--";
+      $("mc-note").textContent = "Players can solve with no time limit.";
+    }
+    $("mc-start").disabled = running;
+    $("mc-restart").disabled = !(running || state === "ended");
+    $("mc-plus").disabled = !(running || state === "ended");
+    $("mc-minus").disabled = !running;
+    $("mc-end").disabled = state === "ended";
+  }
+
+  function message(text, error) {
+    const box = $("mc-msg");
+    box.textContent = text;
+    box.className = "mc-msg" + (error ? " err" : "");
+  }
+
+  async function send(action, extra) {
+    try {
+      const reply = await fetch("/admin/stars-timer/action", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json", "CSRF-Token": init.csrfNonce },
+        body: JSON.stringify(Object.assign({ action }, extra || {})),
+      });
+      const data = await reply.json();
+      if (data.clock) show(data.clock);
+      if (!data.success) message(data.error || "That didn't work.", true);
+      else message("> done");
+    } catch (error) {
+      message("Couldn't reach CTFd. Are you still signed in as admin?", true);
+    }
+  }
+
+  $("mc-start").addEventListener("click", () => {
+    if (length() <= 0) return message("Set a length first.", true);
+    send("start", { seconds: length() });
+  });
+  $("mc-restart").addEventListener("click", () => {
+    if (length() <= 0) return message("Set a length first.", true);
+    if (confirm(`Restart the clock at ${hms(length())} from now? Scores aren't affected.`)) send("restart", { seconds: length() });
+  });
+  $("mc-plus").addEventListener("click", () => send("add", { seconds: 300 }));
+  $("mc-minus").addEventListener("click", () => send("add", { seconds: -300 }));
+  $("mc-end").addEventListener("click", () => {
+    if (confirm("End now? Flag submissions close for every player.")) send("end");
+  });
+  $("mc-standby").addEventListener("click", () => {
+    if (confirm("Put the clock on standby? Players will be locked out of the challenges until you press START.")) send("standby", { seconds: length() });
+  });
+  $("mc-open").addEventListener("click", () => {
+    if (confirm("Remove the clock? Players can then solve with no time limit.")) send("open");
+  });
+  $("mc-music").addEventListener("change", (event) => send("music", { on: event.target.checked }));
+
+  async function poll() {
+    try {
+      const reply = await fetch("/stars/timer/state", { cache: "no-store", credentials: "same-origin" });
+      show(await reply.json());
+    } catch (error) { /* try again on the next poll */ }
+  }
+  poll();
+  setInterval(poll, 5000);
+  setInterval(render, 250);
+})();
+</script>
+{% endblock %}

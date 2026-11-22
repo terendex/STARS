@@ -1,33 +1,40 @@
-/* Altais: rebuilds the flag in memory, then wipes it without printing it.
-   In gdb: `break forget_flag`, `run`, `info args` shows the flag. It's built
-   with debug info (-g) so gdb can show the argument by name. setup.sh passes
-   in KEY and FLAG_BYTES. */
+/* Altais: decodes a message holding the flag, then scrubs it without printing
+   it. In gdb: `break scrub_message`, `run`, `info args` shows the flag. It's
+   built with debug info (-g) so gdb can show the argument by name. setup.sh
+   passes in KEY and FLAG_BYTES. */
 #include <stdio.h>
 #include <string.h>
 
 static const unsigned char flag_bytes[] = FLAG_BYTES;
 
-/* Rebuilds the flag into `flag`. */
-static void remember_flag(char *flag)
+/* Prints the welcome. */
+static void show_banner(void)
 {
-    for (size_t i = 0; i < sizeof flag_bytes; i++)
-        flag[i] = (char)(flag_bytes[i] ^ KEY);
-    flag[sizeof flag_bytes] = '\0';
+    puts("Altais is receiving a message from deep space...");
 }
 
-/* Wipes the flag from memory. */
-static void forget_flag(char *flag)
+/* Decodes the message into `message`. */
+static void decode_message(char *message)
 {
-    memset(flag, 0, 64);
+    for (size_t i = 0; i < sizeof flag_bytes; i++)
+        message[i] = (char)(flag_bytes[i] ^ KEY);
+    message[sizeof flag_bytes] = '\0';
+}
+
+/* Wipes the message from memory. */
+static void scrub_message(char *message)
+{
+    memset(message, 0, 64);
 }
 
 int main(void)
 {
-    char flag[64];
+    char message[64];
 
-    remember_flag(flag);
-    puts("Altais remembered the flag for a moment...");
-    forget_flag(flag);
-    puts("...and now it's forgotten. If only you'd been watching.");
+    show_banner();
+    decode_message(message);
+    puts("Message decoded. Classified, so it won't be shown.");
+    scrub_message(message);
+    puts("Message scrubbed. Nothing to see here.");
     return 0;
 }

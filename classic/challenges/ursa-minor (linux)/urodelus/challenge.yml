@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Urodelus"
+author: "STARS"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  `sky.log` holds thousands of readings from the dome sensors. Each line has a time, a sensor name and a reading, and every reading looks like a flag.
+
+  Every reading was logged at least twice, except one: the real flag, which was logged **only once**.
+
+  **Your goal:** find the reading that appears only once in `sky.log`.
+
+  Log in with the command below and the password `dipperhandle`.
+
+  **Commands you may need to solve this level:** `cut`, `sort`, `uniq`
+connection_info: ssh urodelus@192.168.68.103 -p 2230
+flags:
+  - "STARS{ur0d3lus_0n3_0f_4_k1nd}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Each line has its own time and sensor, so no two lines are identical even when the readings are. `cut` can keep just one column, and the `|` symbol sends one command's output into the next."
+    cost: 5
+  - content: "`uniq` only compares neighboring lines, so `sort` first. `uniq -u` then prints only the lines that aren't repeated."
+    cost: 10
+state: visible

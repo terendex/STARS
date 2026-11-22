@@ -1,10 +1,11 @@
 #!/bin/bash
-# Aldhibah (Hard): the program sleeps for a thousand years, then only prints the
-# flag for root. Players skip both in gdb with `return`.
+# Aldhibah (Hard): the program hibernates for a thousand years, then only prints
+# the flag for a rider of rank 7 (root). Players skip the sleep, then fake the
+# rank, in gdb with `return`.
 set -euo pipefail
 
 user=aldhibah
-FLAG='STARS{4ldh1b4h_w0k3_th3_dr4g0n}'
+FLAG='STARS{4ldh1b4h_r4nk_s3v3n_r1d3r}'
 KEY=0x71
 
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"
@@ -19,8 +20,13 @@ scrambled() {
 gcc -O0 -g -fno-builtin -no-pie -Wl,-z,lazy -DKEY="$KEY" -DFLAG_BYTES="$(scrambled "$FLAG")" \
     -o "$home/aldhibah" aldhibah.c
 
-# Fail the build if strings shows the flag.
+# Fail the build if strings shows the flag, if skipping only the sleep is
+# enough, or if the gdb steps from the answer sheet don't work.
 if strings "$home/aldhibah" | grep -qF STARS; then echo "strings finds aldhibah's flag" >&2; exit 1; fi
+out=$(gdb -q -batch -ex 'break hibernate' -ex run -ex return -ex continue "$home/aldhibah" 2>&1)
+grep -qF "only speaks to riders of rank 7" <<<"$out"
+if grep -qF STARS <<<"$out"; then echo "aldhibah gives its flag without the rank" >&2; exit 1; fi
+gdb -q -batch -ex 'break hibernate' -ex 'break rider_rank' -ex run -ex return -ex continue -ex 'return 7' -ex continue "$home/aldhibah" 2>&1 | grep -qF "$FLAG"
 
 chown -R "root:$user" "$home"
 chmod 750 "$home" "$home/aldhibah"

@@ -4,6 +4,13 @@ author: "STARS"
 category: "Gemini (Crypto)"
 type: standard
 value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
 attempts: 3
 description: |-
   Start here if you've never done crypto before. Pollux, the brightest star in Gemini, has sent a message in **Base64**. Base64 is an encoding rather than a cipher: there's no key, and anyone can reverse it.
@@ -24,7 +31,7 @@ description: |-
 files:
   - dist/message.txt
 flags:
-  - "STARS{p0llux_sp34ks_b4s3_64}"
+  - "STARS{p0llux_b4s3_64_d3c0d3d}"
 tags:
   - "★ Easy"
 hints:

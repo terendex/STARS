@@ -1,7 +1,7 @@
 import secrets
 import sqlite3
 
-FLAG = "STARS{r1g3l_bl1nds_th3_0bs3rv4t0ry}"
+FLAG = "STARS{r1g3l_c0mm3nt3d_0ut_th3_p4ssw0rd}"
 
 db = sqlite3.connect("observatory.db")
 db.execute("CREATE TABLE staff (username TEXT, password TEXT, role TEXT, clearance INTEGER)")
@@ -9,9 +9,10 @@ db.execute("CREATE TABLE secrets (name TEXT, value TEXT)")
 db.executemany(
     "INSERT INTO staff VALUES (?, ?, ?, ?)",
     [
-        ("observer", secrets.token_hex(16), "Night Observer", 1),
+        ("guest", secrets.token_hex(16), "Visiting Observer", 1),
         ("technician", secrets.token_hex(16), "Dome Technician", 3),
-        ("director", secrets.token_hex(16), "Observatory Director", 9),
+        ("archivist", secrets.token_hex(16), "Plate Archivist", 5),
+        ("curator", secrets.token_hex(16), "Head Curator", 7),
     ],
 )
 db.execute("INSERT INTO secrets VALUES ('telescope_key', ?)", (FLAG,))

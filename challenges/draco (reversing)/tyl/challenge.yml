@@ -1,0 +1,37 @@
+version: "0.1"
+name: "Tyl"
+author: "STARS"
+category: "Draco (Reversing)"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  Tyl only talks to observers of level 9000 or more. The program decides your level when it starts, and everyone starts at level 1.
+
+  A debugger can do more than watch. While a program is paused, gdb can change its **variables**, the named values the program keeps its data in, and the program carries on with whatever you put there.
+
+  **Your goal:** make `tyl` believe your level is 9000 or more, so that it prints the flag.
+
+  gdb may warn that it can't find `tyl.c`. That's normal: you have the program, not the code it was written from.
+
+  Log in with the command below and the password `draco`.
+
+  **Commands you may need to solve this level:** `gdb`
+connection_info: ssh tyl@192.168.68.103 -p 2222
+flags:
+  - "STARS{tyl_l3v3l3d_up_w1th_gdb}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "In `gdb ./tyl`, type `break check_level`, then `run`. When it pauses, `print level` shows your level."
+    cost: 5
+  - content: "`set var level = 9000` changes it. Then type `continue` to let the program carry on."
+    cost: 5
+state: visible

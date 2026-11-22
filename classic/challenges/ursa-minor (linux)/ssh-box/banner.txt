@@ -1,0 +1,10 @@
+
+          *        .        *
+     .           STARS          .
+  *       OBSERVATION NETWORK       *
+     .                          .
+          *        .        *
+
+  Home folders are read-only.
+  If you need scratch space, use /tmp.
+

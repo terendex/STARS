@@ -1,0 +1,36 @@
+version: "0.1"
+name: "Ring Nebula"
+author: "STARS"
+category: "Lyra (Forensics)"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The Ring Nebula is the glowing shell of a dying star in Lyra. Our animation of it loops forever, but every time it loops, something flashes past too fast for anyone to read.
+
+  An animated GIF is really a stack of separate pictures, called **frames**, each shown for a set time before the next one.
+
+  **Your goal:** find the frame that flashes past in `ring_nebula.gif` (download it below) and read the flag off it. Capitals don't matter.
+
+  **Tools you may need to solve this level:** an online GIF frame splitter, such as [ezgif](https://ezgif.com/split)
+files:
+  - dist/ring_nebula.gif
+flags:
+  - type: static
+    content: "STARS{ONE_FRAME_TOO_FAST}"
+    data: case_insensitive
+tags:
+  - "★ Easy"
+hints:
+  - content: "On ezgif, choose **Split**, upload the GIF, and press **Split to frames**. Every frame appears as its own picture, with how long it's shown."
+    cost: 5
+  - content: "The flag's frame is shown for only 0.02 seconds. The others are shown for 0.4."
+    cost: 5
+state: visible

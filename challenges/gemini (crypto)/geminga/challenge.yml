@@ -1,0 +1,36 @@
+version: "0.1"
+name: "Geminga"
+author: "STARS"
+category: "Gemini (Crypto)"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  Geminga is a dead star in Gemini that astronomers couldn't see for years. Its message uses a **substitution cipher**: every letter has been swapped for another letter, and the swap is the same all the way through. Every `E` became the same letter, every `T` became another, and so on. Spaces and punctuation weren't changed.
+
+  There's no key to find, but there's a weakness. Some letters are far more common in English than others, so the most common letters in the message stand for the most common letters in English. Using that is called **frequency analysis**, and free websites can do it for you.
+
+  **Your goal:** decrypt `message.txt` (download it below). The message ends with the flag. Capitals don't matter.
+
+  **Tools you may need to solve this level:** [quipqiup](https://quipqiup.com/), CyberChef
+files:
+  - dist/message.txt
+flags:
+  - type: static
+    content: "STARS{g3m1ng4_fr3qu3ncy_4n4lys1s}"
+    data: case_insensitive
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Paste the whole message into [quipqiup](https://quipqiup.com/) and press **Solve**. The top answer is usually the right one."
+    cost: 5
+  - content: "By hand: the flag starts `STARS{`, so the five letters before the `{` give you S, T, A, R and S for free. The most common letter in English is E, then T and A. CyberChef's **Substitute** swaps letters for you."
+    cost: 10
+state: visible

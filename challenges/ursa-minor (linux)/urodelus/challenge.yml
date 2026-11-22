@@ -4,25 +4,32 @@ author: "STARS"
 category: "Ursa Minor (Linux)"
 type: standard
 value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
 attempts: 3
 description: |-
   `sky.log` holds thousands of readings from the dome sensors. Each line has a time, a sensor name and a reading, and every reading looks like a flag.
 
-  Every reading was logged at least twice, except one: the real flag, which was logged **only once**.
+  Every reading was logged a few times. The real flag was logged **more times than any other reading**.
 
-  **Your goal:** find the reading that appears only once in `sky.log`.
+  **Your goal:** find the reading that appears the most times in `sky.log`.
 
-  Log in with the command below and the password `dipperhandle`.
+  Log in with the command below and the password `handlebar`.
 
   **Commands you may need to solve this level:** `cut`, `sort`, `uniq`
-connection_info: ssh urodelus@192.168.68.104 -p 2220
+connection_info: ssh urodelus@192.168.68.103 -p 2220
 flags:
-  - "STARS{ur0d3lus_0n3_0f_4_k1nd}"
+  - "STARS{ur0d3lus_h34rd_1t_m0st}"
 tags:
   - "★★ Medium"
 hints:
   - content: "Each line has its own time and sensor, so no two lines are identical even when the readings are. `cut` can keep just one column, and the `|` symbol sends one command's output into the next."
     cost: 5
-  - content: "`uniq` only compares neighboring lines, so `sort` first. `uniq -u` then prints only the lines that aren't repeated."
+  - content: "`uniq -c` counts how many times each line appears, but it only compares neighboring lines, so `sort` first. Then `sort -n` puts the counts in order, smallest first."
     cost: 10
 state: visible

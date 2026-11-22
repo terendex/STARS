@@ -8,7 +8,7 @@ Run this once after downloading the project, with Docker Desktop running:
     powershell -ExecutionPolicy Bypass -File scripts\setup.ps1
 
 It makes .env with new random passwords, builds and starts everything, finishes
-CTFd's setup with the event's rules, installs all 30 challenges, opens the CTF
+CTFd's setup with the event's rules, installs all 56 challenges, opens the CTF
 on this PC's Wi-Fi address, sets up the demo CTF, and turns on auto-host so the
 CTF follows your network. The admin password goes into LOGINS.txt.
 

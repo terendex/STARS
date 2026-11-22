@@ -1,4 +1,5 @@
-"""One-time setup for a fresh CTFd: the real CTF ("main") or the demo ("demo").
+"""One-time setup for a fresh CTFd: the real CTF ("main"), STARS Classic
+("classic") or the demo ("demo").
 
 scripts/setup.ps1 and setup.sh run this for the real CTF, and demo.ps1 and
 demo.sh run it for the demo. Each starts CTFd on this PC only first, because the
@@ -6,6 +7,7 @@ first visitor to /setup becomes admin. It runs inside the ctfcli container, from
 the folder whose .ctf/config it writes (the STARS folder, or demo/):
 
     python scripts/setup-ctfd.py main
+    python ../scripts/setup-ctfd.py classic
     python ../scripts/setup-ctfd.py demo
 
 It finishes CTFd's setup wizard with the event's rules, uploads the STARS logo,
@@ -34,9 +36,18 @@ LOGINS = ROOT / "LOGINS.txt"
 PROFILES = {
     "main": {
         "ctf_name": "STARS",
-        "ctf_description": "6 challenges per category",
+        "ctf_description": "56 challenges in six categories",
         "theme_color": None,
         "home": PAGES["main"],
+        "configs": {"team_creation": "false", "team_disbanding": "disabled"},
+        "demo_team": False,
+    },
+    "classic": {
+        "ctf_name": "STARS Classic",
+        "ctf_description": "The original STARS challenges, 6 per category",
+        # Green, so Classic is never mistaken for the real CTF (dark) or the demo (purple).
+        "theme_color": "#0b7a5a",
+        "home": PAGES["classic"],
         "configs": {"team_creation": "false", "team_disbanding": "disabled"},
         "demo_team": False,
     },
@@ -62,7 +73,7 @@ def find(pattern, html, what):
 
 
 if len(sys.argv) != 2 or sys.argv[1] not in PROFILES:
-    sys.exit("Usage: setup-ctfd.py main|demo")
+    sys.exit("Usage: setup-ctfd.py main|classic|demo")
 profile = PROFILES[sys.argv[1]]
 
 browser = requests.Session()

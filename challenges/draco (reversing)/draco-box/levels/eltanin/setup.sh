@@ -4,9 +4,9 @@
 set -euo pipefail
 
 user=eltanin
-FLAG='STARS{3lt4n1n_w4tch3s_th3_c4lls}'
-PASSWORD='eye-of-the-dragon'
-KEY=0x5a
+FLAG='STARS{3lt4n1n_s4w_th3_c0mp4r1s0n}'
+PASSWORD='the-dragon-blinks'
+KEY=0x3c
 
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"
 echo "$user:draco" | chpasswd

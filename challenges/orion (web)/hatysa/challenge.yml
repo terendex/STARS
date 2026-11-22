@@ -1,0 +1,29 @@
+version: "0.1"
+name: "Hatysa"
+author: "STARS"
+category: "Orion (Web)"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Hatysa, the brightest star in Orion's sword, hands every visitor a pass. The page doesn't show it, though: it quietly saves the pass inside your browser. Websites can keep data in your browser in a few places. Cookies are one; another is called **Local Storage**.
+
+  **Your goal:** open Hatysa's site at the address below, then find the visitor pass it saved in your browser. The pass is the flag.
+
+  **Tools you may need to solve this level:** Your browser's developer tools (F12)
+connection_info: http://192.168.68.103:8087
+flags:
+  - "STARS{h4ty54_r3m3mb3rs_y0u}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Press **F12**, then open **Application** (Chrome and Edge) or **Storage** (Firefox). Local Storage is in the list on the left. Open it, then click the website's address."
+    cost: 5
+state: visible

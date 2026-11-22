@@ -1,11 +1,11 @@
 #!/bin/bash
-# Altais (Medium): the flag only exists in memory, between remember_flag() and
-# forget_flag(). Players stop the program in gdb and read it.
+# Altais (Medium): the flag only exists in memory, between decode_message() and
+# scrub_message(). Players stop the program in gdb and read it.
 set -euo pipefail
 
 user=altais
-FLAG='STARS{4lt41s_c4ught_1n_m3m0ry}'
-KEY=0x2c
+FLAG='STARS{4lt41s_p4us3d_m1d_m3ss4g3}'
+KEY=0x47
 
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"
 echo "$user:draco" | chpasswd

@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Mebsuta"
+author: "STARS"
+category: "Gemini (Crypto)"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  Mebsuta's message is written in hex, but decoding the hex only gives you gibberish. It was also encrypted with **XOR**, using a key that repeats for the whole message. XOR undoes itself, so the key that locked the message also unlocks it.
+
+  The key is four capital letters: the name of the Gemini twins' mother in Greek myth.
+
+  **Your goal:** decode the hex in `message.txt` (download it below), then XOR the result with the key to read the flag. CyberChef's **XOR** reads its key as hex unless you switch the key's format to **UTF8**, so switch it before typing letters.
+
+  **Tools you may need to solve this level:** CyberChef (`From Hex`, `XOR`)
+files:
+  - dist/message.txt
+flags:
+  - "STARS{m3bsut4_r3p34t1ng_x0r}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Can't find her name? Work the key out instead. Mebsuta opens its messages with the flag, so XOR the decoded hex with `STARS{` (format UTF8). The first characters of the output spell the key, which then starts to repeat."
+    cost: 5
+  - content: "The key is `LEDA`. Recipe: **From Hex**, then **XOR** with key `LEDA` and format **UTF8**."
+    cost: 5
+state: visible

@@ -1,0 +1,33 @@
+version: "0.1"
+name: "Lambda"
+author: "STARS"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The observatory keeps two copies of its star catalog: `catalog-old.txt` and `catalog-new.txt`. Each has 2,400 lines, and every line has a code that looks like a flag. Someone changed **exactly one line** in the new copy, and the code on that changed line is the real flag.
+
+  **Your goal:** find the one line that's different in `catalog-new.txt` and read the flag on it. Comparing 2,400 lines by eye would take all night.
+
+  Log in with the command below and the password `twocopies`.
+
+  **Commands you may need to solve this level:** `ls`, `diff`
+connection_info: ssh lambda@192.168.68.103 -p 2220
+flags:
+  - "STARS{l4mbd4_sp0tt3d_th3_d1ff3r3nc3}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "`diff first second` compares two files and prints only the lines that differ."
+    cost: 5
+  - content: "In `diff`'s output, lines starting with `<` come from the first file and lines starting with `>` from the second. The flag is on the `>` line."
+    cost: 5
+state: visible

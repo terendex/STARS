@@ -4,6 +4,13 @@ author: "STARS"
 category: "Draco (Reversing)"
 type: standard
 value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
 attempts: 3
 description: |-
   Edasich scrambles the password you type in three steps, then compares the result with a scrambled copy of the real password that it keeps in `edasich.py`. You can't make the program unscramble it for you, but you can read exactly how the scrambling works.
@@ -13,14 +20,14 @@ description: |-
   Log in with the command below and the password `draco`.
 
   **Tools you may need to solve this level:** `cat`, `python3`, [CyberChef](https://gchq.github.io/CyberChef/)
-connection_info: ssh edasich@192.168.68.104 -p 2222
+connection_info: ssh edasich@192.168.68.103 -p 2222
 flags:
-  - "STARS{3d4s1ch_und0n3_1n_r3v3rs3}"
+  - "STARS{3d4s1ch_unw0und_th3_c01ls}"
 tags:
   - "★★ Medium"
 hints:
-  - content: "To undo a process, undo its steps in the opposite order, like taking off socks and shoes. Base64 was the last step, so undo it first, and undo the reversing last."
+  - content: "To undo a process, undo its steps in the opposite order, like taking off socks and shoes. `.hex()` was the last step, so undo it first, and undo the shift last."
     cost: 5
-  - content: "In CyberChef, paste the scrambled password and use **From Base64**, then **ROT13** with **Amount** set to `23` (moving 23 letters forward is the same as 3 back), then **Reverse**."
+  - content: "In CyberChef, paste the scrambled password and use **From Hex**, then **Reverse**, then **ROT13** with **Amount** set to `21` (moving 21 letters forward is the same as 5 back)."
     cost: 5
 state: visible

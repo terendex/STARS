@@ -4,6 +4,13 @@ author: "STARS"
 category: "Lyra (Forensics)"
 type: standard
 value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
 attempts: 3
 description: |-
   Start here if you've never done forensics, which means digging information out of files. Image files can store more than the picture itself, such as notes about who took it and how. That extra information is called **metadata**.
@@ -23,7 +30,7 @@ description: |-
 files:
   - dist/sheliak.png
 flags:
-  - "STARS{sh3l14k_m3t4d4t4_sp34ks}"
+  - "STARS{sh3l14k_s4ys_ch3ck_th3_m3t4d4t4}"
 tags:
   - "★ Easy"
 hints:

@@ -4,7 +4,6 @@ result with the scrambled copy of the real password that it keeps.
 
 Run it with:  python3 edasich.py
 """
-import base64
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 
@@ -22,9 +21,9 @@ def shift(word, places):
 
 
 def scramble(word):
+    word = shift(word, 5)
     word = word[::-1]
-    word = shift(word, 3)
-    word = base64.b64encode(word.encode()).decode()
+    word = word.encode().hex()
     return word
 
 

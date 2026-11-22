@@ -15,11 +15,11 @@ static void print_flag(void) {
 int main(void) {
     char line[32];
     setvbuf(stdout, NULL, _IONBF, 0);
-    puts("=== Shaula Sky Tour ===");
+    puts("=== Shaula Night Tour ===");
 
     for (;;) {
-        puts("\n1) Look at Shaula");
-        puts("2) Look at Scorpius");
+        puts("\n1) Look at Shaula, the scorpion's sting");
+        puts("2) Look at Lesath, its twin");
         puts("3) Leave the tour");
         printf("> ");
         if (fgets(line, sizeof(line), stdin) == NULL) {
@@ -28,16 +28,17 @@ int main(void) {
 
         switch (atoi(line)) {
         case 1:
-            puts("Shaula sits at the tip of the scorpion's tail.");
+            puts("Shaula is the second-brightest star in Scorpius.");
             break;
         case 2:
-            puts("Scorpius curls across the southern sky.");
+            puts("Lesath sits right next to Shaula. Together they're called the Cat's Eyes.");
             break;
         case 3:
             puts("Clear skies!");
             return 0;
-        case 42:
-            /* Staff only. The tour guide never mentions this one. */
+        case 314:
+            /* Guides only. Not on the printed menu. */
+            puts("Welcome, guide. Here's tonight's code:");
             print_flag();
             return 0;
         default:

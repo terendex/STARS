@@ -4,9 +4,16 @@ author: "STARS"
 category: "Draco (Reversing)"
 type: standard
 value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
 attempts: 3
 description: |-
-  Start here if you've never done reverse engineering. Reversing means working out what a program does, and what it's hiding, without seeing the code it was written from. Thuban was the pole star when the pyramids were built, and its program has kept a secret ever since.
+  Start here if you've never done reverse engineering. Reversing means working out what a program does, and what it's hiding, without seeing the code it was written from. Thuban was the pole star when the pyramids were built, and its program wrote a secret down inside itself, then never said it out loud.
 
   **Your goal:** find the flag hidden inside the program `thuban`. Running it won't show you the flag.
 
@@ -20,9 +27,9 @@ description: |-
   **Then:** paste the flag into the box below. Type `exit` to leave.
 
   **Commands you may need to solve this level:** `ssh`, `ls`, `strings`, `grep`
-connection_info: ssh thuban@192.168.68.104 -p 2222
+connection_info: ssh thuban@192.168.68.103 -p 2222
 flags:
-  - "STARS{thub4n_th3_0ld_p0l3_st4r}"
+  - "STARS{thub4n_wr0t3_1t_d0wn}"
 tags:
   - "★ Easy"
 hints:

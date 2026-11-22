@@ -1,21 +1,30 @@
 #!/bin/bash
-# Polaris: the flag is a dotfile in the home directory.
+# Polaris: hidden twice. The record is a dotfile inside a dot-folder, so players
+# need ls -a, then cd, then ls -a again.
 set -euo pipefail
 
 user=polaris
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"
-echo "$user:northstar" | chpasswd
+echo "$user:polestar" | chpasswd
 
 home="/home/$user"
-mkdir -p "$home"
+mkdir -p "$home/.observatory"
 
-cat > "$home/README.txt" <<'EOF'
+cat > "$home/README.txt" <<'TEXT'
 Sailors have steered by the North Star for centuries, but it isn't the
 brightest thing in the sky. A lot of what's up there doesn't show up
 unless you ask to see all of it.
-EOF
-echo 'STARS{p0l4r1s_gu1d3s_th3_w4y}' > "$home/.north_star"
+
+And whatever you find might be a place you can go into, with more
+hiding inside.
+TEXT
+echo 'Not this one. Look closer: some names in here start with a dot.' > "$home/.observatory/notes.txt"
+echo 'STARS{p0l4r1s_h1d1ng_1n_pl41n_s1ght}' > "$home/.observatory/.pole_record"
 
 chown -R "root:$user" "$home"
-chmod 750 "$home"
-chmod 640 "$home/README.txt" "$home/.north_star"
+find "$home" -type d -exec chmod 750 {} +
+find "$home" -type f -exec chmod 640 {} +
+
+# Fail the build if ls -a in the hidden folder doesn't show the record.
+[ "$(ls -a "$home/.observatory" | grep -c '^\.pole_record$')" -eq 1 ]
+[ -z "$(ls "$home" | grep observatory || true)" ]

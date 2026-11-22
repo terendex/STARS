@@ -1,4 +1,5 @@
-"""The CTFd home pages for the real CTF ("main") and the demo ("demo"), with a
+"""The CTFd home pages for the real CTF ("main"), STARS Classic ("classic") and
+the demo ("demo"), with a
 short "How to play" guide for beginners.
 
 setup-ctfd.py uses these when it sets up a fresh CTFd. After editing them,
@@ -6,6 +7,7 @@ push the new page to a running CTFd. Run it from the folder whose .ctf/config
 points at that CTFd (it reads the admin token from there and never prints it):
 
     docker compose run --rm --entrypoint python ctfcli scripts/home_page.py main
+    docker compose -f classic/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py classic
     docker compose -f demo/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py demo
 """
 import configparser
@@ -54,8 +56,8 @@ def page(heading, text, buttons, steps, extra):
 </div>"""
 
 
-def steps(scoring, sharing):
-    return [
+def steps(scoring, sharing, clock=False):
+    found = [
         f"Open <b>Challenges</b>. Each category is a constellation, and each challenge is one of its stars. {scoring}",
         "Click a challenge and read it. It tells you your goal. The address, login or file you need is in the same "
         "window, below the description.",
@@ -64,6 +66,10 @@ def steps(scoring, sharing):
         "challenge allows 3 wrong tries, and typos count.",
         f"Stuck? Each challenge has hints, but they cost points, so try first. {sharing}",
     ]
+    if clock:
+        found.insert(0, "Watch the <b>mission clock</b> at the bottom of the screen. The challenges open when "
+                     "your organizer starts it, and once it reaches zero, nobody can submit flags.")
+    return found
 
 
 START_LIST = "\n".join(
@@ -76,8 +82,28 @@ PAGES = {
         "Log in with the account your organizer gave you, then open Challenges.",
         [("Log in", "/login", "btn-primary"), ("Challenges", "/challenges", "btn-outline-secondary")],
         steps(
-            "★ Easy challenges are worth 30 points, ★★ Medium 60, and ★★★ Hard 100.",
+            "★ Easy challenges start at 30 points, ★★ Medium at 60, and ★★★ Hard at 100. Every time another "
+            "team solves one, it loses 1, 3 or 5 points for every team that has it, so the rarer the solve, "
+            "the more it's worth.",
             "Your team shares its solves, hints and wrong tries.",
+            clock=True,
+        ),
+        f"""        <h3>New here? Start with these</h3>
+        <p>Each category has one challenge that walks you through every step:</p>
+        <ul>
+{START_LIST}
+        </ul>""",
+    ),
+    "classic": page(
+        "STARS Classic",
+        "The original STARS challenges. Log in with the account your organizer gave you, then open Challenges.",
+        [("Log in", "/login", "btn-primary"), ("Challenges", "/challenges", "btn-outline-secondary")],
+        steps(
+            "★ Easy challenges start at 30 points, ★★ Medium at 60, and ★★★ Hard at 100. Every time another "
+            "team solves one, it loses 1, 3 or 5 points for every team that has it, so the rarer the solve, "
+            "the more it's worth.",
+            "Your team shares its solves, hints and wrong tries.",
+            clock=True,
         ),
         f"""        <h3>New here? Start with these</h3>
         <p>Each category has one challenge that walks you through every step:</p>
@@ -102,7 +128,7 @@ if __name__ == "__main__":
     import requests
 
     if len(sys.argv) != 2 or sys.argv[1] not in PAGES:
-        sys.exit("Usage: home_page.py main|demo")
+        sys.exit("Usage: home_page.py main|classic|demo")
     config = configparser.ConfigParser()
     config.read(pathlib.Path.cwd() / ".ctf" / "config")
     url = config["config"]["url"].rstrip("/")

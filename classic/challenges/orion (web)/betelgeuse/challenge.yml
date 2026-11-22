@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Betelgeuse"
+author: "STARS"
+category: "Orion (Web)"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Start here if you've never done a web challenge. Betelgeuse's visitor page looks ordinary, but a web page sends your browser more than it shows you. Developers sometimes leave notes in a page's code that visitors never see on screen.
+
+  **Your goal:** find the staff note hidden in the code of Betelgeuse's website. The flag is in it.
+
+  **How to do it:**
+
+  1. Open the website at the address below in Chrome, Edge or Firefox.
+  2. Right-click an empty part of the page and choose **View page source**, or press **Ctrl+U**. A new tab shows the page's code.
+  3. Notes in a page's code are called comments. They start with `<!--` and end with `-->`. Press **Ctrl+F** and search for `<!--` to find them.
+  4. One of the comments is a staff note with the flag in it.
+
+  Use View page source rather than Inspect, which also shows code your browser extensions add.
+
+  **Tools you may need to solve this level:** View page source (Ctrl+U)
+connection_info: http://192.168.68.103:8202
+flags:
+  - "STARS{b3t3lg3us3_v13w_s0urc3}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "You can also search the page source for `STARS`. On a Mac, View page source is **Cmd+Option+U**."
+    cost: 5
+state: visible

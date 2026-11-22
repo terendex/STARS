@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Theta"
+author: "STARS"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  Theta's all-sky camera saved one observation file for every night of 2025: 365 files in the `observations` folder, each with a random name and each holding a reading that looks like a flag. The camera only worked properly on one night: **12 August 2025**, the peak of the Perseid meteor shower.
+
+  The names won't help you, but every file remembers the date and time it was last changed.
+
+  **Your goal:** find the observation file that was last changed on **12 August 2025** and read the flag in it.
+
+  Log in with the command below and the password `perseids`.
+
+  **Commands you may need to solve this level:** `ls`, `grep`, `find`, `cat`
+connection_info: ssh theta@192.168.68.103 -p 2220
+flags:
+  - "STARS{th3t4_c4ught_th3_p3rs31ds}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "`ls -l` shows when each file was last changed, in the columns just before its name. For files from an earlier year, it shows the year instead of the time of day."
+    cost: 5
+  - content: "`ls -l ~/observations | grep 'Aug 12'` leaves one line. `find` can do it too: look up `find -newermt`."
+    cost: 10
+state: visible
