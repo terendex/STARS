@@ -20,7 +20,7 @@ The first team to solve a challenge gets its starting value. After that, every n
 
 Every hint costs points, so a team that used them can solve everything and still finish lower. CTFd won't sell a hint that costs more than a team's current score, so a team on 0 points has to solve something first.
 
-**Mission clock.** Players can only see the challenges and submit flags while the mission clock is running. Start it from **Admin Panel > Mission Clock**, and show `http://localhost:8001/timer` on the projector, opened on the CTF PC. See "Mission clock" in README.md.
+**Mission clock.** Players can only see the challenges and submit flags while the mission clock is running. Start it from **Admin Panel > Mission Clock**, and show `http://localhost:8001/timer` on the projector, opened on the CTF PC. See "Mission clock" in docs/running-an-event.md.
 
 Each team gets 3 wrong flags per challenge, shared by its members, and a typo counts. After the third, CTFd locks that challenge for the team. To unlock it, delete one of the team's wrong submissions for it in **Admin Panel > Submissions**, then wait a minute before they try again. CTFd also stops a team for a minute if it sends more than 10 wrong flags in a minute.
 

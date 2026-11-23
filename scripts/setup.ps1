@@ -10,7 +10,7 @@ Run this once after downloading the project, with Docker Desktop running:
 It makes .env with new random passwords, builds and starts everything, finishes
 CTFd's setup with the event's rules, installs all 56 challenges, opens the CTF
 on this PC's Wi-Fi address, sets up the demo CTF, and turns on auto-host so the
-CTF follows your network. The admin password goes into LOGINS.txt.
+CTF follows your network. The admin password goes into 2nd-star\LOGINS.txt.
 
 Running it again is safe: anything already set up is skipped.
 
@@ -27,6 +27,8 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
+# The real CTF, 2nd Star, which this sets up.
+$main = Join-Path $root '2nd-star'
 $utf8 = New-Object System.Text.UTF8Encoding $false
 
 function Invoke-Compose {
@@ -56,7 +58,7 @@ function Get-LanIp {
         Select-Object -First 1 -ExpandProperty IPAddress
 }
 
-Push-Location $root
+Push-Location $main
 try {
     $ErrorActionPreference = 'Continue'
     docker info --format '{{.ServerVersion}}' 2>$null | Out-Null
@@ -67,7 +69,7 @@ try {
     if (-not $Ip) { $Ip = Get-LanIp }
     if (-not $Ip) { throw 'No network found. Connect to the Wi-Fi the players will use, or pass -Ip <address>.' }
 
-    $envFile = Join-Path $root '.env'
+    $envFile = Join-Path $main '.env'
     if (-not (Test-Path $envFile)) {
         Write-Host 'Making .env with new random passwords.'
         $lines = @(
@@ -80,7 +82,7 @@ try {
         [IO.File]::WriteAllText($envFile, ($lines -join "`n") + "`n", $utf8)
     }
 
-    if (-not (Test-Path (Join-Path $root '.ctf\config'))) {
+    if (-not (Test-Path (Join-Path $main '.ctf\config'))) {
         # The first visitor to /setup becomes admin, so CTFd stays reachable from
         # this PC only until setup-ctfd.py has claimed it.
         Write-Host 'Starting CTFd on this PC only (the first run downloads and builds everything, so it takes a few minutes).'
@@ -88,12 +90,12 @@ try {
         try { Invoke-Compose up -d --build --wait --wait-timeout 300 ctfd }
         finally { Remove-Item Env:CTF_BIND_IP }
 
-        Invoke-Compose run --rm --entrypoint python ctfcli scripts/setup-ctfd.py main
+        Invoke-Compose run --rm --entrypoint python ctfcli ../scripts/setup-ctfd.py main
         Write-Host 'Installing the challenges.'
         Invoke-Compose run --rm ctfcli challenge install
     }
     else {
-        Write-Host 'CTFd is already set up (.ctf\config exists), so skipping that part.'
+        Write-Host 'CTFd is already set up (2nd-star\.ctf\config exists), so skipping that part.'
     }
 
     Write-Host "Opening the CTF on $Ip."
@@ -114,8 +116,8 @@ try {
     Write-Host ''
     Write-Host "Done. The CTF is on http://${Ip}:8000"
     if (-not $NoDemo) { Write-Host "The demo is on http://${Ip}:8100 (scripts\demo.ps1 stop to turn it off)." }
-    Write-Host 'Admin passwords are in LOGINS.txt and demo\LOGINS.txt.'
-    Write-Host 'Next: register the players (README.md, "Registering players"), then test from a phone on the same Wi-Fi.'
+    Write-Host 'Admin passwords are in 2nd-star\LOGINS.txt and demo\LOGINS.txt.'
+    Write-Host 'Next: register the players (docs\running-an-event.md, "Registering players"), then test from a phone on the same Wi-Fi.'
 }
 finally {
     Pop-Location

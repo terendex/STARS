@@ -6,7 +6,7 @@ Sets up, starts, stops or syncs the STARS demo CTF.
 The demo is a separate small CTF in the demo folder: 2 Easy challenges per
 category, none of them in the real event. It has its own CTFd, accounts and
 scores, runs beside the real CTF on port 8100, and uses the same IP address.
-See "Demo CTF" in README.md.
+See demo\README.md.
 
     scripts\demo.ps1 setup   # first time only: creates the admin, a demo team and the challenges
     scripts\demo.ps1 start
@@ -49,7 +49,7 @@ function Start-Demo {
 
     # set-host.ps1 moves the demo's files whenever the real CTF changes IP.
     # This catches the case where they've drifted apart anyway.
-    $ip = Get-BindIp (Join-Path $root '.env')
+    $ip = Get-BindIp (Join-Path $root '2nd-star\.env')
     if ((Get-BindIp $envFile) -ne $ip) {
         & (Join-Path $PSScriptRoot 'set-host.ps1') -Ip $ip -FilesOnly | Out-Null
     }
@@ -64,7 +64,7 @@ try {
     switch ($Action) {
         'setup' {
             if (-not (Test-Path $envFile)) {
-                $ip = Get-BindIp (Join-Path $root '.env')
+                $ip = Get-BindIp (Join-Path $root '2nd-star\.env')
                 $lines = @(
                     '# Made by scripts\demo.ps1 setup. set-host.ps1 keeps CTF_BIND_IP on the same',
                     "# address as the real CTF's .env.",

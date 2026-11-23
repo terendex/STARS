@@ -12,6 +12,8 @@ set -uo pipefail
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+# The real CTF, 2nd Star. docker compose runs from its folder.
+MAIN="$ROOT/2nd-star"
 LOG_DIR="$ROOT/logs"
 LOG="$LOG_DIR/auto-host.log"
 # Set when the files were moved to a new IP while the CTF was stopped, so CTFd
@@ -22,7 +24,7 @@ mkdir -p "$LOG_DIR"
 log() { echo "$(date '+%Y-%m-%d %H:%M:%S')  $*" >> "$LOG"; }
 lan_ip() { ip -4 route get 1.1.1.1 2>/dev/null | sed -nE 's/.* src ([0-9.]+).*/\1/p' | head -n 1; }
 docker_ok() { docker info >/dev/null 2>&1; }
-ctf_running() { [[ -n $(cd "$ROOT" && docker compose ps --status running -q ctfd 2>/dev/null) ]]; }
+ctf_running() { [[ -n $(cd "$MAIN" && docker compose ps --status running -q ctfd 2>/dev/null) ]]; }
 
 set_host() {
     bash "$ROOT/scripts/set-host.sh" "$@" 2>&1 |
@@ -55,7 +57,7 @@ fi
 docker_ok || exit 0
 ip=$(lan_ip)
 [[ -n $ip ]] || exit 0
-bound=$(sed -n 's/^CTF_BIND_IP=//p' "$ROOT/.env" | tr -d '[:space:]')
+bound=$(sed -n 's/^CTF_BIND_IP=//p' "$MAIN/.env" | tr -d '[:space:]')
 
 if [[ $ip != "$bound" ]]; then
     if ctf_running; then
@@ -67,7 +69,7 @@ if [[ $ip != "$bound" ]]; then
     fi
 elif ctf_running && [[ -f $PENDING ]]; then
     log "The CTF is running again: updating the addresses in CTFd to $ip."
-    output=$(cd "$ROOT" && docker compose run --rm --entrypoint python ctfcli scripts/update-connection-info.py 2>/dev/null)
+    output=$(cd "$MAIN" && docker compose run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py . 2>/dev/null)
     status=$?
     [[ -n $output ]] && log "  $output"
     [[ $status == 0 ]] && rm -f "$PENDING"

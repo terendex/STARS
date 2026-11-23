@@ -4,12 +4,10 @@ set-host.ps1 runs this after the IP changes. Unlike `ctf challenge sync`, it
 changes nothing else, so it's safe during an event. It reads the admin token
 from .ctf/config and never prints it.
 
-    docker compose run --rm --entrypoint python ctfcli scripts/update-connection-info.py
+Run it from a CTF's folder (2nd-star, classic, demo or sits), where its
+.ctf/config is, or pass that folder:
 
-Pass a folder to update a different CTFd from its own .ctf/config and
-challenges, as scripts/demo.ps1 does for the demo:
-
-    python ../scripts/update-connection-info.py .
+    docker compose run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py .
 """
 import configparser
 import pathlib
@@ -18,9 +16,8 @@ import sys
 import requests
 import yaml
 
-DEFAULT_ROOT = pathlib.Path(__file__).resolve().parent.parent
-ROOT = pathlib.Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else DEFAULT_ROOT
-LABEL = "" if ROOT == DEFAULT_ROOT else f" ({ROOT.name})"
+ROOT = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ".").resolve()
+LABEL = f" ({ROOT.name})"
 
 config = configparser.ConfigParser()
 config.read(ROOT / ".ctf" / "config")

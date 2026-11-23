@@ -1,0 +1,11 @@
+{
+  // New files get Linux line endings, which the challenge boxes need.
+  // .gitattributes does the same for files saved through git.
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  // YAML breaks with tabs, so the Tab key types two spaces in challenge.yml.
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2
+  }
+}

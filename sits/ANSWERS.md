@@ -4,6 +4,8 @@ Made by Axel Jonas C. Tangalin.
 
 **Organizers only. Don't share this file or show it on screen during the event.**
 
+The commands use `192.168.68.103`. If your IP has changed, use the new one.
+
 Every walkthrough below was played by a test that followed only the challenge's description and hints, and the outputs quoted are the ones it really got. Values that change on every build of a box (random file names and decoy codes) are marked as such: tell teams the *method*, not the value.
 
 ## Scoring

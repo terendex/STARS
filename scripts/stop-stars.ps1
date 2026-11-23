@@ -16,7 +16,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 else {
     $ctfs = @(
-        @{ Name = 'The real CTF (2nd Star)'; File = Join-Path $root 'docker-compose.yml' },
+        @{ Name = 'The real CTF (2nd Star)'; File = Join-Path $root '2nd-star\docker-compose.yml' },
         @{ Name = 'STARS Classic'; File = Join-Path $root 'classic\docker-compose.yml' },
         @{ Name = 'The demo'; File = Join-Path $root 'demo\docker-compose.yml' },
         @{ Name = 'The SITS competition'; File = Join-Path $root 'sits\docker-compose.yml' }

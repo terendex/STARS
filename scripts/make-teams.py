@@ -3,7 +3,8 @@ with 3 player accounts under random names, since players can't register
 themselves. No account belongs to anyone in particular, so on the day you can
 hand any team's logins to any group. Give it how many teams to add:
 
-    docker compose run --rm --entrypoint python ctfcli scripts/make-teams.py 15
+    cd 2nd-star
+    docker compose run --rm --entrypoint python ctfcli ../scripts/make-teams.py 15
 
 New teams take the next call signs not in CTFd yet, so running it again adds
 more teams after the last one. Players' names are an animal and a number, like

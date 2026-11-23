@@ -7,7 +7,7 @@
 # finishes CTFd's setup with the event's rules, installs all 56 challenges,
 # opens the CTF on this PC's network address, sets up the demo CTF, and turns on
 # auto-host so the CTF follows your network. The admin password goes into
-# LOGINS.txt. Running it again is safe: anything already set up is skipped.
+# 2nd-star/LOGINS.txt. Running it again is safe: anything already set up is skipped.
 #
 #   --ip 192.168.1.20   use this address instead of detecting it
 #   --no-demo           skip the demo CTF
@@ -15,6 +15,8 @@
 set -euo pipefail
 
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+# The real CTF, 2nd Star, which this sets up.
+MAIN="$ROOT/2nd-star"
 IP=""
 DEMO=1
 AUTO_HOST=1
@@ -49,7 +51,7 @@ if ! [[ $IP =~ ^[0-9]{1,3}(\.[0-9]{1,3}){3}$ ]]; then
     exit 1
 fi
 
-cd "$ROOT"
+cd "$MAIN"
 if [[ ! -f .env ]]; then
     echo "Making .env with new random passwords."
     {
@@ -66,11 +68,11 @@ if [[ ! -f .ctf/config ]]; then
     # this PC only until setup-ctfd.py has claimed it.
     echo "Starting CTFd on this PC only (the first run downloads and builds everything, so it takes a few minutes)."
     CTF_BIND_IP=127.0.0.1 docker compose up -d --build --wait --wait-timeout 300 ctfd
-    docker compose run --rm --entrypoint python ctfcli scripts/setup-ctfd.py main
+    docker compose run --rm --entrypoint python ctfcli ../scripts/setup-ctfd.py main
     echo "Installing the challenges."
     docker compose run --rm ctfcli challenge install
 else
-    echo "CTFd is already set up (.ctf/config exists), so skipping that part."
+    echo "CTFd is already set up (2nd-star/.ctf/config exists), so skipping that part."
 fi
 
 echo "Opening the CTF on $IP."
@@ -78,7 +80,7 @@ bash "$ROOT/scripts/set-host.sh" "$IP"
 
 if [[ $DEMO == 1 ]]; then
     echo "Setting up the demo CTF."
-    if [[ -f demo/.ctf/config ]]; then bash "$ROOT/scripts/demo.sh" start; else bash "$ROOT/scripts/demo.sh" setup; fi
+    if [[ -f $ROOT/demo/.ctf/config ]]; then bash "$ROOT/scripts/demo.sh" start; else bash "$ROOT/scripts/demo.sh" setup; fi
 fi
 
 if [[ $AUTO_HOST == 1 ]]; then
@@ -88,6 +90,6 @@ fi
 echo
 echo "Done. The CTF is on http://$IP:8000"
 [[ $DEMO == 1 ]] && echo "The demo is on http://$IP:8100 (bash scripts/demo.sh stop to turn it off)."
-echo "Admin passwords are in LOGINS.txt and demo/LOGINS.txt."
-echo "If players can't connect, open the ports in your firewall (README.md, \"Linux\")."
-echo "Next: register the players (README.md, \"Registering players\"), then test from a phone on the same network."
+echo "Admin passwords are in 2nd-star/LOGINS.txt and demo/LOGINS.txt."
+echo "If players can't connect, open the ports in your firewall (docs/running-an-event.md, \"Linux\")."
+echo "Next: register the players (docs/running-an-event.md, \"Registering players\"), then test from a phone on the same network."

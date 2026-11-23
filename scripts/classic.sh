@@ -10,7 +10,7 @@
 # STARS Classic is the original 36 challenges from the first orientation, kept as
 # their own CTF in classic/, with the same mission clock, music and dynamic
 # scoring as the real CTF. It runs beside the real CTF on port 8200 and uses the
-# same IP address. See "STARS Classic" in README.md.
+# same IP address. See classic/README.md.
 set -euo pipefail
 
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
@@ -26,7 +26,7 @@ start_classic() {
         exit 1
     fi
     local ip
-    ip=$(bind_ip "$ROOT/.env")
+    ip=$(bind_ip "$ROOT/2nd-star/.env")
     # set-host.sh moves Classic's files whenever the real CTF changes IP. This
     # catches the case where they've drifted apart anyway.
     if [[ $(bind_ip "$CLASSIC/.env") != "$ip" ]]; then
@@ -43,7 +43,7 @@ case ${1:-} in
             {
                 echo "# Made by scripts/classic.sh setup. set-host.sh keeps CTF_BIND_IP on the same"
                 echo "# address as the real CTF's .env."
-                echo "CTF_BIND_IP=$(bind_ip "$ROOT/.env")"
+                echo "CTF_BIND_IP=$(bind_ip "$ROOT/2nd-star/.env")"
                 echo "SECRET_KEY=$(new_secret)"
                 echo "DB_PASSWORD=$(new_secret)"
                 echo "DB_ROOT_PASSWORD=$(new_secret)"

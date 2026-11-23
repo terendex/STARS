@@ -3,7 +3,7 @@
 Points the CTF at a new IP address.
 
 .DESCRIPTION
-Updates CTF_BIND_IP in .env and the address in every challenge's connection_info,
+Updates CTF_BIND_IP in 2nd-star\.env and the address in every challenge's connection_info,
 republishes the ports on that address, and pushes the new addresses to CTFd.
 Run it from anywhere, for example after your Wi-Fi IP changes:
 
@@ -11,7 +11,8 @@ Run it from anywhere, for example after your Wi-Fi IP changes:
 
 With auto-host installed, this happens by itself.
 
-The side CTFs move with it: the demo in demo\ and STARS Classic in classic\.
+The side CTFs move with it: the demo in demo\, STARS Classic in classic\ and
+the SITS competition in sits\.
 If one has been set up, its files move to the same IP too, and if it's
 running, it's republished there. A stopped one stays stopped.
 #>
@@ -27,22 +28,25 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
+# The real CTF, 2nd Star. Its .env holds the IP every CTF uses.
+$main = Join-Path $root '2nd-star'
 $utf8 = New-Object System.Text.UTF8Encoding $false
 
-# The CTFs that run beside the real one, on the same IP.
+# The CTFs that run beside the real one, on the same IP. A new event only needs
+# adding here (and in set-host.sh).
 $sides = @(
     @{ Dir = (Join-Path $root 'demo'); Name = 'Demo CTF'; Port = 8100 },
     @{ Dir = (Join-Path $root 'classic'); Name = 'STARS Classic'; Port = 8200 },
     @{ Dir = (Join-Path $root 'sits'); Name = 'SITS'; Port = 8300 }
 )
 
-foreach ($envFile in @((Join-Path $root '.env')) + @($sides | ForEach-Object { Join-Path $_.Dir '.env' })) {
+foreach ($envFile in @((Join-Path $main '.env')) + @($sides | ForEach-Object { Join-Path $_.Dir '.env' })) {
     if (-not (Test-Path $envFile)) { continue }
     $text = [IO.File]::ReadAllText($envFile, $utf8)
     [IO.File]::WriteAllText($envFile, ($text -replace '(?m)^CTF_BIND_IP=.*$', "CTF_BIND_IP=$Ip"), $utf8)
 }
 
-$challenges = @((Join-Path $root 'challenges')) + @($sides | ForEach-Object { Join-Path $_.Dir 'challenges' }) |
+$challenges = @((Join-Path $main 'challenges')) + @($sides | ForEach-Object { Join-Path $_.Dir 'challenges' }) |
     Where-Object { Test-Path $_ }
 Get-ChildItem $challenges -Recurse -Filter challenge.yml | ForEach-Object {
     $text = [IO.File]::ReadAllText($_.FullName, $utf8)
@@ -58,7 +62,7 @@ Get-ChildItem $challenges -Recurse -Filter challenge.yml | ForEach-Object {
 }
 
 # Keep the answer sheets' commands on the same address.
-foreach ($answers in @((Join-Path $root 'ANSWERS.md')) + @($sides | ForEach-Object { Join-Path $_.Dir 'ANSWERS.md' })) {
+foreach ($answers in @((Join-Path $main 'ANSWERS.md')) + @($sides | ForEach-Object { Join-Path $_.Dir 'ANSWERS.md' })) {
     if (-not (Test-Path $answers)) { continue }
     $text = [IO.File]::ReadAllText($answers, $utf8)
     $old = [regex]::Match($text, 'The commands use `([\d.]+)`').Groups[1].Value
@@ -97,16 +101,16 @@ if ($FilesOnly) {
 # The exit codes below are what decide that.
 $ErrorActionPreference = 'Continue'
 
-Push-Location $root
+Push-Location $main
 try {
     # Rebinding restarts CTFd, so wait until it's healthy before updating it.
     docker compose up -d --wait --wait-timeout 180
     if ($LASTEXITCODE -ne 0) { throw "docker compose up failed. Is $Ip assigned to this PC?" }
 
-    if (Test-Path (Join-Path $root '.ctf\config')) {
+    if (Test-Path (Join-Path $main '.ctf\config')) {
         # Only the addresses: a full ctfcli sync would recreate every challenge's
         # flags, hints and files, which isn't safe while teams are playing.
-        docker compose run --rm --entrypoint python ctfcli scripts/update-connection-info.py
+        docker compose run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py .
         if ($LASTEXITCODE -ne 0) { throw 'Updating the addresses in CTFd failed.' }
     }
     else {

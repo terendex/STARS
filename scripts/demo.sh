@@ -8,7 +8,7 @@
 #
 # The demo is a separate small CTF in demo/: 2 Easy challenges per category,
 # none of them in the real event. It runs beside the real CTF on port 8100 and
-# uses the same IP address. See "Demo CTF" in README.md.
+# uses the same IP address. See demo/README.md.
 set -euo pipefail
 
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
@@ -24,7 +24,7 @@ start_demo() {
         exit 1
     fi
     local ip
-    ip=$(bind_ip "$ROOT/.env")
+    ip=$(bind_ip "$ROOT/2nd-star/.env")
     # set-host.sh moves the demo's files whenever the real CTF changes IP.
     # This catches the case where they've drifted apart anyway.
     if [[ $(bind_ip "$DEMO/.env") != "$ip" ]]; then
@@ -41,7 +41,7 @@ case ${1:-} in
             {
                 echo "# Made by scripts/demo.sh setup. set-host.sh keeps CTF_BIND_IP on the same"
                 echo "# address as the real CTF's .env."
-                echo "CTF_BIND_IP=$(bind_ip "$ROOT/.env")"
+                echo "CTF_BIND_IP=$(bind_ip "$ROOT/2nd-star/.env")"
                 echo "SECRET_KEY=$(new_secret)"
                 echo "DB_PASSWORD=$(new_secret)"
                 echo "DB_ROOT_PASSWORD=$(new_secret)"

@@ -108,7 +108,7 @@ services:
     <<: *challenge
     build:
       context: "./challenges/ursa-minor (linux)/ssh-box"
-      dockerfile: "../../../../challenges/ursa-minor (linux)/ssh-box/Dockerfile"
+      dockerfile: "../../../../2nd-star/challenges/ursa-minor (linux)/ssh-box/Dockerfile"
     cap_add: [CHOWN, SETGID, SETUID, SYS_CHROOT, KILL, AUDIT_WRITE]
     cpus: 2.0
     mem_limit: 1g
@@ -125,7 +125,7 @@ services:
     <<: *challenge
     build:
       context: "./challenges/draco (reversing)/draco-box"
-      dockerfile: "../../../../challenges/draco (reversing)/draco-box/Dockerfile"
+      dockerfile: "../../../../2nd-star/challenges/draco (reversing)/draco-box/Dockerfile"
     cap_add: [CHOWN, SETGID, SETUID, SYS_CHROOT, KILL, AUDIT_WRITE]
     cpus: 2.0
     mem_limit: 1g
@@ -151,7 +151,7 @@ services:
     <<: *challenge
     build:
       context: "./challenges/scorpius (pwn)"
-      dockerfile: "../../../challenges/scorpius (pwn)/Dockerfile"
+      dockerfile: "../../../2nd-star/challenges/scorpius (pwn)/Dockerfile"
       target: service
       args: {STAR: fang}
 
@@ -159,7 +159,7 @@ services:
     <<: *challenge
     build:
       context: "./challenges/scorpius (pwn)"
-      dockerfile: "../../../challenges/scorpius (pwn)/Dockerfile"
+      dockerfile: "../../../2nd-star/challenges/scorpius (pwn)/Dockerfile"
       target: service
       args: {STAR: larawag}
 

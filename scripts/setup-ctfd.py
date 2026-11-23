@@ -4,9 +4,10 @@
 scripts/setup.ps1 and setup.sh run this for the real CTF, and demo.ps1 and
 demo.sh run it for the demo. Each starts CTFd on this PC only first, because the
 first visitor to /setup becomes admin. It runs inside the ctfcli container, from
-the folder whose .ctf/config it writes (the STARS folder, or demo/):
+the CTF's folder, where it writes .ctf/config (2nd-star/, classic/, demo/ or
+sits/):
 
-    python scripts/setup-ctfd.py main
+    python ../scripts/setup-ctfd.py main
     python ../scripts/setup-ctfd.py classic
     python ../scripts/setup-ctfd.py demo
     python ../scripts/setup-ctfd.py sits

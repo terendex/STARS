@@ -6,7 +6,7 @@ setup-ctfd.py uses these when it sets up a fresh CTFd. After editing them,
 push the new page to a running CTFd. Run it from the folder whose .ctf/config
 points at that CTFd (it reads the admin token from there and never prints it):
 
-    docker compose run --rm --entrypoint python ctfcli scripts/home_page.py main
+    docker compose -f 2nd-star/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py main
     docker compose -f classic/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py classic
     docker compose -f demo/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py demo
     docker compose -f sits/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py sits

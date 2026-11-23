@@ -12,7 +12,7 @@
 # with the same mission clock, music, first blood, help queue and dynamic
 # scoring as 2nd Star. It runs beside STARS on port 8300 and uses the same IP
 # address. Setup makes its admin the same as the real CTF's (the "Admin" entry
-# in LOGINS.txt). See "SITS Capture The Flag Competition 2026" in README.md.
+# in 2nd-star/LOGINS.txt). See sits/README.md.
 set -euo pipefail
 
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
@@ -22,7 +22,7 @@ COMPOSE=(docker compose -f "$SITS/docker-compose.yml")
 bind_ip() { sed -n 's/^CTF_BIND_IP=//p' "$1" | tr -d '[:space:]'; }
 new_secret() { head -c 32 /dev/urandom | base64 | tr -d '+/=\n'; }
 # The real CTF's admin: the line after "Admin" in LOGINS.txt, "  name / password".
-main_admin() { [[ -f $ROOT/LOGINS.txt ]] && awk 'found { print; exit } $0 == "Admin" { found = 1 }' "$ROOT/LOGINS.txt" || true; }
+main_admin() { [[ -f $ROOT/2nd-star/LOGINS.txt ]] && awk 'found { print; exit } $0 == "Admin" { found = 1 }' "$ROOT/2nd-star/LOGINS.txt" || true; }
 
 start_sits() {
     if [[ ! -f $SITS/.ctf/config ]]; then
@@ -30,7 +30,7 @@ start_sits() {
         exit 1
     fi
     local ip
-    ip=$(bind_ip "$ROOT/.env")
+    ip=$(bind_ip "$ROOT/2nd-star/.env")
     if [[ $(bind_ip "$SITS/.env") != "$ip" ]]; then
         bash "$ROOT/scripts/set-host.sh" "$ip" --files-only >/dev/null
     fi
@@ -45,7 +45,7 @@ case ${1:-} in
             {
                 echo "# Made by scripts/sits.sh setup. set-host.sh keeps CTF_BIND_IP on the same"
                 echo "# address as the real CTF's .env."
-                echo "CTF_BIND_IP=$(bind_ip "$ROOT/.env")"
+                echo "CTF_BIND_IP=$(bind_ip "$ROOT/2nd-star/.env")"
                 echo "SECRET_KEY=$(new_secret)"
                 echo "DB_PASSWORD=$(new_secret)"
                 echo "DB_ROOT_PASSWORD=$(new_secret)"

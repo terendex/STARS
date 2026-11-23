@@ -1,0 +1,5 @@
+{
+  // VS Code offers to install these when the STARS folder is opened.
+  // The YAML extension underlines mistakes in challenge.yml files as you type.
+  "recommendations": ["redhat.vscode-yaml"]
+}

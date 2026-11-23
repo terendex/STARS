@@ -1,9 +1,6 @@
 # Passwords and tokens. Each PC makes its own with scripts/setup.ps1 or setup.sh.
 .env
-.ctf/config
-demo/.ctf/config
-classic/.ctf/config
-sits/.ctf/config
+.ctf/
 LOGINS.txt
 
 # SSH host keys copied out of the running boxes, so a rebuild keeps the same

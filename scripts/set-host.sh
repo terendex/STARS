@@ -4,7 +4,7 @@
 #   bash scripts/set-host.sh 192.168.1.20
 #   bash scripts/set-host.sh 192.168.1.20 --files-only
 #
-# Updates CTF_BIND_IP in .env and the address in every challenge's
+# Updates CTF_BIND_IP in 2nd-star/.env and the address in every challenge's
 # connection_info, republishes the ports on that address, and pushes the new
 # addresses to CTFd. --files-only rewrites the files without starting anything.
 #
@@ -21,25 +21,34 @@ if ! [[ $IP =~ ^[0-9]{1,3}(\.[0-9]{1,3}){3}$ ]] || [[ -n $MODE && $MODE != --fil
     exit 2
 fi
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+# The real CTF, 2nd Star. Its .env holds the IP every CTF uses.
+MAIN="$ROOT/2nd-star"
 # The CTFs that run beside the real one, on the same IP, as folder:port.
+# A new event only needs adding here (and in set-host.ps1).
 SIDES=("demo:8100" "classic:8200" "sits:8300")
+# Every CTF's folder: 2nd Star first, then the sides.
+FOLDERS=("$MAIN")
+for side in "${SIDES[@]}"; do FOLDERS+=("$ROOT/${side%%:*}"); done
 
-for env_file in "$ROOT/.env" "$ROOT/demo/.env" "$ROOT/classic/.env" "$ROOT/sits/.env"; do
+for folder in "${FOLDERS[@]}"; do
+    env_file="$folder/.env"
     if [[ -f $env_file ]]; then
         sed -i -E "s/^CTF_BIND_IP=.*/CTF_BIND_IP=$IP/" "$env_file"
     fi
 done
 
 while IFS= read -r -d '' yml; do
-    current=$(sed -nE 's/^connection_info:[^0-9]*([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+).*/\1/p' "$yml" | head -n 1)
+    # The IP may follow a name with digits in it, like ssh umi11@<ip>.
+    current=$(sed -nE 's/^connection_info:(.*[^0-9.])?([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+).*/\2/p' "$yml" | head -n 1)
     if [[ -n $current && $current != "$IP" ]]; then
-        sed -i -E "s/^(connection_info:[^0-9]*)[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/\1$IP/" "$yml"
+        sed -i -E "s/^(connection_info:(.*[^0-9.])?)[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/\1$IP/" "$yml"
         echo "Updated ${yml#"$ROOT"/}"
     fi
-done < <(find "$ROOT/challenges" "$ROOT/demo/challenges" "$ROOT/classic/challenges" "$ROOT/sits/challenges" -name challenge.yml -print0 2>/dev/null)
+done < <(for folder in "${FOLDERS[@]}"; do [[ -d $folder/challenges ]] && find "$folder/challenges" -name challenge.yml -print0; done)
 
 # Keep the answer sheets' commands on the same address.
-for answers in "$ROOT/ANSWERS.md" "$ROOT/demo/ANSWERS.md" "$ROOT/classic/ANSWERS.md" "$ROOT/sits/ANSWERS.md"; do
+for folder in "${FOLDERS[@]}"; do
+    answers="$folder/ANSWERS.md"
     [[ -f $answers ]] || continue
     old=$(sed -nE 's/.*The commands use `([0-9.]+)`.*/\1/p' "$answers" | head -n 1)
     if [[ -n $old && $old != "$IP" ]]; then
@@ -78,14 +87,14 @@ if [[ $MODE == --files-only ]]; then
     exit 0
 fi
 
-cd "$ROOT"
+cd "$MAIN"
 # Rebinding restarts CTFd, so wait until it's healthy before updating it.
 docker compose up -d --wait --wait-timeout 180 ||
     { echo "docker compose up failed. Is $IP assigned to this PC?" >&2; exit 1; }
-if [[ -f $ROOT/.ctf/config ]]; then
+if [[ -f $MAIN/.ctf/config ]]; then
     # Only the addresses: a full ctfcli sync would recreate every challenge's
     # flags, hints and files, which isn't safe while teams are playing.
-    docker compose run --rm --entrypoint python ctfcli scripts/update-connection-info.py ||
+    docker compose run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py . ||
         { echo "Updating the addresses in CTFd failed." >&2; exit 1; }
 else
     echo "No .ctf/config yet, so CTFd was not updated."

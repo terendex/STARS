@@ -45,7 +45,7 @@ services:
       - ctfd_logs:/var/log/CTFd
       - ctfd_uploads:/var/uploads
       # STARS's changes to CTFd: accounts don't need an email.
-      - ./ctfd-plugin:/opt/CTFd/CTFd/plugins/stars:ro
+      - ../ctfd-plugin:/opt/CTFd/CTFd/plugins/stars:ro
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthcheck')"]
       interval: 5s
@@ -226,12 +226,15 @@ services:
       args: {STAR: acrab}
 
   # --- Tools --------------------------------------------------------------
-  # docker compose run --rm ctfcli challenge sync
+  # Mounts the whole STARS folder so the shared scripts are available, but
+  # runs from 2nd-star/, where 2nd Star's .ctf/config lives. From 2nd-star/:
+  #   docker compose run --rm ctfcli challenge sync
   ctfcli:
-    build: ./tools/ctfcli
+    build: ../tools/ctfcli
     profiles: [tools]
     volumes:
-      - .:/work
+      - ..:/work
+    working_dir: /work/2nd-star
     networks: [ctfd_internal]
 
 volumes:

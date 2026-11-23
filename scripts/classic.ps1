@@ -7,7 +7,7 @@ STARS Classic is the original 36 challenges from the first orientation, kept as
 their own CTF in the classic folder. It has the same mission clock, music and
 dynamic scoring as the real CTF, but its own CTFd, accounts and scores. It runs
 beside the real CTF on port 8200 and uses the same IP address. See
-"STARS Classic" in README.md.
+classic\README.md.
 
     scripts\classic.ps1 setup      # first time only: creates the admin and the challenges
     scripts\classic.ps1 teams 15   # makes 15 teams of 3 accounts (logins in classic\LOGINS.txt)
@@ -54,7 +54,7 @@ function Start-Classic {
 
     # set-host.ps1 moves Classic's files whenever the real CTF changes IP. This
     # catches the case where they've drifted apart anyway.
-    $ip = Get-BindIp (Join-Path $root '.env')
+    $ip = Get-BindIp (Join-Path $root '2nd-star\.env')
     if ((Get-BindIp $envFile) -ne $ip) {
         & (Join-Path $PSScriptRoot 'set-host.ps1') -Ip $ip -FilesOnly | Out-Null
     }
@@ -69,7 +69,7 @@ try {
     switch ($Action) {
         'setup' {
             if (-not (Test-Path $envFile)) {
-                $ip = Get-BindIp (Join-Path $root '.env')
+                $ip = Get-BindIp (Join-Path $root '2nd-star\.env')
                 $lines = @(
                     '# Made by scripts\classic.ps1 setup. set-host.ps1 keeps CTF_BIND_IP on the same',
                     "# address as the real CTF's .env.",

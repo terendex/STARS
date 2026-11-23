@@ -7,8 +7,8 @@ SITS is a separate competition CTF in the sits folder, made by Axel Jonas C.
 Tangalin: casual-themed challenges with FLAG{...} flags. It has the same
 mission clock, music, first blood, help queue and dynamic scoring as 2nd Star,
 but its own CTFd, accounts and scores. It runs beside STARS on port 8300 and
-uses the same IP address. See "SITS Capture The Flag Competition 2026" in
-README.md.
+uses the same IP address. See
+sits\README.md.
 
     scripts\sits.ps1 setup      # first time only: the admin and the challenges
     scripts\sits.ps1 teams 15   # makes 15 teams of 3 accounts (logins in sits\LOGINS.txt)
@@ -17,7 +17,7 @@ README.md.
     scripts\sits.ps1 sync       # after editing a challenge.yml in sits\challenges
 
 Setup makes the admin the same as the real CTF's (the "Admin" entry in
-LOGINS.txt), so one login works on every CTF.
+2nd-star\LOGINS.txt), so one login works on every CTF.
 #>
 param(
     [Parameter(Mandatory = $true)]
@@ -53,9 +53,9 @@ function New-Secret {
     return [Convert]::ToBase64String($bytes) -replace '[+/=]', ''
 }
 
-# The real CTF's admin, from the "Admin" entry in LOGINS.txt: "  name / password".
+# The real CTF's admin, from the "Admin" entry in 2nd-star\LOGINS.txt: "  name / password".
 function Get-MainAdmin {
-    $logins = Join-Path $root 'LOGINS.txt'
+    $logins = Join-Path $root '2nd-star\LOGINS.txt'
     if (-not (Test-Path $logins)) { return $null }
     $lines = Get-Content $logins
     $at = [Array]::IndexOf($lines, 'Admin')
@@ -69,7 +69,7 @@ function Start-Sits {
 
     # set-host.ps1 moves SITS's files whenever the real CTF changes IP. This
     # catches the case where they've drifted apart anyway.
-    $ip = Get-BindIp (Join-Path $root '.env')
+    $ip = Get-BindIp (Join-Path $root '2nd-star\.env')
     if ((Get-BindIp $envFile) -ne $ip) {
         & (Join-Path $PSScriptRoot 'set-host.ps1') -Ip $ip -FilesOnly | Out-Null
     }
@@ -84,7 +84,7 @@ try {
     switch ($Action) {
         'setup' {
             if (-not (Test-Path $envFile)) {
-                $ip = Get-BindIp (Join-Path $root '.env')
+                $ip = Get-BindIp (Join-Path $root '2nd-star\.env')
                 $lines = @(
                     '# Made by scripts\sits.ps1 setup. set-host.ps1 keeps CTF_BIND_IP on the same',
                     "# address as the real CTF's .env.",

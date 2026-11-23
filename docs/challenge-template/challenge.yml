@@ -1,0 +1,51 @@
+# A blank challenge. Copy this folder into a CTF's challenges, then fill it in:
+#   STARS CTFs (2nd-star, classic, demo):  challenges/<constellation> (<skill>)/<star>/
+#   SITS:                                   challenges/<category>/<challenge-name>/
+# docs/making-challenges.md explains every field and the steps after this.
+version: "0.1"
+name: "Challenge name"                # Must be different from every other challenge in this CTF
+author: "Your name"
+attribution: "Made by Your name"      # Players see this line under the name
+category: "Orion (Web)"               # Copy it exactly from another challenge in the same category
+type: standard                        # Always "standard": the points dropping is built in
+value: 30                             # 30 Easy, 60 Medium, 100 Hard (the same as initial)
+# Points drop as more teams solve it. Easy is 30 / 1 / 15, Medium is
+# 60 / 3 / 30 and Hard is 100 / 5 / 50. The demo leaves this out (fixed points).
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3                           # Wrong flags allowed per team before it locks
+# Short story, then a bold "Your goal" line that says what to find and where
+# the flag shows up. Easy and Medium end with the tools line; Hard doesn't.
+# Use "Commands" for things typed in a terminal and "Tools" for anything else.
+description: |-
+  One or two sentences of story.
+
+  **Your goal:** what to find, and where the flag will be.
+
+  **Commands you may need to solve this level:** `ls`, `cat`
+
+# Only for challenges with a port. Copy the line from another challenge in the
+# same CTF and change the port. set-host keeps the IP up to date by itself.
+connection_info: http://192.168.1.10:8091
+
+# Only for download challenges. Paths are inside this folder, usually dist/.
+files:
+  - dist/example.txt
+
+# Use this CTF's flag format: STARS{...} for the STARS CTFs, FLAG{...} for SITS.
+flags:
+  - "STARS{replace_me}"
+
+tags:
+  - "★ Easy"                          # "★ Easy", "★★ Medium" or "★★★ Hard"
+
+# Each hint must tell players something the description doesn't.
+# The first hint costs 5 on Easy and Medium, and 10 on Hard.
+hints:
+  - content: "A nudge that adds something new."
+    cost: 5
+
+state: visible                        # "hidden" keeps it out of players' sight

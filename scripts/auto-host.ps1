@@ -17,6 +17,8 @@ param([switch]$AtSignIn)
 
 $ErrorActionPreference = 'Continue'
 $root = Split-Path -Parent $PSScriptRoot
+# The real CTF, 2nd Star. docker compose runs from its folder.
+$main = Join-Path $root '2nd-star'
 $logDir = Join-Path $root 'logs'
 $log = Join-Path $logDir 'auto-host.log'
 # Set when the files were moved to a new IP while the CTF was stopped, so CTFd
@@ -76,7 +78,7 @@ $mutex = New-Object Threading.Mutex($false, 'Local\STARS-auto-host')
 try { $owned = $mutex.WaitOne(0) } catch [Threading.AbandonedMutexException] { $owned = $true }
 if (-not $owned) { exit 0 }
 
-Push-Location $root
+Push-Location $main
 try {
     if ((Test-Path $log) -and (Get-Item $log).Length -gt 200KB) {
         $keep = Get-Content $log -Tail 500
@@ -109,7 +111,7 @@ try {
     $ip = Get-LanIp
     if (-not $ip) { exit 0 }
 
-    $bound = (Select-String -Path (Join-Path $root '.env') -Pattern '^CTF_BIND_IP=(.*)$').Matches[0].Groups[1].Value.Trim()
+    $bound = (Select-String -Path (Join-Path $main '.env') -Pattern '^CTF_BIND_IP=(.*)$').Matches[0].Groups[1].Value.Trim()
     $running = Test-CtfRunning
 
     if ($ip -ne $bound) {
@@ -124,7 +126,7 @@ try {
     }
     elseif ($running -and (Test-Path $pending)) {
         Write-Log "The CTF is running again: updating the addresses in CTFd to $ip."
-        docker compose run --rm --entrypoint python ctfcli scripts/update-connection-info.py 2>$null |
+        docker compose run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py . 2>$null |
             ForEach-Object { Write-Log "  $_" }
         if ($LASTEXITCODE -eq 0) { Remove-Item $pending -ErrorAction SilentlyContinue }
     }
