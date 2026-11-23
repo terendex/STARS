@@ -98,3 +98,7 @@ Upgrading CTFd or ctfcli may break things. Test an upgrade on a copy first, not 
 ## Line endings
 
 The scripts and configs run inside Linux containers, where Windows line endings break them. `.gitattributes` makes git keep LF line endings on every PC, and leaves player downloads (`dist/`, pictures, PDFs, captures) exactly as they are. If you add a file type that must not change, add it there. `.vscode/settings.json` makes VS Code save new files with LF line endings too, and `.vscode/extensions.json` recommends the YAML extension.
+
+## The tick or X next to commits on GitHub
+
+Each commit pushed to GitHub is checked by SonarQube Cloud (SonarCloud), a code-quality service, which marks it with a green tick or a red X. It only checks STARS's own code, the scripts and the CTFd plugin. `.sonarcloud.properties` tells it to skip every `challenges` folder, because the challenges are insecure on purpose. A red X never stops anything from working, and the CTFs don't depend on it. Click it on GitHub to see what SonarCloud found. Ask the repository's owner if you need access to its full report.
