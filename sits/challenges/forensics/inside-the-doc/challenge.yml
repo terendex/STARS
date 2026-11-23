@@ -1,0 +1,37 @@
+version: "0.1"
+name: "Inside the Doc"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  This surprise party plan is a Word document, but its photo was taken out before it was shared.
+
+  A `.docx` file is secretly a **zip archive**: a bundle of smaller files holding the text, the formatting and the pictures. When someone deletes a picture from the page, it can stay inside that bundle.
+
+  **Your goal:** look inside `party_plan.docx` (download it below) and find the picture that was taken off the page. The flag is written in it. Capitals don't matter. You don't need Word.
+
+  **Tools you may need to solve this level:** File Explorer, or 7-Zip
+files:
+  - dist/party_plan.docx
+flags:
+  - type: static
+    content: "FLAG{A_DOCX_IS_A_ZIP}"
+    data: case_insensitive
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Rename the file so it ends in `.zip` instead of `.docx`, then double-click it. If you can't see the extension in the name, turn on file name extensions in File Explorer: **View** > **Show** > **File name extensions**."
+    cost: 5
+  - content: "Pictures in a Word document live in the `word` folder, inside a folder called `media`."
+    cost: 5
+state: visible

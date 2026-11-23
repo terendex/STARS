@@ -2,7 +2,9 @@
 # Theta: 365 observation files with random names, one for every night of 2025.
 # Each holds a flag-shaped line, but only the file last changed on the night of
 # 12 August 2025 holds the real one. Players find it by date (ls -l or find).
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=theta
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

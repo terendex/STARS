@@ -1,0 +1,33 @@
+version: "0.1"
+name: "No Key Given"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  This message uses a **Vigenère cipher** again (like Family Name), but this time nobody tells you the keyword, and there's no riddle.
+
+  That's still not safe. When the message is long and the keyword is short, the keyword repeats many times, and the repeats leave patterns that can be measured. Free websites measure them for you and find the keyword on their own.
+
+  **Your goal:** decrypt `message.txt` (download it below) without being given the keyword, and read the flag at the end.
+files:
+  - dist/message.txt
+flags:
+  - "FLAG{th3_k3y_f0und_1ts3lf}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "Use [dcode's Vigenère Cipher tool](https://www.dcode.fr/vigenere-cipher). Paste the whole message into the **Vigenere ciphertext** box and press **AUTOMATIC DECRYPTION**. The results appear on the left, best first: each line shows a keyword and the message it gives."
+    cost: 10
+  - content: "The keyword is `BRUNCH`. In CyberChef, **Vigenère Decode** with that key shows the whole message."
+    cost: 20
+state: visible

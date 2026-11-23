@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Freeze Frame"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The program `notes` writes a secret note in memory, then burns it without ever printing it. The note is the flag, and it only exists for a moment.
+
+  To see it, you need to pause the program at the right moment and look inside. That's what a **debugger** does, and this server has one called `gdb`. In gdb, `info functions` lists the program's functions, and these have helpful names.
+
+  **Your goal:** stop `notes` before it burns the note, and read the flag from its memory.
+
+  gdb may warn that it can't find `notes.c`. That's normal: you have the program, not the code it was written from.
+
+  Log in with the command below and the password `reverse`.
+
+  **Commands you may need to solve this level:** `gdb`
+connection_info: ssh freeze@192.168.68.103 -p 2242
+flags:
+  - "FLAG{c4ught_b3f0r3_th3_burn}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Start with `gdb ./notes`. `break burn_note` tells gdb to pause when the program reaches that function, and `run` starts the program."
+    cost: 5
+  - content: "When it pauses at `burn_note`, type `info args`: it shows what the function was given, which is the note it's about to burn. Type `quit` to leave gdb."
+    cost: 5
+state: visible

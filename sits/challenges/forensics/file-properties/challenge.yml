@@ -1,0 +1,33 @@
+version: "0.1"
+name: "File Properties"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The board game club's minutes have nothing interesting on the page. But files also carry information about themselves, such as a title, an author and a subject. That information is called **metadata**.
+
+  **Your goal:** find the flag in the metadata of `club_minutes.pdf` (download it below).
+
+  **Tools you may need to solve this level:** A PDF viewer, such as your web browser
+files:
+  - dist/club_minutes.pdf
+flags:
+  - "FLAG{m3t4d4t4_kn0ws_m0r3}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "PDF viewers list metadata under **Document properties**. In Chrome's PDF viewer, it's in the ⋮ menu at the top right. In Firefox, it's in the » menu. Searching the web for \"PDF metadata viewer\" also finds online tools."
+    cost: 5
+  - content: "No luck with a viewer? Open the PDF in Notepad and find `/Subject`. The value after it, between `<` and `>`, is written in hex. Paste it into [CyberChef](https://gchq.github.io/CyberChef/) and use **From Hex**."
+    cost: 5
+state: visible

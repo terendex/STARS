@@ -18,7 +18,7 @@ COPY banner.txt host-key[s] /build/host-keys/
 # if they were saved with Windows line endings.
 RUN sed -i 's/\r$//' /etc/ssh/sshd_config /etc/ssh/banner.txt /build/levels/*.sh \
     && groupadd players \
-    && for level in /build/levels/*.sh; do bash "$level"; done \
+    && for level in /build/levels/*.sh; do bash "$level" || { echo "LEVEL FAILED: $level" >&2; exit 1; }; done \
     && if ls /build/host-keys/ssh_host_*_key >/dev/null 2>&1; then \
            cp /build/host-keys/ssh_host_* /etc/ssh/ \
            && chmod 600 /etc/ssh/ssh_host_*_key && chmod 644 /etc/ssh/ssh_host_*_key.pub; \

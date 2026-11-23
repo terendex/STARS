@@ -1,0 +1,37 @@
+version: "0.1"
+name: "Common Password"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  Someone leaked the coffee club's staff login, but the password isn't written out. It's stored as an **MD5 hash**.
+
+  A hash is like a fingerprint of a password: it's easy to make from the password, and impossible to turn back into it. But people pick the same passwords over and over, and websites have already hashed billions of common ones and kept the results in huge lookup tables. If a password is common, its hash is in there.
+
+  **Your goal:** find the password behind the hash in `leaked.txt` (download it below). The flag is `FLAG{password}`, with the password in place of the word `password`.
+
+  **Tools you may need to solve this level:** [CrackStation](https://crackstation.net/), [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/leaked.txt
+flags:
+  - type: static
+    content: "FLAG{sunshine}"
+    data: case_insensitive
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Paste the hash into [CrackStation](https://crackstation.net/), tick the box to show you're not a robot, and press **Crack Hashes**."
+    cost: 5
+  - content: "It's one of the most common passwords in the world: one word, the thing you hope for on a beach day. To check a guess, CyberChef's **MD5** turns any word into its hash. If it matches the one in `leaked.txt`, that's the password."
+    cost: 5
+state: visible

@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Odd One Out"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Linux"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  `laundry.log` lists every sock that went through the wash. Each line has a time, a basket, the word `sock` and the sock's code. Every sock has a matching pair, so its code appears twice, **except one**. The lonely sock's code is the flag.
+
+  **Your goal:** find the code that appears only once.
+
+  Log in with the command below and the password `pairsonly`.
+
+  **Commands you may need to solve this level:** `cut`, `sort`, `uniq`
+connection_info: ssh oddone@192.168.68.103 -p 2240
+flags:
+  - "FLAG{th3_l0n3ly_s0ck}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Every line has its own time and basket, so no two whole lines are the same. `cut -d' ' -f4 laundry.log` keeps only the 4th column, the sock code."
+    cost: 5
+  - content: "`uniq -u` prints the lines that appear only once, but it only compares neighbouring lines, so sort first: `cut -d' ' -f4 laundry.log | sort | uniq -u`."
+    cost: 10
+state: visible

@@ -1,0 +1,32 @@
+version: "0.1"
+name: "Spaced Out"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Linux"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The flag is in a file whose name has spaces and brackets in it. Try to `cat` it the normal way and the terminal gets confused: it thinks each word is a different file.
+
+  **Your goal:** read the flag in the file whose name starts with `my secret plans`.
+
+  Log in with the command below and the password `spacebar`.
+
+  **Commands you may need to solve this level:** `ls`, `cat`
+connection_info: ssh spaced@192.168.68.103 -p 2240
+flags:
+  - "FLAG{qu0t3s_h4ndl3_sp4c3s}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Put the whole name inside quotes, so the terminal sees it as one name: `cat \"my secret plans (final).txt\"`. Or type `cat my` and press Tab: the terminal finishes the name for you."
+    cost: 5
+state: visible

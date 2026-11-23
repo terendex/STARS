@@ -3,6 +3,7 @@
 .ctf/config
 demo/.ctf/config
 classic/.ctf/config
+sits/.ctf/config
 LOGINS.txt
 
 # SSH host keys copied out of the running boxes, so a rebuild keeps the same

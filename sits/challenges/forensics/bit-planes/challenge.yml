@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Bit Planes"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  This photo of city lights hides a **picture inside the picture**.
+
+  Every pixel has red, green and blue values, each made of 8 bits. Take just one bit of one colour from every pixel, show each pixel in black or white depending on whether that bit is 0 or 1, and you get a black-and-white picture called a **bit plane**. Here, the lowest bit of one colour was replaced with a drawing of the flag. Nobody can see the change in the photo, but that bit plane shows it plainly.
+
+  **Your goal:** find the right bit plane of `city_lights.png` (download it below) and read the flag off it. Capitals don't matter.
+files:
+  - dist/city_lights.png
+flags:
+  - type: static
+    content: "FLAG{HIDDEN_IN_A_BIT_PLANE}"
+    data: case_insensitive
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "[CyberChef](https://gchq.github.io/CyberChef/)'s **View Bit Plane** shows one bit plane at a time: drop the PNG into **Input** and add View Bit Plane. Leave **Bit** at `0` (the lowest bit), and try each **Colour**."
+    cost: 10
+  - content: "Set **Colour** to `Red` and **Bit** to `0`. The flag appears in black on white in the Output."
+    cost: 20
+state: visible

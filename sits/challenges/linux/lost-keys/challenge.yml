@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Lost Keys"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Linux"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Somebody lost their keys somewhere in the `house` folder. It has four floors, six rooms on each floor and five hiding spots in every room, so looking in each folder by hand would take ages.
+
+  **Your goal:** find the file called `keys.txt` and read the flag inside it.
+
+  Log in with the command below and the password `jinglejingle`. `cd name` goes into a folder and `cd ..` comes back out, but there's a faster way: a command that searches every folder at once.
+
+  **Commands you may need to solve this level:** `find`, `cat`
+connection_info: ssh lostkeys@192.168.68.103 -p 2240
+flags:
+  - "FLAG{f1nd_f0und_th3_k3ys}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "`find` searches folders for files. `find ~ -name keys.txt` searches your whole home folder for that name and prints where the file is."
+    cost: 5
+  - content: "Read it with `cat` followed by the path `find` printed, which starts `/home/lostkeys/house/`."
+    cost: 5
+state: visible

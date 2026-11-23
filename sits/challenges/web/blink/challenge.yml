@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Blink"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Web"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The library's lost and found page holds the flag, but the instant it loads, it sends your browser somewhere else. That's called a **redirect**, and it happens so fast you never see the first page. Even pressing Ctrl+U shows you the code of the page you ended up on, not the one you wanted.
+
+  The trick is to read the first page without letting your browser follow the redirect.
+
+  **Your goal:** read the page at the address below before your browser leaves it. The flag is on that page.
+
+  **Tools you may need to solve this level:** View page source, your browser's developer tools (F12), or `curl.exe` in PowerShell
+connection_info: http://192.168.68.103:8307
+flags:
+  - "FLAG{r3d1r3ct_t00_f4st}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "If you type `view-source:` in front of an address in the address bar, the browser shows that page's code without running it, so nothing redirects you. Type the address yourself rather than pressing Ctrl+U."
+    cost: 5
+  - content: "Another way: in PowerShell, `curl.exe` followed by the address prints the page's code and doesn't follow this kind of redirect."
+    cost: 5
+state: visible

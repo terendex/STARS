@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Backwards"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The bakery's recipe vault is a Python program, `backwards.py`. Python programs are plain text, so you can read every line of it, including the line that checks your password.
+
+  **Your goal:** read the program, work out the password it wants, then run `python3 backwards.py` and type it in. The program prints the flag.
+
+  Not sure what a piece of Python does? Try it out: type `python3` on its own to open Python, type the piece you're unsure about, such as `"hello"[::-1]`, and press Enter to see the result. Type `exit()` to leave.
+
+  Log in with the command below and the password `reverse`.
+
+  **Commands you may need to solve this level:** `cat`, `python3`
+connection_info: ssh backwards@192.168.68.103 -p 2242
+flags:
+  - "FLAG{r34d_1t_b4ckw4rds}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "`[::-1]` reverses text, so the password is `SECRET` written backwards. To reverse it without typos, type `python3`, then the text from `SECRET` in quotes followed by `[::-1]`. CyberChef's **Reverse** works too."
+    cost: 5
+state: visible

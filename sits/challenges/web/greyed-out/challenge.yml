@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Greyed Out"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Web"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  It's Free Cookie Friday, but the **Claim the free cookie** button is greyed out. The page switched it off, and that switch lives in the page your browser downloaded, which means it's in your hands. Your browser's developer tools let you change any page you're looking at.
+
+  Whether the server double-checks a claim is a different question.
+
+  **Your goal:** open the page at the address below, switch the button back on, and press it. The flag appears.
+
+  **Tools you may need to solve this level:** Your browser's developer tools (F12)
+connection_info: http://192.168.68.103:8304
+flags:
+  - "FLAG{gr3y3d_0ut_but_n0t_l0ck3d}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Right-click the button and choose **Inspect**. The button's code is highlighted, and it contains the word `disabled`."
+    cost: 5
+  - content: "In the Elements panel, double-click `disabled` and delete it (or right-click the line, choose **Edit as HTML** and remove it), press Enter, then click the button on the page."
+    cost: 5
+state: visible

@@ -1,7 +1,9 @@
 #!/bin/bash
 # Lambda: two copies of a catalog, identical except for one line. Every line has
 # a fake flag, so grep can't help; diff finds the changed line at once.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=lambda
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"
@@ -29,8 +31,8 @@ for (( i = 1; i <= 2400; i++ )); do
 done
 
 # Fail the build unless diff shows exactly one changed line holding the flag.
-[ "$(diff "$old" "$new" | grep -c '^>')" -eq 1 ]
-diff "$old" "$new" | grep '^>' | grep -qF "$FLAG"
+[ "$({ diff "$old" "$new" || true; } | grep -c '^>')" -eq 1 ]
+{ diff "$old" "$new" || true; } | grep '^>' | grep -qF "$FLAG"
 
 chown -R "root:$user" "$home"
 chmod 750 "$home"

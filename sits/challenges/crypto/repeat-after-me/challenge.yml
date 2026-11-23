@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Repeat After Me"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  This message is written in hex, but decoding the hex only gives you gibberish. It was also encrypted with **XOR**, using a key that repeats for the whole message. XOR undoes itself, so the key that locked the message also unlocks it.
+
+  The key is four capital letters: a food so popular it has its own day of the week (\_\_\_\_ Tuesday).
+
+  **Your goal:** decode the hex in `message.txt` (download it below), then XOR the result with the key to read the flag. CyberChef's **XOR** reads its key as hex unless you switch the key's format to **UTF8**, so switch it before typing letters.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/) (`From Hex`, `XOR`)
+files:
+  - dist/message.txt
+flags:
+  - "FLAG{t4c0_tu3sd4y_x0r}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Not sure of the food? Work the key out instead. The message opens with the flag, so XOR the decoded hex with `FLAG{` (format UTF8). The first characters of the output spell the key, which then starts to repeat."
+    cost: 5
+  - content: "The key is `TACO`. Recipe: **From Hex**, then **XOR** with key `TACO` and format **UTF8**."
+    cost: 5
+state: visible

@@ -1,0 +1,8 @@
+
+  SITS Capture The Flag Competition 2026
+  Reversing box
+
+  Tools ready to use: strings, ltrace, gdb, objdump, python3.
+  Home folders are read-only.
+  If you need scratch space, use /tmp.
+

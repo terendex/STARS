@@ -3,7 +3,9 @@
 # beacon service in docker-compose.yml), on one port between 4000 and 4999.
 # Only this server can reach it, so players scan for it with nc -z, then
 # connect. This account just needs a shell; nc is installed for everyone.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=umi11
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

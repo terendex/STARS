@@ -2,6 +2,8 @@
 
 A Jeopardy-style CTF hosted from one PC. Each category is a constellation and each challenge is one of its stars. Players join over the same Wi-Fi. Only the admin can see the scoreboard.
 
+Made by Axel Jonas C. Tangalin. This folder also holds a separate competition CTF, [SITS Capture The Flag Competition 2026](#sits-capture-the-flag-competition-2026).
+
 **This folder contains every flag and both answer sheets. Keep it in a private repo, and share it only with organizers.** See [Giving STARS to someone else](#giving-stars-to-someone-else).
 
 ## What players use
@@ -64,7 +66,8 @@ When it's done, [register the players](#registering-players), then test from a p
 STARS never starts by itself when the PC starts, and Docker doesn't restart its containers. Use the two buttons on the desktop:
 
 - **Start STARS** starts Docker Desktop if it's closed, then the real CTF on this PC's current network. When it's done, its window shows the players' address and the Mission Clock's.
-- **Stop STARS** stops the real CTF, STARS Classic and the demo. Accounts, scores and the clock are kept.
+- **Start SITS CTF** does the same for the [SITS competition](#sits-capture-the-flag-competition-2026).
+- **Stop STARS** stops the real CTF, STARS Classic, the demo and SITS. Accounts, scores and the clock are kept.
 
 First-time setup puts the buttons there. To add them again, for example after moving this folder, run `scripts\install-shortcuts.ps1`. STARS Classic and the demo start with their own scripts (see [Demo CTF](#demo-ctf) and [STARS Classic](#stars-classic)).
 
@@ -204,6 +207,37 @@ scripts\classic.ps1 sync       # after editing a challenge.yml in classic\challe
 The admin password and the players' logins are in `classic\LOGINS.txt`, which stays out of git, and the solutions are in `classic\ANSWERS.md`. Signing in to Classic doesn't sign you out of the real CTF or the demo.
 
 Classic doesn't start when you sign in, and first-time setup doesn't set it up, so a fresh install stays small. If your IP changes while it's running, it moves with the real CTF. To clear its scores, use **Admin Panel > Config > Reset** in Classic's CTFd, as in [Resetting](#resetting).
+
+## SITS Capture The Flag Competition 2026
+
+`sits\` is a separate, casual-themed 4-hour competition, made by Axel Jonas C. Tangalin. Its flags look like `FLAG{...}`, and its challenges remix STARS's with new passwords, keys, files and flags, so players who did the orientations still have something to solve. It's aimed at beginners: every challenge was played by following only its description and hints. There are **83 challenges**.
+
+| Category | Challenges | Where |
+|---|---|---|
+| Linux | 15 (6 Easy, 6 Medium, 3 Hard) | `ssh <account>@<host> -p 2240` |
+| Web | 15 | `http://<host>:8301` to `8315` |
+| Crypto | 15 | downloads |
+| Forensics | 15 | downloads |
+| Reversing | 15 | `ssh <account>@<host> -p 2242`, password `reverse` |
+| Pwn | 8 (5 Easy, 2 Medium, 1 Hard) | `nc <host> 9041` to `9048`, or SSH gate accounts on 2240 (password `pwnit`) |
+
+The Pwn programs are the 8 from Scorpius, reused unchanged except for their flags, so their own menus and text still mention stars. Each has an SSH gate account on 2240 (password `pwnit`) that drops the player straight into the program, for Windows players without `nc`. Return to Sender needs raw bytes, so it has no gate: players use `nc` from a Linux challenge account, where `printf` builds the bytes.
+
+It has the same features as 2nd Star: [dynamic scoring](#scoring), the [mission clock](#mission-clock) (no countdown for players) with music on the projector, [first blood and help requests](#first-blood-and-help-requests), hidden scores, and teams of 3. Its admin is the same as the real CTF's. CTFd is on `http://<host>:8300`, and the projector page is `http://localhost:8003/timer` on the CTF PC.
+
+```powershell
+scripts\sits.ps1 setup      # done already on this PC: the admin and the challenges
+scripts\sits.ps1 teams 15   # makes 15 teams of 3; logins go in sits\LOGINS.txt
+scripts\sits.ps1 start      # or the Start SITS CTF button
+scripts\sits.ps1 stop       # or Stop STARS; keeps accounts and scores
+scripts\sits.ps1 sync       # after editing a challenge.yml in sits\challenges
+```
+
+On Linux, use `bash scripts/sits.sh` with the same words, and open ports 8300, 8301-8315, 9041-9048, 2240 and 2242 in ufw.
+
+The answer key is `sits\ANSWERS.md`: a step-by-step walkthrough of all 83 challenges, with the outputs a player sees. The Crypto and Forensics downloads are made by `make_files.py` in their folders, which also checks each one can be solved. The SSH and Pwn programs check themselves when their boxes are built. The Pwn programs' C source is in each `sits\challenges\pwn\<star>\dist\`, and their flags in each `src\flag.txt`.
+
+The SSH boxes' host keys are saved in `sits\challenges\linux\linux-box\host-keys\` and `sits\challenges\reversing\rev-box\host-keys\`, as in [Troubleshooting](#troubleshooting).
 
 ## If your IP changes
 
@@ -351,7 +385,7 @@ Use a **private** GitHub repository, because the challenge files and answer shee
 
 **What's in git:** all the challenges and their downloads, the Docker setup, the scripts, the logo, and both answer sheets. `.gitattributes` makes git deliver the player downloads byte for byte. Without it, Git for Windows would change some of them, and the two PDFs would break.
 
-**What isn't:** passwords and tokens (`.env`, `.ctf/config`, `LOGINS.txt`, and the same files in `demo\` and `classic\`), the SSH boxes' keys (`host-keys\`) and logs. Setup makes new ones on each PC. Your CTFd's accounts, teams and solves aren't in git either, because they live in Docker on your PC. The other person's setup starts with a fresh, empty CTF.
+**What isn't:** passwords and tokens (`.env`, `.ctf/config`, `LOGINS.txt`, and the same files in `demo\`, `classic\` and `sits\`), the SSH boxes' keys (`host-keys\`) and logs. Setup makes new ones on each PC. Your CTFd's accounts, teams and solves aren't in git either, because they live in Docker on your PC. The other person's setup starts with a fresh, empty CTF.
 
 To put it on GitHub, create an empty **private** repository on github.com, then run this from this folder:
 
@@ -372,3 +406,7 @@ Then add the other organizer under the repository's **Settings > Collaborators**
 - Ports are published on the address in `CTF_BIND_IP` only, so they aren't exposed on Radmin VPN or Tailscale.
 - Challenge containers have read-only filesystems, limited capabilities, and CPU, memory and process limits.
 - As on OverTheWire, players on the SSH box can see each other's processes and anything left world-readable in `/tmp`.
+
+## Credits
+
+STARS (2nd Star, STARS Classic and the demo) and the SITS Capture The Flag Competition 2026 were made by Axel Jonas C. Tangalin.

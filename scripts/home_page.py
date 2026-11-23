@@ -1,6 +1,6 @@
-"""The CTFd home pages for the real CTF ("main"), STARS Classic ("classic") and
-the demo ("demo"), with a
-short "How to play" guide for beginners.
+"""The CTFd home pages for the real CTF ("main"), STARS Classic ("classic"), the
+demo ("demo") and the SITS competition ("sits"), with a short "How to play"
+guide for beginners and the credit line.
 
 setup-ctfd.py uses these when it sets up a fresh CTFd. After editing them,
 push the new page to a running CTFd. Run it from the folder whose .ctf/config
@@ -9,6 +9,7 @@ points at that CTFd (it reads the admin token from there and never prints it):
     docker compose run --rm --entrypoint python ctfcli scripts/home_page.py main
     docker compose -f classic/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py classic
     docker compose -f demo/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py demo
+    docker compose -f sits/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py sits
 """
 import configparser
 import pathlib
@@ -23,6 +24,18 @@ START_HERE = [
     ("Shaula", "Scorpius", "Pwn"),
     ("Thuban", "Draco", "Reversing"),
 ]
+
+# SITS's walkthrough levels: (challenge, category).
+SITS_START_HERE = [
+    ("Welcome Mat", "Linux"),
+    ("View Source", "Web"),
+    ("Not So Secret", "Crypto"),
+    ("Photo Notes", "Forensics"),
+    ("Secret Menu", "Pwn"),
+    ("Strings Attached", "Reversing"),
+]
+
+CREDIT = "Made by Axel Jonas C. Tangalin"
 
 
 def page(heading, text, buttons, steps, extra):
@@ -52,16 +65,17 @@ def page(heading, text, buttons, steps, extra):
             <li>To copy a flag out of PowerShell, highlight it with the mouse, then right-click.</li>
             <li>If a program seems stuck, press Ctrl+C to stop it. Type <code>exit</code> to leave a server.</li>
         </ul>
+        <p class="text-muted small mt-5 mb-0">{CREDIT}</p>
     </div>
 </div>"""
 
 
-def steps(scoring, sharing, clock=False):
+def steps(scoring, sharing, clock=False, flag="STARS{...}"):
     found = [
         f"Open <b>Challenges</b>. Each category is a constellation, and each challenge is one of its stars. {scoring}",
         "Click a challenge and read it. It tells you your goal. The address, login or file you need is in the same "
         "window, below the description.",
-        "Find the flag. Every flag looks like <code>STARS{...}</code>.",
+        f"Find the flag. Every flag looks like <code>{flag}</code>.",
         "Paste the flag into the box at the bottom of the challenge and press <b>Submit</b>. Copy it exactly: each "
         "challenge allows 3 wrong tries, and typos count.",
         f"Stuck? Each challenge has hints, but they cost points, so try first. {sharing}",
@@ -74,6 +88,10 @@ def steps(scoring, sharing, clock=False):
 
 START_LIST = "\n".join(
     f"            <li><b>{star}</b> in {constellation} ({skill})</li>" for star, constellation, skill in START_HERE
+)
+
+SITS_START_LIST = "\n".join(
+    f"            <li><b>{name}</b> in {category}</li>" for name, category in SITS_START_HERE
 )
 
 PAGES = {
@@ -111,6 +129,25 @@ PAGES = {
 {START_LIST}
         </ul>""",
     ),
+    "sits": page(
+        "SITS Capture The Flag Competition 2026",
+        "Log in with the account your organizer gave you, then open Challenges. You have 4 hours.",
+        [("Log in", "/login", "btn-primary"), ("Challenges", "/challenges", "btn-outline-secondary")],
+        steps(
+            "★ Easy challenges start at 30 points, ★★ Medium at 60, and ★★★ Hard at 100. Every time another "
+            "team solves one, it loses 1, 3 or 5 points for every team that has it, so the rarer the solve, "
+            "the more it's worth.",
+            "Your team shares its solves, hints and wrong tries. Stuck for a while? Press <b>Ask for help</b> "
+            "in the corner of the challenges page and an organizer will come to you.",
+            clock=True,
+            flag="FLAG{...}",
+        ),
+        f"""        <h3>New here? Start with these</h3>
+        <p>Each category has one challenge that walks you through every step:</p>
+        <ul>
+{SITS_START_LIST}
+        </ul>""",
+    ),
     "demo": page(
         "STARS CTF Demo",
         "No login needed. You're already playing as the Demo Team.",
@@ -128,7 +165,7 @@ if __name__ == "__main__":
     import requests
 
     if len(sys.argv) != 2 or sys.argv[1] not in PAGES:
-        sys.exit("Usage: home_page.py main|classic|demo")
+        sys.exit("Usage: home_page.py main|classic|demo|sits")
     config = configparser.ConfigParser()
     config.read(pathlib.Path.cwd() / ".ctf" / "config")
     url = config["config"]["url"].rstrip("/")

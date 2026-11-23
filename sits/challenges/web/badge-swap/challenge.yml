@@ -1,0 +1,32 @@
+version: "0.1"
+name: "Badge Swap"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Web"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  The festival's backstage area is only for tickets with a **vip** seat **and** backstage access. Yours has neither. The site reads your ticket from a cookie, and you can edit your own cookies, but this time the cookie holds more than one thing, and two of them have to change.
+
+  **Your goal:** open the festival site at the address below and change your ticket so the site lets you backstage. The flag is there.
+
+  The cookie is called `ticket`. It's under **Application** > **Cookies** in developer tools (F12), or **Storage** > **Cookies** in Firefox. Its value is encoded, and the page shows what it reads from it, so you can check your work.
+connection_info: http://192.168.68.103:8313
+flags:
+  - "FLAG{tw0_f13lds_sw4pp3d}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "The value is Base64. [CyberChef](https://gchq.github.io/CyberChef/)'s **From Base64** shows JSON: names and values in quotes, inside curly brackets. Change `standing` to `vip` and `false` to `true`, keeping every quote and bracket, then use **To Base64** and paste the result in as the cookie's value."
+    cost: 10
+  - content: "The JSON to encode is `{\"name\": \"guest\", \"seat\": \"vip\", \"backstage\": true}`. **To Base64** turns it into `eyJuYW1lIjogImd1ZXN0IiwgInNlYXQiOiAidmlwIiwgImJhY2tzdGFnZSI6IHRydWV9`. Paste that as the cookie's value, press Enter, and refresh the page."
+    cost: 20
+state: visible

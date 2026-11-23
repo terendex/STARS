@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Letter by Letter"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The gym locker, `letters.py`, never writes its password down. It checks your guess one letter at a time, in a jumbled order, so the password doesn't read straight off the screen.
+
+  In Python, `guess[0]` means the first letter of `guess`, `guess[1]` the second, and so on: Python counts positions from 0, not 1.
+
+  **Your goal:** work out the password from the checks, then run `python3 letters.py` and type it in. The program prints the flag.
+
+  Log in with the command below and the password `reverse`.
+
+  **Commands you may need to solve this level:** `cat`, `python3`
+connection_info: ssh letters@192.168.68.103 -p 2242
+flags:
+  - "FLAG{c0unt1ng_st4rts_4t_z3r0}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "A line like `if guess[3] != \"k\"` means \"the letter at position 3 must be k\". `len(guess) != 10` means the password has 10 letters. Write the positions 0 to 9 in a row and fill in each letter under its number."
+    cost: 5
+state: visible

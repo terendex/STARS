@@ -1,0 +1,32 @@
+version: "0.1"
+name: "The Union"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Web"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  The Music Library's search has the same weakness as Sign In Anyway: it pastes whatever you type into a database query. There's no login to get past this time. The flag is stored in **another table** in the same database, and you don't know that table's name.
+
+  The library runs on **SQLite**. `UNION SELECT` lets you add rows from another query to the search results, as long as your query returns as many columns as the results table shows.
+
+  **Your goal:** open the library at the address below, find the hidden table's name, then use the search box to read the flag out of it.
+connection_info: http://192.168.68.103:8314
+flags:
+  - "FLAG{un10n_s3l3ct_f0und_th3_st4sh}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "Count the columns in the results: there are 3. Search for `' UNION SELECT 1, 2, 3 -- ` (with a space at the end). The numbers appear as a row, which shows the injection works. SQLite lists its tables in one called `sqlite_master`."
+    cost: 10
+  - content: "Search `' UNION SELECT name, sql, 3 FROM sqlite_master -- ` to see every table's name and columns. Then search `' UNION SELECT item, value, 3 FROM ` followed by the hidden table's name and ` -- `."
+    cost: 20
+state: visible

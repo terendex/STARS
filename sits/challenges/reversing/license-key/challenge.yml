@@ -1,0 +1,36 @@
+version: "0.1"
+name: "License Key"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  Your photo editor's free trial has run out, and it wants a license key. There's no single right key: the program has a rule, and **any** key that follows the rule works. Making your own valid key is called writing a **keygen**.
+
+  The program's messages tell you which part of the rule a key broke, but not the whole rule. The rest is in its instructions.
+
+  **Your goal:** work out the rule, make a key that follows it, and give it to `./license`. The program prints the flag.
+
+  gdb may warn that it can't find `license.c`. That's normal: you have the program, not the code it was written from.
+
+  Log in with the command below and the password `reverse`.
+connection_info: ssh license@192.168.68.103 -p 2242
+flags:
+  - "FLAG{m4d3_my_0wn_k3yg3n}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "Try a few keys and read the messages. Then in `gdb ./license`, `disassemble check_key` shows the checks as `cmp` lines. Numbers after `$` are in hexadecimal."
+    cost: 10
+  - content: "`$0x8` is the length (8 characters), `$0x2f` and `$0x39` check that each one is a digit, and `$0x2a` is the total: 2a in hexadecimal is 42. Any 8 digits that add up to 42 work, for example `99996000`."
+    cost: 10
+state: visible

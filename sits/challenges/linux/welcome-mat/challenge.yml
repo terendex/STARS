@@ -1,0 +1,41 @@
+version: "0.1"
+name: "Welcome Mat"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Linux"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Start here if you've never used a terminal before. A lot of hacking happens on servers you control by typing commands, and this is your first one.
+
+  **Your goal:** log in to the server and read the flag in your home folder. Every flag in this competition looks like `FLAG{...}`.
+
+  **How to do it:**
+
+  1. Open a terminal. On Windows, that's PowerShell: press the Windows key, type `powershell` and press Enter.
+  2. Type the command below and press Enter.
+  3. If it asks whether you want to continue connecting, type `yes` and press Enter.
+  4. Enter the password `doormat`. Nothing appears as you type it, which is normal.
+  5. Type `ls` and press Enter. It lists the files in your home folder.
+  6. Type `cat hello.txt` and press Enter to read the file.
+
+  **Then:** copy the flag into the box below. To copy from PowerShell, highlight the text with the mouse, then right-click. Type `exit` to leave the server.
+
+  **Commands you may need to solve this level:** `ssh`, `ls`, `cat`
+connection_info: ssh welcome@192.168.68.103 -p 2240
+flags:
+  - "FLAG{w3lc0m3_t0_th3_sh3ll}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Type the file name exactly: `cat hello.txt`. Linux treats capital and small letters as different."
+    cost: 5
+state: visible

@@ -1,5 +1,7 @@
 # STARS Classic answer sheet
 
+Made by Axel Jonas C. Tangalin.
+
 **Organizers only. Don't share this file or show it on screen during the event.**
 
 These are the first orientation's 36 challenges, as they were, running as STARS Classic on `http://192.168.68.103:8200`. Classic uses its own ports, so every address below differs from the real CTF's: SSH on 2230, Draco on 2232, Orion on 8201 to 8206, and Scorpius on 9031 to 9036. The second orientation's challenges are in `ANSWERS.md` in the main folder.

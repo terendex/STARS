@@ -3,7 +3,9 @@
 # was logged more often than any other. Each line also has its own time and
 # sensor, so players have to pull out the reading before sort and uniq -c can
 # count anything. uniq -u (the trick from the first orientation) finds nothing.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=urodelus
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

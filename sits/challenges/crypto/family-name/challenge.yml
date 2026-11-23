@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Family Name"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  This message uses a **Vigenère cipher**, which is like a Caesar cipher except that each letter is shifted by a different amount, set by a keyword.
+
+  The keyword is seven letters long: the family name of the famous yellow cartoon family from Springfield.
+
+  **Your goal:** decrypt `message.txt` (download it below) with the keyword and read the flag. A wrong keyword just gives gibberish, and it doesn't use up any of your flag attempts.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/) (`Vigenère Decode`)
+files:
+  - dist/message.txt
+flags:
+  - "FLAG{f4m1ly_n4m3_unl0cks_1t}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Not sure of the family? Work the keyword out instead. The cipher only changes letters, so the `{` is still there, and the four letters right before it decrypt to `FLAG`. Put just those four letters through **Vigenère Decode** with `FLAG` as the key, and the output is the start of the keyword."
+    cost: 5
+  - content: "The keyword is `SIMPSON`."
+    cost: 5
+state: visible

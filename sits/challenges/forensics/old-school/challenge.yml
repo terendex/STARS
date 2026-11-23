@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Old School"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  This is a recording of network traffic while someone logged in to the office file server. The file server uses **FTP**, an old way of sending files that doesn't encrypt anything, not even passwords.
+
+  **Your goal:** find the password they logged in with. That password is the flag.
+
+  Download the recording, `ftp_capture.pcap`, below and open it in [Wireshark](https://www.wireshark.org/).
+
+  **Tools you may need to solve this level:** Wireshark
+files:
+  - dist/ftp_capture.pcap
+flags:
+  - "FLAG{ftp_n3v3r_h1d3s_p4ssw0rds}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "In Wireshark, type `ftp` in the filter bar and press Enter. Each line is one command or reply. Look for the commands that send a password."
+    cost: 5
+  - content: "FTP sends the password in a `PASS` command. There are two: the first login failed (the reply says `530 Login incorrect`), the second worked."
+    cost: 10
+state: visible

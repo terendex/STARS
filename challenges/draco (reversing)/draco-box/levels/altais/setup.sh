@@ -1,7 +1,9 @@
 #!/bin/bash
 # Altais (Medium): the flag only exists in memory, between decode_message() and
 # scrub_message(). Players stop the program in gdb and read it.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=altais
 FLAG='STARS{4lt41s_p4us3d_m1d_m3ss4g3}'

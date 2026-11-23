@@ -1,6 +1,7 @@
 version: "0.1"
 name: "Kuma"
-author: "STARS"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
 category: "Draco (Reversing)"
 type: standard
 value: 30

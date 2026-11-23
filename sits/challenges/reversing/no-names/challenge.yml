@@ -1,0 +1,34 @@
+version: "0.1"
+name: "No Names"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  The program `nonames` has had all its own names scrubbed off (it's **stripped**), so gdb's `break` won't work with any of its functions' names. For a moment, it decodes the flag into memory, then it wipes it.
+
+  But it still uses ready-made **library functions**, and those keep their names. One of them does the wiping.
+
+  **Your goal:** catch the flag in memory before it's wiped.
+
+  Log in with the command below and the password `reverse`.
+connection_info: ssh nonames@192.168.68.103 -p 2242
+flags:
+  - "FLAG{n0_n4m3s_n0_pr0bl3m}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "Run `ltrace ./nonames` to see which library functions it calls. `memset` fills memory with zeros: that's the wipe. gdb can pause at a library function by its name."
+    cost: 10
+  - content: "`gdb ./nonames`, then `break memset`, then `run`. gdb shows the pause as `?? ()` in `libc.so.6`, because the library's own names are scrubbed too, but it's memset. The address of the memory being wiped is in a register called `rdi`, and `x/s $rdi` prints it as text."
+    cost: 10
+state: visible

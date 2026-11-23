@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Echo Echo"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Pwn"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The program repeats your message back to you. In C, `printf` treats codes like `%p` and `%s` as instructions to read data from memory, and this program passes your message straight to it. This is called a **format string** bug.
+
+  **Your goal:** the flag is sitting in the program's memory, but the program never prints it on its own. Use the bug to read it out.
+
+  **How to connect:** Windows doesn't come with `nc`, so open a terminal (PowerShell) and run the command below. It uses the password `pwnit` and takes you straight into the program, with no shell. On a Mac or Linux, or if you have `nc` installed, `nc IP 9047` works the same way.
+
+  The program's source code is attached below as a download. Reading it is how you find the weakness.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`
+connection_info: ssh echoecho@192.168.68.103 -p 2240
+files:
+  - dist/acrab.c
+flags:
+  - "FLAG{3ch0_3ch0_l34k3d}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Type `%p %p %p %p` as your message and you'll see values from memory instead of your text. That's the bug working."
+    cost: 5
+  - content: "`%7$s` means \"take the 7th value and print whatever text it points to\". Try the numbers going up: `%1$s`, `%2$s`, and so on. The flag's pointer is well down the list, past `%25$s`. A blank line or a disconnect just means that value wasn't a text pointer, so reconnect and try the next number."
+    cost: 10
+state: visible

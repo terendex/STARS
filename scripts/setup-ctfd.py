@@ -1,5 +1,5 @@
 """One-time setup for a fresh CTFd: the real CTF ("main"), STARS Classic
-("classic") or the demo ("demo").
+("classic"), the demo ("demo") or the SITS competition ("sits").
 
 scripts/setup.ps1 and setup.sh run this for the real CTF, and demo.ps1 and
 demo.sh run it for the demo. Each starts CTFd on this PC only first, because the
@@ -9,12 +9,18 @@ the folder whose .ctf/config it writes (the STARS folder, or demo/):
     python scripts/setup-ctfd.py main
     python ../scripts/setup-ctfd.py classic
     python ../scripts/setup-ctfd.py demo
+    python ../scripts/setup-ctfd.py sits
+
+The admin is called "admin" with a new random password, unless the environment
+variables STARS_ADMIN_NAME and STARS_ADMIN_PASSWORD say otherwise (sits.ps1
+passes the real CTF's admin, so all the CTFs share one admin login).
 
 It finishes CTFd's setup wizard with the event's rules, uploads the STARS logo,
 makes an API token for ctfcli, and writes .ctf/config listing every challenge.
 Every password goes into LOGINS.txt next to it, and none are printed.
 """
 import datetime
+import os
 import pathlib
 import re
 import secrets
@@ -51,6 +57,19 @@ PROFILES = {
         "configs": {"team_creation": "false", "team_disbanding": "disabled"},
         "demo_team": False,
     },
+    "sits": {
+        "ctf_name": "SITS Capture The Flag Competition 2026",
+        "ctf_description": "A 4-hour capture the flag competition. Made by Axel Jonas C. Tangalin.",
+        # Blue, so SITS is never mistaken for 2nd Star (dark), Classic (green)
+        # or the demo (purple).
+        "theme_color": "#1f5fa8",
+        "home": PAGES["sits"],
+        "configs": {"team_creation": "false", "team_disbanding": "disabled"},
+        "demo_team": False,
+        # Not STARS-branded, so CTFd shows the name instead of the STARS logo.
+        "logo": False,
+        "email_domain": "sits.invalid",
+    },
     "demo": {
         "ctf_name": "STARS Demo",
         "ctf_description": "A demo of the STARS CTF.",
@@ -73,7 +92,7 @@ def find(pattern, html, what):
 
 
 if len(sys.argv) != 2 or sys.argv[1] not in PROFILES:
-    sys.exit("Usage: setup-ctfd.py main|classic|demo")
+    sys.exit("Usage: setup-ctfd.py main|classic|demo|sits")
 profile = PROFILES[sys.argv[1]]
 
 browser = requests.Session()
@@ -87,15 +106,16 @@ if not page.url.endswith("/setup"):
 
 # The setup wizard: teams of 3, accounts made by the admin, and scores and
 # other teams visible to the admin only.
-admin_password = secrets.token_urlsafe(12)
+admin_name = os.environ.get("STARS_ADMIN_NAME", "").strip() or "admin"
+admin_password = os.environ.get("STARS_ADMIN_PASSWORD", "").strip() or secrets.token_urlsafe(12)
 form = {
     "nonce": find(r'name="nonce"[^>]*value="([^"]+)"', page.text, "setup form's nonce"),
     "ctf_name": profile["ctf_name"],
     "ctf_description": profile["ctf_description"],
     "user_mode": "teams",
     "team_size": "3",
-    "name": "admin",
-    "email": "admin@stars.invalid",
+    "name": admin_name,
+    "email": f"admin@{profile.get('email_domain', 'stars.invalid')}",
     "password": admin_password,
     "challenge_visibility": "private",
     "account_visibility": "admins",
@@ -107,11 +127,13 @@ form = {
 if profile["theme_color"]:
     form["theme_color"] = profile["theme_color"]
 branding = REPO / "branding"
-files = {
-    "ctf_logo": ("logo.png", (branding / "logo.png").read_bytes(), "image/png"),
-    "ctf_small_icon": ("favicon.png", (branding / "favicon.png").read_bytes(), "image/png"),
-}
-browser.post(f"{URL}/setup", data=form, files=files, timeout=60).raise_for_status()
+files = {}
+if profile.get("logo", True):
+    files = {
+        "ctf_logo": ("logo.png", (branding / "logo.png").read_bytes(), "image/png"),
+        "ctf_small_icon": ("favicon.png", (branding / "favicon.png").read_bytes(), "image/png"),
+    }
+browser.post(f"{URL}/setup", data=form, files=files or None, timeout=60).raise_for_status()
 if browser.get(f"{URL}/admin/statistics", timeout=30, allow_redirects=False).status_code != 200:
     sys.exit("CTFd's setup wizard didn't finish.")
 
@@ -155,7 +177,7 @@ lines = [
     f"Made by scripts/setup-ctfd.py on {datetime.date.today()}. You can change any of these in CTFd.",
     "",
     "Admin",
-    f"  admin / {admin_password}",
+    f"  {admin_name} / {admin_password}",
 ]
 
 # The demo's one team, which every visitor plays as.

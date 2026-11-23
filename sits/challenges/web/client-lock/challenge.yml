@@ -1,0 +1,30 @@
+version: "0.1"
+name: "Client-Side Lock"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Web"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The Pizza Club's members' area asks for a members' code. But the code isn't checked by the website's server: it's checked by a script inside the page itself. Everything inside a page has been sent to your browser, so you can read it.
+
+  **Your goal:** find the members' code in the page's code, type it in, and get into the members' area. The flag is there.
+
+  **Tools you may need to solve this level:** View page source (Ctrl+U)
+connection_info: http://192.168.68.103:8303
+flags:
+  - "FLAG{th3_br0ws3r_kn3w_th3_c0d3}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Press **Ctrl+U** to see the page's code. Near the bottom, between `<script>` and `</script>`, there's a line starting `const MEMBERS_CODE =`. The code is the text in quotes after it."
+    cost: 5
+state: visible

@@ -1,7 +1,9 @@
 #!/bin/bash
 # Alifa: the flag isn't in a file. sshd sets it as an environment variable when
 # this account logs in, among a few ordinary-looking ones, so players learn env.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=alifa
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

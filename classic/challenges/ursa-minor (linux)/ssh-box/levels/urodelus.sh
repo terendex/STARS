@@ -2,7 +2,9 @@
 # Urodelus: every reading in the log is repeated except the real flag, but each
 # line also has its own time and sensor, so players have to pull out the reading
 # before sort and uniq can compare anything.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=urodelus
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

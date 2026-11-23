@@ -1,0 +1,32 @@
+version: "0.1"
+name: "Undo History"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Linux"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  Lola keeps her recipes in a folder called `recipes`, and she uses **git**, a program that remembers every change ever made to the folder. She added her grandma's secret sauce, panicked, and deleted it a minute later. The file is gone from the folder, but git never forgets.
+
+  **Your goal:** find the secret ingredient in the folder's history.
+
+  Log in with the command below and the password `undoredo`. Then go into the folder with `cd recipes`.
+connection_info: ssh history@192.168.68.103 -p 2240
+flags:
+  - "FLAG{g1t_n3v3r_f0rg3ts}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "`git log` lists every saved change (git calls them commits), newest first, with a message saying what changed. One of them added the secret sauce."
+    cost: 10
+  - content: "`git log -p` also shows what each commit added (lines starting with `+`) and removed (`-`). `git log -p | grep FLAG` jumps straight to it. Press `q` if it opens a long page."
+    cost: 10
+state: visible

@@ -1,7 +1,9 @@
 #!/bin/bash
 # Alrakis (Medium): the code is a number inside a cmp instruction, so strings
 # can't find it. Players read it from `disassemble check_code` in gdb.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=alrakis
 FLAG='STARS{4lr4k1s_r34d_th3_4ss3mbly}'

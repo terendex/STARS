@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Blank Password"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Pwn"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The vault has a 16-letter passcode, and it picks a new random one every time someone connects, so guessing is hopeless. But read the source carefully: it decides how much of your guess to check based on your guess itself.
+
+  **Your goal:** get past the passcode check and make the program print the flag.
+
+  **How to connect:** Windows doesn't come with `nc`, so open a terminal (PowerShell) and run the command below. It uses the password `pwnit` and takes you straight into the program, with no shell. On a Mac or Linux, or if you have `nc` installed, `nc IP 9044` works the same way.
+
+  The program's source code is attached below as a download. Reading it is how you find the weakness.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`, `cat`
+connection_info: ssh vault@192.168.68.103 -p 2240
+files:
+  - dist/fang.c
+flags:
+  - "FLAG{bl4nk_p4ssw0rd_w0rks}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "`strncmp(a, b, n)` compares only the first `n` characters of two pieces of text. Look at where this program gets `n` from. What's the smallest it can be?"
+    cost: 5
+  - content: "It checks `strlen(your guess)` characters, that is, as many as you typed. Type nothing at all and press Enter: it then checks zero characters, and zero characters always match."
+    cost: 10
+state: visible

@@ -1,5 +1,7 @@
 # STARS demo answer sheet
 
+Made by Axel Jonas C. Tangalin.
+
 **Organizers only.** None of these challenges are in the real event, so it's fine to walk through these solutions in front of players during a demo.
 
 CTFd checks flags automatically and they're case-sensitive. The maximum score is 360: 60 per category. Every challenge is ★ Easy and worth 30 points, and every hint costs 5. CTFd won't sell a hint that costs more than the team's current score, so the Demo Team has to solve something before it can buy one.

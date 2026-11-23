@@ -1,0 +1,31 @@
+version: "0.1"
+name: "Ones and Zeros"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  This signal only uses two symbols, 0 and 1. That's **binary**, the way computers store everything, and each group of eight digits is one character.
+
+  **Your goal:** turn `signal.txt` (download it below) back into text to read the flag.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/signal.txt
+flags:
+  - "FLAG{0n3s_4nd_z3r0s}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In CyberChef, drag the **From Binary** operation into the Recipe column, and paste the file's contents into Input."
+    cost: 5
+state: visible

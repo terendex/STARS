@@ -1,0 +1,7 @@
+
+  SITS Capture The Flag Competition 2026
+  Linux box
+
+  Home folders are read-only.
+  If you need scratch space, use /tmp.
+

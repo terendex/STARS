@@ -3,7 +3,9 @@
 # character codes. Players turn them back into letters, with chr() in python3
 # or CyberChef's From Decimal. The flag is XORed with the password, so it can't
 # be read straight out of the file.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=rastaban
 FLAG='STARS{r4st4b4n_sp34ks_1n_numb3rs}'

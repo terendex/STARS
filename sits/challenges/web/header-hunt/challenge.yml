@@ -1,0 +1,30 @@
+version: "0.1"
+name: "Header Hunt"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Web"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  When a website sends you a page, it also sends a few lines of information about the page that your browser reads but never shows. These are called **response headers**. They say things like what kind of file it is and when it was sent, but a website can add any header it likes.
+
+  **Your goal:** read the headers the weather site at the address below sends with its page. One of them is the flag.
+
+  **Tools you may need to solve this level:** Your browser's developer tools (F12), or `curl.exe` in PowerShell
+connection_info: http://192.168.68.103:8306
+flags:
+  - "FLAG{h34d3rs_c4rry_s3cr3ts}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Press **F12**, open the **Network** tab, then refresh the page (F5) with developer tools still open. Click the first line in the list, then **Headers**, and look under **Response Headers**. Or in PowerShell: `curl.exe -i` followed by the address."
+    cost: 5
+state: visible

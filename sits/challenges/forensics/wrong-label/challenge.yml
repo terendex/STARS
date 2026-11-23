@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Wrong Label"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Grandma's secret recipe was saved as `recipe.txt`, but it won't read properly. A file's extension (the `.txt` part of its name) is only a label, and it can be wrong.
+
+  **Your goal:** work out what kind of file `recipe.txt` (download it below) really is, then open it as that kind of file. The flag is in it. Capitals don't matter.
+
+  Open it in a text editor and look at the very first characters. Most kinds of file begin with their own signature.
+
+  **Tools you may need to solve this level:** A text editor such as Notepad
+files:
+  - dist/recipe.txt
+flags:
+  - type: static
+    content: "FLAG{NOT_A_TEXT_FILE}"
+    data: case_insensitive
+tags:
+  - "★ Easy"
+hints:
+  - content: "The file starts with `PNG`, which is a kind of picture. Rename it so it ends in `.png` instead of `.txt`, and open it. If you can't see the extension in the name, turn on file name extensions in File Explorer: **View** > **Show** > **File name extensions**."
+    cost: 5
+state: visible

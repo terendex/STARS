@@ -1,0 +1,34 @@
+version: "0.1"
+name: "By the Numbers"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The cinema's staff door, `numbers.py`, keeps its password as numbers instead of letters. Computers store every letter as a number called its **character code**: `A` is 65, `B` is 66, and lowercase `a` is 97.
+
+  **Your goal:** turn the numbers back into the password, then run `python3 numbers.py` and type it in. The program prints the flag.
+
+  Log in with the command below and the password `reverse`.
+
+  **Tools you may need to solve this level:** `cat`, `python3`, [CyberChef](https://gchq.github.io/CyberChef/)
+connection_info: ssh numbers@192.168.68.103 -p 2242
+flags:
+  - "FLAG{ch4r_c0d3s_t0_l3tt3rs}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In `python3`, `chr(97)` gives `'a'`. The program builds the password itself on the line starting `password =`. Paste that line's right-hand side into `python3`, with `CODES` swapped for the list of numbers from the file, square brackets included."
+    cost: 5
+  - content: "Or in CyberChef: paste just the numbers into Input, add **From Decimal**, and set its **Delimiter** to `Comma`."
+    cost: 5
+state: visible

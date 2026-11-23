@@ -2,7 +2,9 @@
 # Rastaban (Easy): a Python program that stores its password backwards. Reading
 # the code shows that `SECRET[::-1]` reverses it. The flag is XORed with the
 # password, so it can't be read straight out of the file.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=rastaban
 FLAG='STARS{r4st4b4n_r34d_th3_c0d3}'

@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Sign In Anyway"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Web"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The cinema's staff portal shows tonight's safe code, but only to the manager, and you don't have an account.
+
+  The portal checks your login by pasting exactly what you type into a database query. Type the right symbols and you can change what that query means. This is called **SQL injection**.
+
+  **Your goal:** open the staff portal at the address below, and sign in as the manager without knowing the password. The safe code is the flag.
+
+  **Tools you may need to solve this level:** SQL injection with `'`, `OR` and `--`
+connection_info: http://192.168.68.103:8312
+flags:
+  - "FLAG{s1gn3d_1n_w1th0ut_4_p4ssw0rd}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Put a single quote `'` in the username and look at the error: your quote broke the query. Then try `' OR 1=1 -- ` (with a space at the end) as the username, with any password."
+    cost: 5
+  - content: "`' OR 1=1 -- ` signs you in as whichever account comes first, which isn't the manager. To pick the account, give its name and then cut the password check off: type `manager' -- ` (with a space at the end) as the username, and anything as the password."
+    cost: 10
+state: visible

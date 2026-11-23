@@ -1,0 +1,32 @@
+version: "0.1"
+name: "Hide and Seek"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Linux"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Someone is playing hide and seek in your home folder. A plain `ls` doesn't show everything: on Linux, any file or folder whose name starts with a dot (`.`) is hidden.
+
+  **Your goal:** find the hidden file and read the flag inside it. Read `README.txt` first.
+
+  Log in with the command below and the password `countto10`.
+
+  **Commands you may need to solve this level:** `ls`, `cd`, `cat`
+connection_info: ssh hideseek@192.168.68.103 -p 2240
+flags:
+  - "FLAG{y0u_f0und_m3_1n_th3_cl0s3t}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "`ls -a` shows everything, hidden names included. The hidden thing in your home folder is a folder: go into it with `cd`, then look again with `ls -a`."
+    cost: 5
+state: visible

@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Wire Tap"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  This recording of office network traffic has two things in it. Someone **logged in to the file server** over FTP, and someone **downloaded a file** over plain HTTP. The file is a zip, and it's locked with a password.
+
+  People reuse their passwords far more than they should.
+
+  **Your goal:** get the zip out of `office_capture.pcap` (download it below), unlock it, and read the flag inside.
+
+  **Tools you may need to solve this level:** [Wireshark](https://www.wireshark.org/), File Explorer or [7-Zip](https://www.7-zip.org/)
+files:
+  - dist/office_capture.pcap
+flags:
+  - "FLAG{s4m3_p4ssw0rd_tw1c3}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "Two skills from earlier: Wireshark's **File** > **Export Objects** > **HTTP** saves the files that were downloaded, and an FTP password is in a `PASS` command. Only one of the two `PASS` commands worked."
+    cost: 10
+  - content: "Filter on `ftp`: the second `PASS` (`sunflower42`) got `230 User jamie logged in`. Then **File** > **Export Objects** > **HTTP**, click `bonus_list.zip` and **Save**. Open the zip in File Explorer or 7-Zip, open `bonus_list.txt`, and type `sunflower42` when it asks for the password."
+    cost: 20
+state: visible

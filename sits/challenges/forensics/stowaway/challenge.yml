@@ -1,0 +1,33 @@
+version: "0.1"
+name: "Stowaway"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  This holiday photo looks ordinary, but the file is much bigger than a picture like this should be. Something has stowed away inside it.
+
+  **Your goal:** find out what else is stored in `holiday.png` (download it below), get it out, and read the flag.
+
+  **Tools you may need to solve this level:** `binwalk`, or a hex editor such as [HexEd.it](https://hexed.it/)
+files:
+  - dist/holiday.png
+flags:
+  - "FLAG{st0w4w4y_z1p_f0und}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Image viewers stop reading at the end of the PNG, but the file doesn't have to end there. Try `binwalk`, or look at the end of the file in a hex editor: names of files show up as readable text."
+    cost: 5
+  - content: "It's a zip archive. On Windows, `tar -xf holiday.png` in PowerShell (in the folder you saved it to) extracts it. On Linux or a Mac, `unzip holiday.png` does (ignore the warning about extra bytes)."
+    cost: 5
+state: visible

@@ -1,7 +1,9 @@
 #!/bin/bash
 # Tyl (Medium): the flag is only shown when a variable is 9000 or more, and the
 # program always sets it to 1. Players change it in gdb with `set var`.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=tyl
 FLAG='STARS{tyl_l3v3l3d_up_w1th_gdb}'

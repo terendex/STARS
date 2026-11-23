@@ -1,6 +1,7 @@
 version: "0.1"
 name: "RR Lyrae"
-author: "STARS"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
 category: "Lyra (Forensics)"
 type: standard
 value: 30

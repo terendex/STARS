@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Easy as ABC"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  This message is nothing but numbers, one word per line. Look at them closely: **none of them is bigger than 26**. It's one of the simplest codes there is, and you can crack it with pen and paper.
+
+  The message spells out the flag's words after `FLAG WORDS FOLLOW`. This code has no curly brackets or underscores, so **write the flag yourself**: put the words, joined by underscores, inside `FLAG{}`. For example, the words `RED APPLE` would make the flag `FLAG{RED_APPLE}`. Capitals don't matter.
+
+  **Your goal:** decode `message.txt` (download it below) and turn the flag's words into the flag.
+
+  **Tools you may need to solve this level:** pen and paper, or [dcode](https://www.dcode.fr/en)
+files:
+  - dist/message.txt
+flags:
+  - type: static
+    content: "FLAG{NUMBERS_TO_LETTERS}"
+    data: case_insensitive
+tags:
+  - "★ Easy"
+hints:
+  - content: "Each number is a letter's place in the alphabet: 1 is A, 2 is B, and so on. The code is called **A1Z26**. dcode's [Letter Number Code](https://www.dcode.fr/letter-number-cipher) tool decodes the whole file at once (press **DECRYPT**), but runs the words together, so split them yourself. CyberChef's **A1Z26 Cipher Decode** only works one line (one word) at a time."
+    cost: 5
+state: visible

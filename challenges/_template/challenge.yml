@@ -2,7 +2,8 @@
 # README.md has the full steps for adding a challenge.
 version: "0.1"
 name: "Star name"
-author: "STARS"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
 category: "Constellation (Skill)"   # Same text as other stars in that constellation
 type: standard                      # Keep "standard": the points dropping is built in
 value: 30                           # 30 Easy, 60 Medium, 100 Hard (same as initial)

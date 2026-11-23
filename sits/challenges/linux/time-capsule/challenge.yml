@@ -1,0 +1,36 @@
+version: "0.1"
+name: "Time Capsule"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Linux"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The `diary` folder holds one page for every day of 2024: 366 pages with random names, each with a secret that looks like a flag. The real one was written on **14 February 2024**.
+
+  The names won't help you, but every file remembers the date it was last changed.
+
+  **Your goal:** find the page last changed on 14 February 2024 and read the flag in it.
+
+  Log in with the command below and the password `buriedtreasure`.
+
+  **Commands you may need to solve this level:** `ls`, `grep`, `cat`
+connection_info: ssh capsule@192.168.68.103 -p 2240
+flags:
+  - "FLAG{d4t3d_v4l3nt1n3s_d4y}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "`ls -l` shows when each file was last changed, in the columns just before its name. For files from an earlier year, it shows the year instead of the time."
+    cost: 5
+  - content: "`ls -l ~/diary | grep 'Feb 14'` leaves one line. Then `cat ~/diary/` followed by that file's name."
+    cost: 10
+state: visible

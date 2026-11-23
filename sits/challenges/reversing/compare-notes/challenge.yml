@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Compare Notes"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The program `checker` wants a password, which you give it after its name, like `./checker hello`. It keeps the real password scrambled, so `strings` won't find it.
+
+  You don't need to read the program. Watch it work instead: `ltrace` runs a program and shows every library function it calls, along with what it passes in. Put `ltrace` in front of the command you'd normally type. One of the calls compares two pieces of text.
+
+  **Your goal:** find the password, then give it to `./checker`. The program prints the flag.
+
+  Log in with the command below and the password `reverse`.
+
+  **Commands you may need to solve this level:** `ltrace`
+connection_info: ssh compare@192.168.68.103 -p 2242
+flags:
+  - "FLAG{ltr4c3_s4w_th3_c0mp4r3}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Run `ltrace ./checker hello`. Find the line starting `strcmp`, short for string compare: it compares your guess with the real password."
+    cost: 5
+state: visible

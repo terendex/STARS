@@ -1,5 +1,7 @@
 # STARS CTF answer sheet
 
+Made by Axel Jonas C. Tangalin.
+
 **Organizers only. Don't share this file or show it on screen during the event.**
 
 This is the second orientation's set, named 2nd Star in CTFd: 56 challenges, and every flag is new. The first orientation's 36 are in `classic/ANSWERS.md`, for STARS Classic.

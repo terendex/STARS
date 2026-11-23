@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Name Tag"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Pwn"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The desk gives you a name tag with room for a set number of letters, and right next to it in memory is the value that decides whether you're allowed in.
+
+  What happens when a name doesn't fit? This is called a **buffer overflow**: the extra letters spill past the tag and into whatever sits after it.
+
+  **Your goal:** get the desk to let you in. It gives the flag to anyone it lets in.
+
+  **How to connect:** Windows doesn't come with `nc`, so open a terminal (PowerShell) and run the command below. It uses the password `pwnit` and takes you straight into the program, with no shell. On a Mac or Linux, or if you have `nc` installed, `nc IP 9043` works the same way.
+
+  The program's source code is attached below as a download. Reading it is how you find the weakness.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`, `cat`
+connection_info: ssh nametag@192.168.68.103 -p 2240
+files:
+  - dist/lesath.c
+flags:
+  - "FLAG{n4m3_t00_l0ng_f0r_th3_t4g}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Try signing in with a really long name: twenty letters or more."
+    cost: 5
+state: visible

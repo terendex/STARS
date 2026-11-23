@@ -1,6 +1,8 @@
 #!/bin/bash
 # Akhfa: the flag is gzipped, then put in a tar, gzipped again, and Base64 encoded.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=akhfa
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

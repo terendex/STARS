@@ -1,7 +1,9 @@
 #!/bin/bash
 # Kochab: one real record among hundreds of decoys. Every decoy carries a fake
 # flag, so a plain grep isn't enough: players have to filter by size and owner.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=kochab
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

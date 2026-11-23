@@ -2,7 +2,9 @@
 # Edasich (Medium): a Python program that scrambles the password in three steps
 # (shift 5 letters, reverse, hex). Players undo them in the opposite order,
 # for example with CyberChef: From Hex, Reverse, ROT13 by 21.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=edasich
 FLAG='STARS{3d4s1ch_unw0und_th3_c01ls}'

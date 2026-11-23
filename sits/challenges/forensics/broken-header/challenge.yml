@@ -1,0 +1,37 @@
+version: "0.1"
+name: "Broken Header"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  This postcard picture won't open in anything. Every kind of file starts with the same few bytes, called its **file signature** (or "magic bytes"), so programs can tell what it is. Every PNG picture starts with the same 8 bytes.
+
+  The first **4 bytes** of `postcard.png` were wiped to zeros. The rest of the picture is fine.
+
+  **Your goal:** look up what the first bytes of a PNG should be, put them back with a hex editor, then open the picture. The flag is written in it. Capitals don't matter.
+
+  **Tools you may need to solve this level:** a hex editor, such as [HexEd.it](https://hexed.it/) in your browser
+files:
+  - dist/postcard.png
+flags:
+  - type: static
+    content: "FLAG{MAGIC_BYTES_FIXED}"
+    data: case_insensitive
+tags:
+  - "★ Easy"
+hints:
+  - content: "Search for \"PNG file signature\". It starts `89 50 4E 47`. In HexEd.it, open the file and type those four values over the `00 00 00 00` at the very start."
+    cost: 5
+  - content: "In HexEd.it, use **Export** (or File > Save as) to download the fixed file, then open it in any image viewer."
+    cost: 5
+state: visible

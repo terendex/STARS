@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Return to Sender"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Pwn"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  The monitor takes a reading and logs it, but it was never told what to do with a reading that's too big. It has a function called `supernova` that nothing ever calls, and it even tells you where that function is. Overflow the buffer far enough to overwrite the **return address**, the place the program goes back to when a function ends, and send it to `supernova`.
+
+  **Your goal:** make the program run `supernova`, which prints the flag.
+
+  This one needs raw bytes, which a normal keyboard can't send, so there's no SSH login for it. If you don't have `nc` on your computer, log in to any Linux challenge account (its shell has `nc` and `printf`) and work from there. The program is reachable from that shell as `nc antares 9001`, and from your own computer as `nc 192.168.68.103 9048`.
+connection_info: nc 192.168.68.103 9048
+files:
+  - dist/antares
+  - dist/antares.c
+flags:
+  - "FLAG{r3turn_t0_s3nd3r_w1n}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "The buffer is 64 bytes, and 8 more bytes of saved data sit before the return address. That's 72 bytes in total before it. The program prints `supernova`'s address every time you connect: read it first."
+    cost: 10
+  - content: "Addresses are stored backwards (little-endian). On a Linux account, `printf` sends exact bytes and `nc` sends them on. If the address is `0x4017c5`, that's the bytes `\\xc5\\x17\\x40`, so run: `{ printf 'A%.0s' {1..72}; printf '\\xc5\\x17\\x40'; } | nc antares 9001`. Use the address the program actually showed you."
+    cost: 20
+state: visible

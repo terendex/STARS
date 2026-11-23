@@ -2,7 +2,9 @@
 # Giausar (demo, Easy): a Python program with its password in plain sight.
 # Reading the code finds it. The flag is XORed with the password, so it can't
 # be read straight out of the file.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=giausar
 FLAG='STARS{g14us4r_l0ck_1n_pl41n_s1ght}'

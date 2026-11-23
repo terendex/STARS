@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Read the Assembly"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The piggy bank `vault` asks for a code, a number. The number isn't stored as text anywhere, so `strings` won't find it: it's written straight into the program's instructions.
+
+  A debugger can show those instructions. In `gdb`, `info functions` lists the program's functions, and `disassemble` followed by a function's name shows it as **assembly**: the small, simple steps the processor actually runs, one per line.
+
+  **Your goal:** find the code in the vault's instructions, then run `./vault` and type it in. The program prints the flag.
+
+  The vault understands numbers written in hexadecimal (starting with `0x`, like `0x1f`) as well as ordinary ones, so you don't need to convert anything.
+
+  Log in with the command below and the password `reverse`.
+
+  **Commands you may need to solve this level:** `gdb`
+connection_info: ssh assembly@192.168.68.103 -p 2242
+flags:
+  - "FLAG{1t_w4s_1n_th3_4ss3mbly}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Start with `gdb ./vault`, then `disassemble check_code`. The instruction that compares two values is `cmp`, and numbers written into an instruction start with `$`."
+    cost: 5
+  - content: "The number after `$` on the `cmp` line is the code. Type `quit`, run `./vault`, and type the number with its `0x` but without the `$`."
+    cost: 10
+state: visible

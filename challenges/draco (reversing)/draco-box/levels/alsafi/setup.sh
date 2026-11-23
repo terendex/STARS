@@ -2,7 +2,9 @@
 # Alsafi (Easy): a Python program that checks the password one letter at a time,
 # by position, in a jumbled order. Players line the letters up by their index
 # (Python counts from 0). The flag is XORed with the password.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=alsafi
 FLAG='STARS{4ls4f1_c0unts_fr0m_z3r0}'

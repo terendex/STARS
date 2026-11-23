@@ -1,6 +1,8 @@
 #!/bin/bash
 # Pherkad: the very first step. Log in, list the files, read one.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=pherkad
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

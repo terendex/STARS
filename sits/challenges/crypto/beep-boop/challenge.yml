@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Beep Boop"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The radio room still sends messages the old way: short and long beeps, written down as dots and dashes. Each group of dots and dashes is one letter, and each line of `message.txt` is one word. Sailors and radio operators used this code for over a century, and it's named after one of its inventors.
+
+  The message spells out the flag's words after `FLAG WORDS FOLLOW`. This code has no curly brackets or underscores, so **write the flag yourself**: put the words, joined by underscores, inside `FLAG{}`. For example, the words `RED APPLE` would make the flag `FLAG{RED_APPLE}`. Capitals don't matter.
+
+  **Your goal:** decode `message.txt` (download it below) and turn the flag's words into the flag.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/message.txt
+flags:
+  - type: static
+    content: "FLAG{DOTS_AND_DASHES}"
+    data: case_insensitive
+tags:
+  - "★ Easy"
+hints:
+  - content: "It's **Morse code**. CyberChef's **From Morse Code** reads this file as it is."
+    cost: 5
+state: visible

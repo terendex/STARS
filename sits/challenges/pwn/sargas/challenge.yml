@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Store Credit"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Pwn"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The flag costs 1000 credits at the shop, and you only have 100. The cheap item costs 10 credits each. The shop checks that you can afford what you buy, but does it check everything?
+
+  **Your goal:** buy the flag. The shop prints it when you do.
+
+  **How to connect:** Windows doesn't come with `nc`, so open a terminal (PowerShell) and run the command below. It uses the password `pwnit` and takes you straight into the program, with no shell. On a Mac or Linux, or if you have `nc` installed, `nc IP 9042` works the same way.
+
+  The program's source code is attached below as a download. Reading it is how you find the weakness.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`, `cat`
+connection_info: ssh shop@192.168.68.103 -p 2240
+files:
+  - dist/sargas.c
+flags:
+  - "FLAG{n3g4t1v3_sh0pp1ng_spr33}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Look at how the cost is worked out from the number of items, and how it changes your credits. What happens if you buy fewer than zero items?"
+    cost: 5
+  - content: "Buy the cheap item, and say you want `-100` of them. The cost comes out negative, so instead of taking credits away, it adds them. Now you can afford the flag."
+    cost: 10
+state: visible

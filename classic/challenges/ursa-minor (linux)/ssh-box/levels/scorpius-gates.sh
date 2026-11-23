@@ -2,7 +2,9 @@
 # Windows doesn't ship with nc, so these accounts let Scorpius players connect
 # with SSH instead. Logging in goes straight to the star's program, with no shell.
 # Antares isn't here because it needs raw bytes, which a terminal would mangle.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 for star in shaula sargas lesath dschubba acrab; do
     useradd -M -d / -s /bin/bash -G players "$star"

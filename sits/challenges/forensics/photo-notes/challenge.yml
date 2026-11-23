@@ -1,0 +1,40 @@
+version: "0.1"
+name: "Photo Notes"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Start here if you've never done forensics, which means digging information out of files. Image files can store more than the picture itself, such as notes about who took it and how. That extra information is called **metadata**.
+
+  Someone left a note inside this beach photo. You won't see it by looking at the picture.
+
+  **Your goal:** find the note inside `beach_day.png`. The flag is in it. Every flag in this CTF looks like `FLAG{...}`.
+
+  **How to do it:**
+
+  1. Click `beach_day.png` below to download it.
+  2. Open Notepad, then drag `beach_day.png` from your Downloads folder into the Notepad window. (On a Mac, open it with TextEdit.)
+  3. Most of what you see is gibberish, because a picture isn't text. Press **Ctrl+F** and search for `FLAG`.
+  4. The search finds the note, with the flag in it.
+
+  **Tools you may need to solve this level:** A text editor such as Notepad
+files:
+  - dist/beach_day.png
+flags:
+  - "FLAG{ph0t0s_c4n_h0ld_n0t3s}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Notepad searches from wherever your cursor is. If it can't find `FLAG`, press **Ctrl+Home** to jump to the start of the file, then search again."
+    cost: 5
+state: visible

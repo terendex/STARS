@@ -8,7 +8,8 @@
 # connection_info, republishes the ports on that address, and pushes the new
 # addresses to CTFd. --files-only rewrites the files without starting anything.
 #
-# The side CTFs move with it: the demo in demo/ and STARS Classic in classic/.
+# The side CTFs move with it: the demo in demo/, STARS Classic in classic/ and
+# the SITS competition in sits/.
 # If one has been set up, its files move to the same IP too, and if it's
 # running, it's republished there. A stopped one stays stopped.
 set -euo pipefail
@@ -21,9 +22,9 @@ if ! [[ $IP =~ ^[0-9]{1,3}(\.[0-9]{1,3}){3}$ ]] || [[ -n $MODE && $MODE != --fil
 fi
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 # The CTFs that run beside the real one, on the same IP, as folder:port.
-SIDES=("demo:8100" "classic:8200")
+SIDES=("demo:8100" "classic:8200" "sits:8300")
 
-for env_file in "$ROOT/.env" "$ROOT/demo/.env" "$ROOT/classic/.env"; do
+for env_file in "$ROOT/.env" "$ROOT/demo/.env" "$ROOT/classic/.env" "$ROOT/sits/.env"; do
     if [[ -f $env_file ]]; then
         sed -i -E "s/^CTF_BIND_IP=.*/CTF_BIND_IP=$IP/" "$env_file"
     fi
@@ -35,10 +36,10 @@ while IFS= read -r -d '' yml; do
         sed -i -E "s/^(connection_info:[^0-9]*)[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/\1$IP/" "$yml"
         echo "Updated ${yml#"$ROOT"/}"
     fi
-done < <(find "$ROOT/challenges" "$ROOT/demo/challenges" "$ROOT/classic/challenges" -name challenge.yml -print0 2>/dev/null)
+done < <(find "$ROOT/challenges" "$ROOT/demo/challenges" "$ROOT/classic/challenges" "$ROOT/sits/challenges" -name challenge.yml -print0 2>/dev/null)
 
 # Keep the answer sheets' commands on the same address.
-for answers in "$ROOT/ANSWERS.md" "$ROOT/demo/ANSWERS.md" "$ROOT/classic/ANSWERS.md"; do
+for answers in "$ROOT/ANSWERS.md" "$ROOT/demo/ANSWERS.md" "$ROOT/classic/ANSWERS.md" "$ROOT/sits/ANSWERS.md"; do
     [[ -f $answers ]] || continue
     old=$(sed -nE 's/.*The commands use `([0-9.]+)`.*/\1/p' "$answers" | head -n 1)
     if [[ -n $old && $old != "$IP" ]]; then

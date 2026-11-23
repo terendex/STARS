@@ -1,0 +1,37 @@
+version: "0.1"
+name: "Shared Secret"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  Ana and Ben send each other messages using **RSA**, the system that protects much of the web. Each of them publishes a number `n`, made by multiplying two secret primes. Anyone who can split `n` back into those primes can work out the private key and read that person's messages.
+
+  These keys are 2048 bits long, so no computer on Earth can split one on its own. But Ana and Ben made their keys with the same cheap app, and it was running low on primes.
+
+  We intercepted a message sent to Ben. `keys.txt` (download it below) holds both of their `n` numbers, the public exponent `e` they share, and the encrypted message `c`.
+
+  **Your goal:** recover Ben's two primes, use them to decrypt `c`, and read the flag.
+
+  You don't need to write any code. Free online big-number calculators and RSA decoders handle numbers this size.
+files:
+  - dist/keys.txt
+flags:
+  - "FLAG{sh4r3d_pr1m3_br0k3_b0th}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "If two numbers have a factor in common, you don't need to split either one to find it. Their greatest common divisor (GCD) gives it to you instantly, even for numbers this big. On [Alpertron's calculator](https://www.alpertron.com.ar/ECM.HTM), type `Gcd(first number, second number)` and press **Only evaluate**."
+    cost: 10
+  - content: "The other prime `q` is Ben's `n` divided by `p`. Alpertron prints long numbers with spaces in them and can't read them back, so do it in one go: type `n_ben / Gcd(n_ana, n_ben)` with the real numbers and press **Only evaluate**. Then [dcode's RSA Cipher tool](https://www.dcode.fr/rsa-cipher) decrypts for you: fill in `C`, `E`, `N` (Ben's), `P` and `Q` (the spaces are fine there), choose **Plaintext as Character string**, and press **CALCULATE/DECRYPT**."
+    cost: 20
+state: visible

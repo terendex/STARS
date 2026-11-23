@@ -1,0 +1,32 @@
+version: "0.1"
+name: "Robots Only"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Web"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Search engines send robots to crawl websites. Most sites keep a file telling those robots which pages to skip. Anyone can read that file, though, so it also points out the very pages the owner wanted hidden.
+
+  **Your goal:** open the coffee shop's website at the address below and find its file for search engine robots. Then visit the pages that file tells them to skip. One of those pages still has something on it: the flag.
+
+  **Tools you may need to solve this level:** Your browser's address bar
+connection_info: http://192.168.68.103:8302
+flags:
+  - "FLAG{r0b0ts_txt_p01nts_th3_w4y}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "The file is always called `robots.txt`. Add `/robots.txt` to the end of the website's address."
+    cost: 5
+  - content: "Each `Disallow:` line is a page. Add it to the website's address, for example `http://address:8302/old-menu/`, and try each one."
+    cost: 5
+state: visible

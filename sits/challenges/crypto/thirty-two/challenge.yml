@@ -1,0 +1,31 @@
+version: "0.1"
+name: "Thirty-Two"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  This message looks a lot like Base64 at first glance, but look closer. Base64 is named after the 64 different symbols it writes with. This encoding uses **half as many**: only the capital letters `A` to `Z` and the digits `2` to `7`, with some `=` at the end.
+
+  **Your goal:** work out which encoding that is, then decode `message.txt` (download it below) to read the flag.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/message.txt
+flags:
+  - "FLAG{h4lf_th3_symb0ls_b4s3_32}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Half of 64 is 32. CyberChef has an operation with that name."
+    cost: 5
+state: visible

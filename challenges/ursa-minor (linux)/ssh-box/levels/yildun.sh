@@ -1,7 +1,9 @@
 #!/bin/bash
 # Yildun: one file somewhere in a big folder tree. Walking it with cd and ls
 # works but is slow; find does it in one go.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=yildun
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

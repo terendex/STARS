@@ -32,7 +32,8 @@ $utf8 = New-Object System.Text.UTF8Encoding $false
 # The CTFs that run beside the real one, on the same IP.
 $sides = @(
     @{ Dir = (Join-Path $root 'demo'); Name = 'Demo CTF'; Port = 8100 },
-    @{ Dir = (Join-Path $root 'classic'); Name = 'STARS Classic'; Port = 8200 }
+    @{ Dir = (Join-Path $root 'classic'); Name = 'STARS Classic'; Port = 8200 },
+    @{ Dir = (Join-Path $root 'sits'); Name = 'SITS'; Port = 8300 }
 )
 
 foreach ($envFile in @((Join-Path $root '.env')) + @($sides | ForEach-Object { Join-Path $_.Dir '.env' })) {

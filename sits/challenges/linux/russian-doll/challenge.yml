@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Russian Doll"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Linux"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  `doll.dat` is a Russian doll: a file wrapped in another, wrapped in another, five layers deep. Some layers are compressed with gzip, some are text encoded as Base64, and one is a tar archive.
+
+  **Your goal:** open the layers one by one until the flag appears.
+
+  Log in with the command below and the password `matryoshka`. Your home folder is read-only, so work in a folder of your own in `/tmp`: `cd "$(mktemp -d)"` makes one and goes into it.
+
+  `file` tells you what kind of file you have. `gunzip`, `base64 -d` and `tar` each open one kind of layer.
+connection_info: ssh russiandoll@192.168.68.103 -p 2240
+flags:
+  - "FLAG{0p3n3d_3v3ry_s1ngl3_d0ll}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "Start with `file ~/doll.dat`. For gzip, `gunzip -c in > out`. For Base64 text, `base64 -d in > out`. For a tar archive, `tar -xf in`, then `ls` to see what came out. Run `file` on each new file."
+    cost: 10
+  - content: "The layers are gzip, Base64, gzip, tar, then Base64. All in one go: `gunzip -c ~/doll.dat | base64 -d | gunzip | tar -xO | base64 -d`."
+    cost: 10
+state: visible

@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Setting"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The pantry program doesn't ask you anything. Instead, it reads a setting from its **environment**: named values, called environment variables, that the terminal hands to every program it starts.
+
+  To give a program an environment variable for one run, write it in front of the command, like `COLOUR=blue ./pantry`.
+
+  You don't need to read the program to find out which setting it wants, or what value. `ltrace` runs a program and shows every library function it calls and what it passes in. Put `ltrace` in front of the command you'd normally type.
+
+  **Your goal:** find the setting the pantry is waiting for and the value it wants, then run `./pantry` with that setting. The program prints the flag.
+
+  Log in with the command below and the password `reverse`.
+
+  **Commands you may need to solve this level:** `ltrace`
+connection_info: ssh setting@192.168.68.103 -p 2242
+flags:
+  - "FLAG{3nv1r0nm3nt_s3tt1ng_f0und}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Run `ltrace ./pantry`. `getenv` is short for get environment variable: the text in its brackets is the name the pantry asks for, and `nil` means it isn't set."
+    cost: 5
+  - content: "Set that variable to anything by putting it in front, like `NAME=hello ltrace ./pantry` with the real name. Now find the `strcmp` line: its second text is the value it wants."
+    cost: 5
+state: visible

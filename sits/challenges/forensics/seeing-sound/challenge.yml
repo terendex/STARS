@@ -1,0 +1,37 @@
+version: "0.1"
+name: "Seeing Sound"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  Play `mystery.wav` and you'll only hear a strange buzzing.
+
+  A sound is a mix of high and low notes. A **spectrogram** is a picture of a sound: time runs from left to right, high notes are drawn near the top, and low notes near the bottom. Someone drew the flag into this sound, so you have to look at it rather than listen.
+
+  **Your goal:** view the spectrogram of `mystery.wav` (download it below) and read the flag. Capitals don't matter.
+
+  **Tools you may need to solve this level:** [Audacity](https://www.audacityteam.org/) (free), or an online spectrogram viewer
+files:
+  - dist/mystery.wav
+flags:
+  - type: static
+    content: "FLAG{LOOK_DONT_LISTEN}"
+    data: case_insensitive
+tags:
+  - "★★ Medium"
+hints:
+  - content: "In Audacity, open the file, then click the track's name (or the ⋮ menu at its top left) and choose **Spectrogram**."
+    cost: 5
+  - content: "Letters too squashed? Make the track taller by dragging its bottom edge down, or zoom in on the time line with Ctrl and the mouse wheel."
+    cost: 10
+state: visible

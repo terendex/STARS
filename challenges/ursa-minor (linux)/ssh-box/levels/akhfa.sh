@@ -1,7 +1,9 @@
 #!/bin/bash
 # Akhfa: five layers. Unwrapped from the outside: Base64, gzip, Base64 again,
 # a tar archive, and a gzipped file holding the flag.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=akhfa
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

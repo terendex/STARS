@@ -1,0 +1,1 @@
+FLAG{bl4nk_p4ssw0rd_w0rks}

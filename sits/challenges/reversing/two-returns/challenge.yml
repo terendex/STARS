@@ -1,0 +1,36 @@
+version: "0.1"
+name: "Two Returns"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  The club has a thousand-year queue, and after that, the bouncer only lets in VIPs of a high enough tier. You aren't one.
+
+  You can't change who you are, but a debugger can change what a program does while it runs.
+
+  **Your goal:** get past both the wait and the bouncer, so the program `vip` prints the flag.
+
+  If you run `./vip` on its own, it just waits. Press Ctrl+C to stop it. gdb may warn that it can't find `vip.c`. That's normal: you have the program, not the code it was written from.
+
+  Log in with the command below and the password `reverse`.
+connection_info: ssh tworeturns@192.168.68.103 -p 2242
+flags:
+  - "FLAG{tw0_r3turns_g0t_m3_1n}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "In `gdb ./vip`, `info functions` lists the program's functions. `break` pauses at one, and `return` leaves it straight away. `return` followed by a number also makes the function hand back that number."
+    cost: 10
+  - content: "Type `break queue_up`, `run`, then `return`, answer `y`, and `continue`: the bouncer tells you the tier it wants. Then type `break vip_tier` and `run` again, skip the queue the same way (`return`, `y`, `continue`), and at the `vip_tier` pause type `return` followed by that tier, answer `y`, then `continue`."
+    cost: 10
+state: visible

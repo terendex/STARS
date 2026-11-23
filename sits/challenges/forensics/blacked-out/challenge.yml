@@ -1,0 +1,31 @@
+version: "0.1"
+name: "Blacked Out"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The office's incident report was "redacted" before it was shared: someone hid the secret parts under black boxes. But drawing a black box over text in a PDF doesn't delete the text. It only covers it up.
+
+  **Your goal:** recover the line hidden under the long black box in `incident_report.pdf` (download it below). The flag is on it.
+
+  **Tools you may need to solve this level:** A PDF viewer (your browser works), Notepad
+files:
+  - dist/incident_report.pdf
+flags:
+  - "FLAG{bl4ck_b0x3s_d0nt_d3l3t3}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Open the PDF in your browser, press **Ctrl+A** to select everything, then **Ctrl+C** to copy it. Paste into Notepad, and the text under the boxes is there."
+    cost: 5
+state: visible

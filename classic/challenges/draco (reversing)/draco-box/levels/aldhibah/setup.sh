@@ -1,7 +1,9 @@
 #!/bin/bash
 # Aldhibah (Hard): the program sleeps for a thousand years, then only prints the
 # flag for root. Players skip both in gdb with `return`.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=aldhibah
 FLAG='STARS{4ldh1b4h_w0k3_th3_dr4g0n}'

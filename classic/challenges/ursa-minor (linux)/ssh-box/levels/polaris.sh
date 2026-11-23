@@ -1,6 +1,8 @@
 #!/bin/bash
 # Polaris: the flag is a dotfile in the home directory.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=polaris
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

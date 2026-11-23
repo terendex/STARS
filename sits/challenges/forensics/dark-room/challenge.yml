@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Dark Room"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  This photo of a dark room looks pure black, apart from a few specks of dust. But a pixel that's *almost* black isn't the same as one that *is* black, even if your eyes can't tell them apart.
+
+  **Your goal:** make the hidden text in `dark_room.png` (download it below) visible. The text is the flag. Capitals don't matter.
+
+  **Tools you may need to solve this level:** An image editor, such as Paint
+files:
+  - dist/dark_room.png
+flags:
+  - type: static
+    content: "FLAG{TURN_THE_LIGHTS_ON}"
+    data: case_insensitive
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Paint's **Fill** tool (the paint bucket) only fills pixels that are exactly the colour you click on, and leaves every other colour alone."
+    cost: 5
+  - content: "In Paint, pick white as your colour, choose **Fill**, and click on the black, away from the specks. The letters are colour (8, 8, 8), not black (0, 0, 0), so they stay dark on the white."
+    cost: 10
+state: visible

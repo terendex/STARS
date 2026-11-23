@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Crowd Favourite"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Linux"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  `votes.log` holds every vote from the school snack poll: a time, a booth and the vote. Every option got a few votes, but the winner got **more votes than any other**. The winning vote is the flag.
+
+  **Your goal:** find the vote that appears the most times.
+
+  Log in with the command below and the password `mostvotes`.
+
+  **Commands you may need to solve this level:** `cut`, `sort`, `uniq`
+connection_info: ssh favourite@192.168.68.103 -p 2240
+flags:
+  - "FLAG{th3_cr0wd_h4s_sp0k3n}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Pull out just the votes with `cut -d' ' -f3 votes.log`. `uniq -c` then counts how many times each line repeats, as long as the lines are sorted first."
+    cost: 5
+  - content: "`cut -d' ' -f3 votes.log | sort | uniq -c | sort -n | tail -1` shows the vote with the highest count."
+    cost: 10
+state: visible

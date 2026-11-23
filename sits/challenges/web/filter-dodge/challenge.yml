@@ -1,0 +1,32 @@
+version: "0.1"
+name: "Filter Dodge"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Web"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  The Travel Diary loads each day's page from a folder called `pages`, using the name in the address: `?page=day1.txt`. The flag is in `flag.txt`, one folder **above** `pages`, just like in Up a Folder.
+
+  This time there's a **safety filter**: before opening anything, the site deletes every `../` from the name you give it. The page shows you what you asked for and what's left after the filter, so you can watch it work. But it only runs once.
+
+  **Your goal:** get past the filter and open `flag.txt`.
+connection_info: http://192.168.68.103:8315
+flags:
+  - "FLAG{f1lt3r_d0dg3d_w1th_d0ts}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "Try `?page=../flag.txt` and look at \"After the safety filter\": the `../` is gone. The filter doesn't check again after deleting, so think about a name that *turns into* `../` once a `../` is cut out of the middle of it."
+    cost: 10
+  - content: "Use `?page=....//flag.txt`. The filter cuts the `../` out of the middle of `....//`, and what's left is `../`."
+    cost: 20
+state: visible

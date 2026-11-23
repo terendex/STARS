@@ -1,0 +1,40 @@
+version: "0.1"
+name: "Exact Fit"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Pwn"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  This is a buffer overflow again, like Name Tag, but it has to be exact now. Your name can spill into an access key, and the key has to end up holding one specific number. The source code shows which number.
+
+  The program prints what ended up in the key, in hexadecimal, so you can see how close you are.
+
+  **Your goal:** make the key hold exactly the right number. The program prints the flag when it does.
+
+  **How to connect:** Windows doesn't come with `nc`, so open a terminal (PowerShell) and run the command below. It uses the password `pwnit` and takes you straight into the program, with no shell. On a Mac or Linux, or if you have `nc` installed, `nc IP 9046` works the same way.
+
+  The program's source code is attached below as a download. Reading it is how you find the weakness.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`, `cat`
+connection_info: ssh exactfit@192.168.68.103 -p 2240
+files:
+  - dist/dschubba.c
+flags:
+  - "FLAG{3x4ct_f1t_k3y}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Look at `struct record` in the source. Add up the size of every field before `key` to work out how many characters to type first. A `char` is 1 byte and an `unsigned int` is 4 bytes."
+    cost: 5
+  - content: "The fields before `key` are `name` (32 bytes) and `visits` (4 bytes), so type 36 characters first. The key must read `0x41564f4e`: that's four bytes, `41`='A', `56`='V', `4f`='O', `4e`='N'. The computer stores the lowest byte first, so you type them in reverse. After 36 characters, type `NOVA`."
+    cost: 10
+state: visible

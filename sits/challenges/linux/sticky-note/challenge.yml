@@ -1,0 +1,32 @@
+version: "0.1"
+name: "Sticky Note"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Linux"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  This time the note isn't in a file. When you log in, the server gives your session a list of named settings called **environment variables**, and every program you run can read them. Someone stuck the flag on as one of them.
+
+  **Your goal:** find the environment variable that holds the flag. Read `notes.txt` too.
+
+  Log in with the command below and the password `postit`.
+
+  **Commands you may need to solve this level:** `env`, `grep`
+connection_info: ssh sticky@192.168.68.103 -p 2240
+flags:
+  - "FLAG{st1cky_n0t3_1n_th3_3nv}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "`env` lists every environment variable, one `NAME=value` per line. Add `| grep FLAG` to show only the lines with `FLAG` in them: `env | grep FLAG`."
+    cost: 5
+state: visible

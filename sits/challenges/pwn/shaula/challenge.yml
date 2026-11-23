@@ -1,0 +1,43 @@
+version: "0.1"
+name: "Secret Menu"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Pwn"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Start here if you've never done pwn. "Pwn" means finding a weakness in a running program and making it do something it shouldn't. This is the gentlest possible start.
+
+  The program shows a menu with a few choices. But its source code, the code it was built from, has one more choice that the menu never prints.
+
+  **Your goal:** use what you find in the source code to make the program print the flag. Every flag in this competition looks like `FLAG{...}`.
+
+  **How to do it:**
+
+  1. Click `shaula.c` below to download it, and open it in Notepad.
+  2. Find the part that decides what each menu choice does. Is there a choice the menu doesn't show you?
+  3. Open a terminal (on Windows, that's PowerShell), run the command below, and enter the password `pwnit`. Nothing appears as you type the password, which is normal. It takes you straight into the program.
+  4. Type the hidden choice and press Enter.
+
+  If you have `nc`, `nc IP 9041` works too.
+
+  **Commands you may need to solve this level:** `ssh`
+connection_info: ssh menu@192.168.68.103 -p 2240
+files:
+  - dist/shaula.c
+flags:
+  - "FLAG{s3cr3t_m3nu_unl0ck3d}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In the source, find the `switch` section. Each `case` is a menu choice, and its number is what you type. One case isn't on the printed menu."
+    cost: 5
+state: visible

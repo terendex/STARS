@@ -1,6 +1,8 @@
 #!/bin/bash
 # Grumium (demo, Easy): the flag is stored in the program as plain text. strings finds it.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=grumium
 FLAG='STARS{grum1um_k33ps_1t_1ns1d3}'

@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Onion"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  Like an onion, this message has layers, four of them. From the outside in:
+
+  1. **Hex**.
+  2. **XOR** with a single byte: one key between `00` and `ff`, used on every byte. Nobody tells you which one, but there are only 256 to try.
+  3. **Base64**.
+  4. A **Caesar shift**, with no shift given.
+
+  **Your goal:** peel all four layers off `onion.txt` (download it below) to read the flag. CyberChef has an operation that tries every XOR key at once, and one that tries every Caesar shift at once.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/onion.txt
+flags:
+  - "FLAG{p33l3d_3v3ry_l4y3r}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "After **From Hex**, add **XOR Brute Force**. The right key turns the bytes into Base64, which ends in `==`, so type `==` in its **Crib** box: only one key is left, and the line starts with it. Do the same for the Caesar layer later with **ROT13 Brute Force** and the crib `FLAG`."
+    cost: 10
+  - content: "Recipe: **From Hex**, then **XOR** with key `5a` and format **Hex**, then **From Base64**, then **ROT13** with **Amount** set to `20`."
+    cost: 20
+state: visible

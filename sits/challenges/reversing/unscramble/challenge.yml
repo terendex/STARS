@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Unscramble"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The ice cream shop's secret menu, `unscramble.py`, scrambles the password you type in three steps, then compares the result with a scrambled copy of the real password that it keeps. You can't make it unscramble that copy for you, but you can read exactly how the scrambling works.
+
+  **Your goal:** undo the scrambling to get the password back, then run `python3 unscramble.py` and type it in. The program prints the flag.
+
+  Log in with the command below and the password `reverse`.
+
+  **Tools you may need to solve this level:** `cat`, [CyberChef](https://gchq.github.io/CyberChef/)
+connection_info: ssh unscramble@192.168.68.103 -p 2242
+flags:
+  - "FLAG{und0n3_1n_r3v3rs3_0rd3r}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "To undo a process, undo its steps in the opposite order, like taking off shoes and socks. Base64 was the last step, so undo it first, and undo the reversing last."
+    cost: 5
+  - content: "In CyberChef, paste the scrambled password and use **From Base64**, then **ROT13** with **Amount** set to `23` (moving 23 letters forward is the same as 3 back), then **Reverse**."
+    cost: 10
+state: visible

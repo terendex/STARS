@@ -1,7 +1,9 @@
 #!/bin/bash
 # Polaris: hidden twice. The record is a dotfile inside a dot-folder, so players
 # need ls -a, then cd, then ls -a again.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=polaris
 useradd -M -d "/home/$user" -s /bin/bash -G players "$user"

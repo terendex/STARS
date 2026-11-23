@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Skip the Wait"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The `queue` program puts you in line for a new phone, and the wait is a thousand years. Only after that does it print your receipt, which has the flag.
+
+  A debugger can make a function stop early. When gdb has paused inside a function, `return` leaves it straight away, skipping the rest of it.
+
+  **Your goal:** skip the wait, so the program prints the flag.
+
+  If you run `./queue` on its own, it just waits. Press Ctrl+C to stop it. gdb may warn that it can't find `queue.c`. That's normal: you have the program, not the code it was written from.
+
+  Log in with the command below and the password `reverse`.
+
+  **Commands you may need to solve this level:** `gdb`
+connection_info: ssh skipwait@192.168.68.103 -p 2242
+flags:
+  - "FLAG{sk1pp3d_th3_wh0l3_qu3u3}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "In `gdb ./queue`, `info functions` lists the program's functions. One of them is the waiting."
+    cost: 5
+  - content: "Type `break wait_in_line`, then `run`. When it pauses, type `return`, answer `y`, then `continue`."
+    cost: 10
+state: visible

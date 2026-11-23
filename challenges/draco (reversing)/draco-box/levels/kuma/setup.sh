@@ -2,7 +2,9 @@
 # Kuma (Easy): the program reads its password from an environment variable.
 # ltrace shows the getenv call (the variable's name), then the strcmp call (the
 # value it wants).
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=kuma
 FLAG='STARS{kum4_r34d_1ts_3nv1r0nm3nt}'
@@ -30,7 +32,7 @@ KUMA_EYE="$SECRET" "$home/kuma" | grep -qF "$FLAG"
 if "$home/kuma" | grep -qF STARS; then echo "kuma prints its flag with no setting" >&2; exit 1; fi
 if KUMA_EYE=wrong "$home/kuma" | grep -qF STARS; then echo "kuma accepts a wrong setting" >&2; exit 1; fi
 if strings "$home/kuma" | grep -qF -e "$SECRET" -e STARS; then echo "strings finds kuma's secrets" >&2; exit 1; fi
-strings "$home/kuma" | grep -qxF KUMA_EYE
+strings "$home/kuma" | grep -qF KUMA_EYE
 
 chown -R "root:$user" "$home"
 chmod 750 "$home" "$home/kuma"

@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Mixed Up"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The arcade's high-score table, `mixedup.py`, also scrambles the password you type in three steps, but different ones, then compares the result with its scrambled copy of the real password.
+
+  **Your goal:** undo the scrambling to get the password back, then run `python3 mixedup.py` and type it in. The program prints the flag.
+
+  Log in with the command below and the password `reverse`.
+
+  **Tools you may need to solve this level:** `cat`, [CyberChef](https://gchq.github.io/CyberChef/)
+connection_info: ssh mixedup@192.168.68.103 -p 2242
+flags:
+  - "FLAG{h3x_r3v3rs3_sh1ft_und0n3}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Read `scramble()` from the bottom up and undo each step: `.hex()` first, then the reversing, then the shift."
+    cost: 5
+  - content: "In CyberChef: **From Hex**, then **Reverse**, then **ROT13** with **Amount** set to `21` (21 forward is the same as 5 back)."
+    cost: 10
+state: visible

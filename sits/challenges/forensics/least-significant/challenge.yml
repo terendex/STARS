@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Least Significant"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Forensics"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  This garden photo hides a message, and you'd never see it by looking.
+
+  Every pixel has red, green and blue values from 0 to 255. Changing the lowest bit of a value (the "least significant" one) changes it by just 1, which no eye can see, so it's a perfect hiding place. Hiding things like this is called **steganography**.
+
+  Here, the flag is spelled out in the lowest bits of **one** of the three colours, starting at the top-left pixel and going left to right, row by row, 8 bits to a character. Nobody wrote down which colour.
+
+  **Your goal:** pull the hidden bits out of `garden.png` (download it below) and read the flag.
+files:
+  - dist/garden.png
+flags:
+  - "FLAG{blu3_b1ts_t3ll_t4l3s}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "[CyberChef](https://gchq.github.io/CyberChef/)'s **Extract LSB** does it all: drop the PNG into **Input** and add Extract LSB. Its **Colour Pattern #1** picks the colour. Try `R`, then `G`, then `B`, and look at the start of the Output."
+    cost: 10
+  - content: "It's blue: set **Colour Pattern #1** to `B`, leave the other patterns empty, and the flag is at the start of the Output."
+    cost: 20
+state: visible

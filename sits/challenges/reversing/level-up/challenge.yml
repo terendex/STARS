@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Level Up"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Reversing"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The `game` only shows its secret ending to players at level 9000 or more, and everyone starts at level 1.
+
+  A debugger can do more than watch. While a program is paused, gdb can change its **variables**, the named values the program keeps its data in, and the program carries on with whatever you put there.
+
+  **Your goal:** make the game believe your level is 9000 or more, so it prints the flag.
+
+  gdb may warn that it can't find `game.c`. That's normal: you have the program, not the code it was written from.
+
+  Log in with the command below and the password `reverse`.
+
+  **Commands you may need to solve this level:** `gdb`
+connection_info: ssh levelup@192.168.68.103 -p 2242
+flags:
+  - "FLAG{1ts_0v3r_n1n3_th0us4nd}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "In `gdb ./game`, type `break check_level`, then `run`. When it pauses, `print level` shows your level."
+    cost: 5
+  - content: "`set var level = 9000` changes it. Then type `continue` to let the game carry on."
+    cost: 10
+state: visible

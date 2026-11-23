@@ -1,0 +1,34 @@
+version: "0.1"
+name: "Cookie Jar"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Web"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The gym's sauna is only for **gold** members, and you're a basic one. The site decides your membership by reading a cookie, a small note the website stores in your browser, and you can edit your own cookies.
+
+  **Your goal:** open the site at the address below and make it believe your membership is **gold**. The sauna opens and shows the flag.
+
+  Press **F12** to open your browser's developer tools. The cookie called `membership` is under **Application** > **Cookies** (in Firefox, **Storage** > **Cookies**). Work out what its value says, change it, then refresh the page.
+
+  **Tools you may need to solve this level:** Your browser's developer tools (F12), [CyberChef](https://gchq.github.io/CyberChef/)
+connection_info: http://192.168.68.103:8309
+flags:
+  - "FLAG{c00k13s_c4n_b3_3d1t3d}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "The cookie's value is Base64. Decode it with [CyberChef](https://gchq.github.io/CyberChef/)'s **From Base64** to read it: it says `level=basic`."
+    cost: 5
+  - content: "Put `level=gold` through CyberChef's **To Base64**, which gives `bGV2ZWw9Z29sZA==`. Double-click the cookie's value in developer tools, paste that in, press Enter, and refresh the page."
+    cost: 10
+state: visible

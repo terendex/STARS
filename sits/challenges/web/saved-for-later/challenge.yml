@@ -1,0 +1,30 @@
+version: "0.1"
+name: "Saved for Later"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Web"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  Playlist Maker picks a secret bonus track for every visitor. The page doesn't show it, though: it quietly saves it inside your browser. Websites can keep data in your browser in a few places. Cookies are one; another is called **Local Storage**.
+
+  **Your goal:** open the site at the address below, then find the bonus track it saved in your browser. The bonus track is the flag.
+
+  **Tools you may need to solve this level:** Your browser's developer tools (F12)
+connection_info: http://192.168.68.103:8305
+flags:
+  - "FLAG{l0c4l_st0r4g3_r3m3mb3rs}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "Press **F12**, then open **Application** (Chrome and Edge) or **Storage** (Firefox). Local Storage is in the list on the left. Open it, then click the website's address. The flag is next to `bonus_track`."
+    cost: 5
+state: visible

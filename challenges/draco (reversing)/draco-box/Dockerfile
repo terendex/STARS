@@ -32,7 +32,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends gcc libc6-dev \
     && find /etc/ssh/sshd_config /etc/ssh/banner.txt /build/levels -type f -exec sed -i 's/\r$//' {} + \
     && groupadd players \
-    && for setup in /build/levels/*/setup.sh; do (cd "$(dirname "$setup")" && bash setup.sh); done \
+    && for setup in /build/levels/*/setup.sh; do (cd "$(dirname "$setup")" && bash setup.sh) || { echo "LEVEL FAILED: $setup" >&2; exit 1; }; done \
     && apt-get purge -y --auto-remove gcc libc6-dev \
     && if ls /build/host-keys/ssh_host_*_key >/dev/null 2>&1; then \
            cp /build/host-keys/ssh_host_* /etc/ssh/ \

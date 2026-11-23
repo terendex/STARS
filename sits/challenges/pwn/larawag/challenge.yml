@@ -1,0 +1,38 @@
+version: "0.1"
+name: "Greeter"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Pwn"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The greeter asks for a name, puts it into a terminal command, and runs that command. The source code is attached below. A terminal can run more than one command from a single line.
+
+  **Your goal:** make the program show you the file `/flag.txt`.
+
+  **How to connect:** Windows doesn't come with `nc`, so open a terminal (PowerShell) and run the command below. It uses the password `pwnit` and takes you straight into the program, with no shell. On a Mac or Linux, or if you have `nc` installed, `nc IP 9045` works the same way.
+
+  The program's source code is attached below as a download. Reading it is how you find the weakness.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`, `cat`
+connection_info: ssh greeter@192.168.68.103 -p 2240
+files:
+  - dist/larawag.c
+flags:
+  - "FLAG{s3m1c0l0n_s4ys_h3ll0}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In a terminal, `;` ends one command and starts the next, so `echo hi; ls` runs both. Put that idea into the name you give the greeter."
+    cost: 5
+  - content: "Enter the name `; cat /flag.txt`. The greeter runs `echo Hello,` then your `cat /flag.txt`."
+    cost: 10
+state: visible

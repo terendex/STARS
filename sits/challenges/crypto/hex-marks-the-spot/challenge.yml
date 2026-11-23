@@ -1,0 +1,31 @@
+version: "0.1"
+name: "Hex Marks the Spot"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 30
+# Dynamic scoring: starts at 30, then every solve takes 1 off for
+# everyone who has solved it, down to 15.
+extra:
+  function: linear
+  initial: 30
+  decay: 1
+  minimum: 15
+attempts: 3
+description: |-
+  The treasure map is written in **hexadecimal**. Computers store each letter as a number, and hex is a way of writing those numbers with the digits `0` to `9` and the letters `a` to `f`. Each pair is one character: `46` means `F`, and `4c` means `L`.
+
+  **Your goal:** turn the numbers in `map.txt` (download it below) back into text to read the flag. Use CyberChef the same way as in Not So Secret: paste the file into **Input**, then find the operation that reads hex.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/map.txt
+flags:
+  - "FLAG{h3x_m4rks_th3_sp0t}"
+tags:
+  - "★ Easy"
+hints:
+  - content: "In CyberChef, use the **From Hex** operation."
+    cost: 5
+state: visible

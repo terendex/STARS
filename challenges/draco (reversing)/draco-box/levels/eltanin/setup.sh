@@ -1,7 +1,9 @@
 #!/bin/bash
 # Eltanin (Easy): the program compares your password with the real one using
 # strcmp. ltrace shows that call, real password included.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=eltanin
 FLAG='STARS{3lt4n1n_s4w_th3_c0mp4r1s0n}'

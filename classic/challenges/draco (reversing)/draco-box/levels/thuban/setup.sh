@@ -1,6 +1,8 @@
 #!/bin/bash
 # Thuban (Easy): the flag is stored in the program as plain text. strings finds it.
-set -euo pipefail
+# No pipefail: the checks pipe output into grep -q, which can stop the
+# writer early, and only grep's answer matters.
+set -eu
 
 user=thuban
 FLAG='STARS{thub4n_th3_0ld_p0l3_st4r}'

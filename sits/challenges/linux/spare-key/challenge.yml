@@ -1,0 +1,32 @@
+version: "0.1"
+name: "Spare Key"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Linux"
+type: standard
+value: 100
+# Dynamic scoring: starts at 100, then every solve takes 5 off for
+# everyone who has solved it, down to 50.
+extra:
+  function: linear
+  initial: 100
+  decay: 5
+  minimum: 50
+attempts: 3
+description: |-
+  The caretaker left a spare key in your home folder. It isn't a password: it's an **SSH key**, a file that logs you in to an account without the account's password. The caretaker's account is on this same server, and its home folder has the flag.
+
+  **Your goal:** use the key to log in as `caretaker` and read the flag in the caretaker's home folder.
+
+  Log in with the command below and the password `underthemat`. Read `note.txt` too.
+connection_info: ssh sparekey@192.168.68.103 -p 2240
+flags:
+  - "FLAG{sp4r3_k3y_und3r_th3_m4t}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "`ssh` can log in with a key file instead of a password: `ssh -i keyfile user@server`. You're already on the server, so the server is `localhost`."
+    cost: 10
+  - content: "Run `ssh -i ~/spare_key caretaker@localhost`, type `yes` if it asks, then `cat flag.txt`. Type `exit` twice to come back out."
+    cost: 10
+state: visible

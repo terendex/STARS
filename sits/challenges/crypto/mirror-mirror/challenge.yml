@@ -1,0 +1,33 @@
+version: "0.1"
+name: "Mirror, Mirror"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  This message has two layers. The outer one is **Base64**, like Not So Secret. Under it is one of the oldest ciphers there is: the alphabet is flipped, so `A` becomes `Z`, `B` becomes `Y`, `C` becomes `X`, and so on. Numbers and symbols aren't changed.
+
+  **Your goal:** undo both layers of `message.txt` (download it below) to read the flag. CyberChef runs the Recipe from top to bottom, so put the Base64 step first.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/message.txt
+flags:
+  - "FLAG{m1rr0r_m1rr0r_0n_th3_w4ll}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "After **From Base64**, the flag's start reads `UOZT{`: U is the 6th letter from the end of the alphabet, and F is the 6th from the start. The flipped-alphabet cipher is called **Atbash**."
+    cost: 5
+  - content: "Recipe: **From Base64**, then **Atbash Cipher**."
+    cost: 5
+state: visible

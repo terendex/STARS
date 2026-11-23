@@ -1,0 +1,35 @@
+version: "0.1"
+name: "Shift Work"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Crypto"
+type: standard
+value: 60
+# Dynamic scoring: starts at 60, then every solve takes 3 off for
+# everyone who has solved it, down to 30.
+extra:
+  function: linear
+  initial: 60
+  decay: 3
+  minimum: 30
+attempts: 3
+description: |-
+  The night shift's report comes in two layers.
+
+  The outer layer is **hexadecimal**, like Hex Marks the Spot. Under it is a **Caesar cipher**, which is about 2,000 years old: it moves every letter the same number of places along the alphabet, so with a shift of 3, `A` becomes `D`. Nobody told us the shift, but there are only 25 possibilities. CyberChef files the Caesar cipher under the name of its most famous 13-place version, and it has an operation that tries every shift at once.
+
+  **Your goal:** undo both layers of `report.txt` (download it below) to read the flag. CyberChef runs the Recipe from top to bottom, so put the hex step first.
+
+  **Tools you may need to solve this level:** [CyberChef](https://gchq.github.io/CyberChef/)
+files:
+  - dist/report.txt
+flags:
+  - "FLAG{sh1ft_w0rk_cl0ck3d_0ut}"
+tags:
+  - "★★ Medium"
+hints:
+  - content: "Start with **From Hex**. Below it, add **ROT13 Brute Force**, which shows the message at every shift. Type `FLAG` in its **Crib** box to keep only the line that reads. (**Caesar Box Cipher** is a different thing.)"
+    cost: 5
+  - content: "The shift was 17, so moving 9 more places brings every letter back (17 + 9 = 26). Recipe: **From Hex**, then **ROT13** with **Amount** set to `9`."
+    cost: 10
+state: visible
