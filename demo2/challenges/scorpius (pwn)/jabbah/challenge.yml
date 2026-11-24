@@ -7,17 +7,23 @@ type: standard
 value: 60
 attempts: 3
 description: |-
-  Jabbah is a star system in the head of Scorpius, near the end of its life. Its core monitor takes a fusion reading and logs it, but it lets you type up to 256 bytes into a space that holds 64, so a long reading spills into whatever comes next. This is called a **buffer overflow**. Read the source below.
+  Jabbah is a star system in the head of Scorpius, near the end of its life. Its core monitor asks for a fusion reading, but it lets you type up to 256 bytes into a space that only holds 64. Everything past the first 64 bytes spills into what comes after. This is called a **buffer overflow**. Read the source below.
 
-  Right after the 64-byte space come 8 bytes of saved data, and then the **return address**: the place the program goes back to when a function ends. The program has a function called `supernova` that nothing ever calls, and it prints where that function is. Send 72 bytes of padding (64 + 8), then `supernova`'s address, and the program goes to `supernova` instead of back where it came from.
+  Just past that 64-byte space sit 8 bytes of saved data, and then the **return address**: the place the program jumps back to when the current function ends. Overflow far enough to overwrite the return address and you choose where the program goes next. The program has a function called `supernova` that nothing ever calls and that prints the flag, and when it starts it tells you where that function is: `supernova() is at 0x...`.
 
-  The address has to be sent as raw bytes, in the order this computer stores them: backwards (**little-endian**), and filled up to 8 bytes. You can't type raw bytes on a keyboard, but `printf` can make them, and you can pipe its output into `nc`.
+  So the input you send is **72 bytes of filler** (64 to fill the space, plus 8 for the saved data), then **`supernova`'s address**. The address has to be sent as raw bytes — you can't type those on a keyboard — and written **backwards** (this is called little-endian), padded with zeros to 8 bytes. For the address `0x4017c5`, the 8 bytes are `\xc5\x17\x40\x00\x00\x00\x00\x00`.
 
-  **Your goal:** make the program run `supernova`, which prints the flag.
+  `printf` turns those `\x` codes into raw bytes, and `|` pipes them straight into `nc`, so the whole attack is one line:
 
-  **How to connect:** the easiest way is from the Calvera account on this CTF, which has `printf` and `nc` ready. Log in with `ssh calvera@<address> -p 2250`, using the address from the command below and the password `neutronstar`, then run `nc jabbah 9001`. The command below reaches the same program from your own computer, if you have `nc` there.
+  `printf 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\xc5\x17\x40\x00\x00\x00\x00\x00' | nc jabbah 9001`
 
-  **Commands you may need to solve this level:** `nc`, `printf`
+  That's 72 `A`s for the filler, then the 8 address bytes.
+
+  **Your goal:** run that command. The program jumps to `supernova`, which prints the flag.
+
+  **How to connect:** the command needs `printf` and `nc`, which the Calvera account on this CTF already has. Log in with `ssh calvera@<address> -p 2250` (use the address from the command below) and the password `neutronstar`, then paste the `printf ... | nc jabbah 9001` line. If you have `nc` on your own computer instead, the command below connects to the same program — keep the same `printf`, but swap `jabbah 9001` for the host and port it shows.
+
+  **Commands you may need to solve this level:** `ssh`, `nc`, `printf`
 connection_info: nc 192.168.68.101 9051
 files:
   - dist/jabbah.c
@@ -27,9 +33,9 @@ tags:
   - "★★ Medium"
 hints:
   - content: |-
-      In `printf`, `\x` and two hex digits make one raw byte. To write an address backwards, split it into pairs of digits from the right, then add `00`s until there are 8. For `0x4017c5` that's `\xc5\x17\x40\x00\x00\x00\x00\x00`.
+      If the program's first line shows an address other than `0x4017c5`, it was rebuilt, so use the one it shows. Split it into pairs of digits from the right (`0x4017c5` becomes `c5 17 40`), write each pair as `\x` plus the pair, then add `\x00` until there are 8 in all: `\xc5\x17\x40\x00\x00\x00\x00\x00`.
     cost: 0
   - content: |-
-      From the Calvera account, send 72 `A`s and then the address: `printf 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\xc5\x17\x40\x00\x00\x00\x00\x00' | nc jabbah 9001`. If the program printed a different address, put that one in instead.
+      No flag came back? Count the `A`s — it has to be exactly 72, with the 8 address bytes right after and no space between. And if your own computer says `nc` isn't found, use the Calvera account, where `nc` and `printf` are both installed.
     cost: 0
 state: visible
