@@ -1,5 +1,5 @@
 #!/bin/bash
-# Calvera (Hard): some of this account's commands are fakes. ~/.local/bin comes
+# Calvera (Medium): some of this account's commands are fakes. ~/.local/bin comes
 # first in its PATH (Debian puts it there for every user that has one), and it
 # holds look-alike cat, grep, head and friends. They run the real program, then
 # hide anything shaped like a flag. Players have to notice (type cat, echo

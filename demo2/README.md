@@ -1,12 +1,12 @@
 # STARS Demo 2
 
-A second small demo CTF, for showing the hardest kind of STARS challenge: one ★★★ Hard per category, six in all, worth 100 points each. None of them are in a real event, so it's safe to demo in front of players. Its navbar is dark red. Flags look like `STARS{...}`. Keep it that way: never put a real event's challenge, flag or trick here.
+A second small demo CTF, a step up from the first: one ★★ Medium challenge per category, six in all, worth 60 points each. None of them are in a real event, so it's safe to demo in front of players. Its navbar is dark red. Flags look like `STARS{...}`. Keep it that way: never put a real event's challenge, flag or trick here.
 
 It works like the [first demo](../demo/README.md):
 
 - **No login needed.** Anyone who opens it is signed in automatically as `demo1` on the **Demo Team**, so everyone shares that one team, its solves and its 3 tries per challenge. To require logins again, empty `STARS_DEMO_AUTOLOGIN` in `demo2\docker-compose.yml` and run `scripts\demo2.ps1 start`.
 - **No mission clock**, and points don't drop. No first blood or help queue.
-- **Every hint is free.** In the first demo hints cost points, but CTFd won't sell a hint to a team on 0 points, and with only Hard challenges the Demo Team would be stuck.
+- **Every hint is free.** In the first demo hints cost points, but CTFd won't sell a hint to a team on 0 points, so a Demo Team that's stuck on its first challenge here could never buy one.
 
 | What | Address |
 |---|---|

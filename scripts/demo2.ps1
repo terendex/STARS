@@ -3,7 +3,7 @@
 Sets up, starts, stops or syncs the 2nd STARS demo CTF.
 
 .DESCRIPTION
-The 2nd demo is a separate small CTF in the demo2 folder: one Hard challenge
+The 2nd demo is a separate small CTF in the demo2 folder: one Medium challenge
 per category, none of them in a real event. It works like the first demo, with
 its own CTFd, accounts and scores, runs beside the real CTF on port 8500, and
 uses the same IP address. See demo2\README.md.

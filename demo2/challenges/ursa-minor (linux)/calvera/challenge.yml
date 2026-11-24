@@ -4,24 +4,26 @@ author: "Axel Jonas C. Tangalin"
 attribution: "Made by Axel Jonas C. Tangalin"
 category: "Ursa Minor (Linux)"
 type: standard
-value: 100
+value: 60
 attempts: 3
 description: |-
   Calvera is a lonely neutron star in the Little Dipper, named after the villain of the film The Magnificent Seven. It gives off no light we can see, so it hides in plain sight.
 
-  On this account, some everyday commands have been quietly swapped for look-alikes. They work like the real ones, except that they hide anything shaped like a flag.
+  When you type a command like `cat`, the shell looks through a list of folders called your **PATH**, in order, and runs the first program with that name. On this account, someone put a folder of look-alike commands at the front of that list. They work like the real ones, except that they hide anything shaped like a flag.
 
   **Your goal:** read the real contents of `report.txt` in your home folder. The flag is in it.
 
   Log in with the command below and the password `neutronstar`.
+
+  **Commands you may need to solve this level:** `echo $PATH`, `type`, `cat`
 connection_info: ssh calvera@192.168.68.101 -p 2250
 flags:
   - "STARS{c4lv3r4_tru5ts_n0_p4th}"
 tags:
-  - "★★★ Hard"
+  - "★★ Medium"
 hints:
-  - content: "When you type a command's name, the shell runs the first program with that name it finds in the folders listed in `$PATH`. `type cat` shows which one that is, and `echo $PATH` shows the list."
+  - content: "`type cat` shows which `cat` really runs when you type `cat`. The real commands are in `/usr/bin`."
     cost: 0
-  - content: "The real programs are in `/usr/bin`. Run them by their full path, like `/usr/bin/cat report.txt`. That goes for every command in a pipe, too."
+  - content: "Run the real `cat` by its full path: `/usr/bin/cat report.txt`. If you pipe it into another command, that one needs its full path too, because `grep` is faked as well."
     cost: 0
 state: visible

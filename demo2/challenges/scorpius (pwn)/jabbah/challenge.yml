@@ -4,26 +4,32 @@ author: "Axel Jonas C. Tangalin"
 attribution: "Made by Axel Jonas C. Tangalin"
 category: "Scorpius (Pwn)"
 type: standard
-value: 100
+value: 60
 attempts: 3
 description: |-
-  Jabbah is a star system in the head of Scorpius, near the end of its life. Its core monitor takes a fusion reading and logs it, but it was never told what to do with a reading that's too big.
+  Jabbah is a star system in the head of Scorpius, near the end of its life. Its core monitor takes a fusion reading and logs it, but it lets you type up to 256 bytes into a space that holds 64, so a long reading spills into whatever comes next. This is called a **buffer overflow**. Read the source below.
 
-  The program has a function called `supernova` that nothing ever calls, and it even tells you where that function is. Overflow the buffer far enough to overwrite the **return address**, the place the program goes back to when a function ends, and send it to `supernova`.
+  Right after the 64-byte space come 8 bytes of saved data, and then the **return address**: the place the program goes back to when a function ends. The program has a function called `supernova` that nothing ever calls, and it prints where that function is. Send 72 bytes of padding (64 + 8), then `supernova`'s address, and the program goes to `supernova` instead of back where it came from.
 
-  **Your goal:** make the program run `supernova`, which prints the flag. Read its source below.
+  The address has to be sent as raw bytes, in the order this computer stores them: backwards (**little-endian**), and filled up to 8 bytes. You can't type raw bytes on a keyboard, but `printf` can make them, and you can pipe its output into `nc`.
 
-  This needs raw bytes, so a normal keyboard won't do. Connect with the command below from PowerShell, or if you don't have `nc`, log in to the Calvera account on this CTF (port 2250, password `neutronstar`) and run `nc jabbah 9001` from there.
+  **Your goal:** make the program run `supernova`, which prints the flag.
+
+  **How to connect:** the easiest way is from the Calvera account on this CTF, which has `printf` and `nc` ready. Log in with `ssh calvera@<address> -p 2250`, using the address from the command below and the password `neutronstar`, then run `nc jabbah 9001`. The command below reaches the same program from your own computer, if you have `nc` there.
+
+  **Commands you may need to solve this level:** `nc`, `printf`
 connection_info: nc 192.168.68.101 9051
 files:
   - dist/jabbah.c
 flags:
   - "STARS{j4bb4h_r3turns_t0_th3_c0r3}"
 tags:
-  - "★★★ Hard"
+  - "★★ Medium"
 hints:
-  - content: "The buffer is 64 bytes, and 8 more bytes of saved data sit before the return address. That's 72 bytes in total."
+  - content: |-
+      In `printf`, `\x` and two hex digits make one raw byte. To write an address backwards, split it into pairs of digits from the right, then add `00`s until there are 8. For `0x4017c5` that's `\xc5\x17\x40\x00\x00\x00\x00\x00`.
     cost: 0
-  - content: "Addresses are stored backwards (little-endian) in 8 bytes. Read `supernova()`'s address from the program's own line (it stays the same unless the program is rebuilt), then send 72 bytes of padding followed by that address. On your own machine with Python: read the banner, pull the address out with a regex, then send `b'A'*72 + struct.pack('<Q', addr)`. From the Calvera account there's no Python, so use `printf`: for the address `0x4017c5` that's `printf 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\\xc5\\x17\\x40\\x00\\x00\\x00\\x00\\x00' | nc jabbah 9001`."
+  - content: |-
+      From the Calvera account, send 72 `A`s and then the address: `printf 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\xc5\x17\x40\x00\x00\x00\x00\x00' | nc jabbah 9001`. If the program printed a different address, put that one in instead.
     cost: 0
 state: visible

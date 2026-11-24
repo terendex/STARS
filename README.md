@@ -15,7 +15,7 @@ Each CTF is its own folder with its own website, accounts and scores. They can r
 | **2nd Star**, the main STARS event (56 challenges) | [2nd-star/](2nd-star/) | `http://<host>:8000` | `STARS{...}` | the **Start STARS** button |
 | **STARS Classic**, the first orientation (36) | [classic/](classic/) | `http://<host>:8200` | `STARS{...}` | `scripts\classic.ps1 start` |
 | **STARS Demo**, safe to show anyone (12) | [demo/](demo/) | `http://<host>:8100` | `STARS{...}` | `scripts\demo.ps1 start` |
-| **STARS Demo 2**, the hardest kind, one per category (6) | [demo2/](demo2/) | `http://<host>:8500` | `STARS{...}` | `scripts\demo2.ps1 start` |
+| **STARS Demo 2**, ★★ Medium, one per category (6) | [demo2/](demo2/) | `http://<host>:8500` | `STARS{...}` | `scripts\demo2.ps1 start` |
 | **SITS Capture The Flag Competition 2026** (83) | [sits/](sits/) | `http://<host>:8300` | `FLAG{...}` | the **Start SITS CTF** button |
 
 `<host>` is the CTF PC's Wi-Fi address, which the Start buttons show. **Stop STARS** stops all of them. Each folder's README lists its ports and commands.

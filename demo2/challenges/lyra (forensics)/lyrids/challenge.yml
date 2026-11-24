@@ -4,21 +4,25 @@ author: "Axel Jonas C. Tangalin"
 attribution: "Made by Axel Jonas C. Tangalin"
 category: "Lyra (Forensics)"
 type: standard
-value: 100
+value: 60
 attempts: 3
 description: |-
   Every April, the Lyrids meteor shower seems to pour out of Lyra. On the night of the last one, someone at the observatory phoned in a message by typing it on the phone's keypad, and the call was recorded (download it below).
 
-  **Your goal:** decode the tones to find out which keys were pressed. You'll get numbers with `*` between them, where each number is the character code of one character of the flag. Turn those numbers back into text to read the flag.
+  Each key on a phone's keypad makes its own beep, called a **DTMF tone**. A DTMF decoder listens to a recording and tells you which keys were pressed.
+
+  **Your goal:** decode the tones to find out which keys were pressed. You'll get numbers with `*` between them, and each number is the **decimal ASCII code** of one character of the flag. Turn those numbers back into text to read the flag.
+
+  **Tools you may need to solve this level:** an online DTMF decoder that takes an audio file, CyberChef (`From Decimal`)
 files:
   - dist/call.wav
 flags:
   - "STARS{lyr1ds_d14l_t0n3s}"
 tags:
-  - "★★★ Hard"
+  - "★★ Medium"
 hints:
-  - content: "The beeps are DTMF tones, the sounds a phone's keys make. Search for an online DTMF decoder that takes an audio file, and give it `call.wav`. If a decoder struggles, a spectrogram shows two lines for each beep, and the DTMF table on Wikipedia says which key each pair means."
+  - content: "Every flag starts with `STARS{`, so the keys should start with `83*84*65*82*83*123`. If a decoder misses or doubles some keys, try another one. Or open the file in a spectrogram viewer (Audacity has one): each beep shows as two lines, and the DTMF table on Wikipedia says which key each pair of lines means."
     cost: 0
-  - content: "The numbers are decimal ASCII codes. In CyberChef, paste the keys, replace `*` with a space (Find / Replace), then add From Decimal."
+  - content: "In CyberChef, paste the keys and add From Decimal. It expects spaces between the numbers, so change its Delimiter from Space to Auto, which splits the numbers at the `*`s."
     cost: 0
 state: visible

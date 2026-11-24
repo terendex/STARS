@@ -4,22 +4,26 @@ author: "Axel Jonas C. Tangalin"
 attribution: "Made by Axel Jonas C. Tangalin"
 category: "Gemini (Crypto)"
 type: standard
-value: 100
+value: 60
 attempts: 3
 description: |-
-  The Jellyfish Nebula drifts near Propus, at the feet of Gemini's twins. Its station sent two signals, both encrypted with the same one-time key (download them below). A one-time key can't be broken if it's used once. This one was used twice, and the station later printed the first message in its newsletter (download it below too).
+  The Jellyfish Nebula drifts near Propus, at the feet of Gemini's twins. Its station sent two signals, both encrypted with **XOR** and the same one-time key (download them below). A one-time key can't be broken if it's used once. This one was used twice, and the station later printed the first message in its newsletter (download it below too).
 
-  **Your goal:** use the printed message to recover the key, then decrypt Signal 2. The flag is in it.
+  XOR undoes itself. XOR a signal with its original message and you get the key. XOR a signal with the key and you get its message.
+
+  **Your goal:** XOR Signal 1 with the newsletter's message to get the key, then XOR Signal 2 with the key. The flag is in Signal 2's message.
+
+  **Tools you may need to solve this level:** CyberChef (`From Hex`, `XOR`, `To Hex`)
 files:
   - dist/signals.txt
   - dist/newsletter.txt
 flags:
   - "STARS{tw1n_k3ys_c4nc3l_0ut}"
 tags:
-  - "★★★ Hard"
+  - "★★ Medium"
 hints:
-  - content: "The signals were made with XOR, which undoes itself: if signal = message XOR key, then key = signal XOR message. In CyberChef, paste Signal 1, add From Hex, then XOR with the newsletter's message as the key (choose UTF8)."
+  - content: "The signals are written in hex, so start with From Hex. To get the key: paste Signal 1, add From Hex, then add XOR and paste the newsletter's last line (the message) as its key, with the key box set to UTF8. Add To Hex at the end, and the output is the key."
     cost: 0
-  - content: "Now XOR Signal 2 with that key. A shortcut in one recipe: paste Signal 2, then From Hex, XOR with Signal 1 (choose HEX), and XOR with the newsletter's message (choose UTF8)."
+  - content: "Now paste Signal 2 as the input instead, keep From Hex, and set XOR's key to the hex key from the first hint, with the key box set to HEX. Take out To Hex so the output shows as text."
     cost: 0
 state: visible

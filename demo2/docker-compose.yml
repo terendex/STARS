@@ -1,6 +1,6 @@
 name: stars-demo2
 
-# The second demo CTF: the hardest kind of STARS challenge, one ★★★ Hard per
+# The second demo CTF: a step up from the first, one ★★ Medium challenge per
 # category, none of which are in a real event, so it's safe to show anyone.
 # It works like the first demo: no login, no mission clock, fixed points.
 # Use scripts\demo2.ps1 to set it up, start it and stop it. It has its own

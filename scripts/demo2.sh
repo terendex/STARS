@@ -6,7 +6,7 @@
 #   bash scripts/demo2.sh stop    # keeps accounts and scores
 #   bash scripts/demo2.sh sync    # after editing a demo challenge.yml
 #
-# The 2nd demo is a separate small CTF in demo2/: one Hard challenge per
+# The 2nd demo is a separate small CTF in demo2/: one Medium challenge per
 # category, none of them in a real event. It works like the first demo, runs
 # beside the real CTF on port 8500 and uses the same IP address. See
 # demo2/README.md.

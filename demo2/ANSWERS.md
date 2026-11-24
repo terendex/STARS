@@ -4,7 +4,7 @@ Made by Axel Jonas C. Tangalin.
 
 **Organizers only.** None of these challenges are in a real event, so it's fine to walk through these solutions in front of players during a demo.
 
-The 2nd demo shows the hardest kind of STARS challenge: one ★★★ Hard per category, each worth 100 points, for a maximum of 600. Points don't drop, there's no mission clock, and every hint is free, so anyone can follow along. (In the first demo hints cost points, and CTFd won't sell a hint to a team on 0 points. With only Hard challenges, the Demo Team would be stuck.)
+The 2nd demo is a step up from the first: one ★★ Medium per category, each worth 60 points, for a maximum of 360. Each description names the idea behind the challenge and the tools for it, and the hints walk through the rest. Points don't drop, there's no mission clock, and every hint is free, so anyone can follow along. (In the first demo hints cost points, and CTFd won't sell a hint to a team on 0 points, so a Demo Team stuck on its first challenge here could never buy one.)
 
 Nobody needs to log in: everyone who opens the demo plays as `demo1` on the **Demo Team**, so a solve by one person shows as solved for everyone. The admin login is in `LOGINS.txt` in this folder.
 
@@ -75,7 +75,7 @@ The longer way, as the hints describe: Signal 1, From Hex, XOR with the newslett
 
 1. Download `call.wav` and listen: it's a phone being dialled.
 2. Upload it to an online DTMF decoder (search for "DTMF decoder audio file"). It gives the keys: `83*84*65*82*83*123*108*121*114*49*100*115*95*100*49*52*108*95*116*48*110*51*115*125`.
-3. In CyberChef, paste the keys, add **Find / Replace** to replace `*` with a space, then add **From Decimal**. It reads `STARS{lyr1ds_d14l_t0n3s}`.
+3. In CyberChef, paste the keys, add **From Decimal**, and set its **Delimiter** to **Auto** (the default, Space, would only read the first number). It reads `STARS{lyr1ds_d14l_t0n3s}`. The longer way: **Find / Replace** with `*` in Find, that box switched from REGEX to SIMPLE STRING (as a regex, `*` alone is an error), and one space in Replace, then **From Decimal**.
 
 Without a decoder: open the file in a spectrogram viewer (Audacity, or a website). Each beep shows as two lines, and the DTMF table on Wikipedia gives the key for each pair: 697 Hz and 1209 Hz is 1, 941 Hz and 1209 Hz is `*`, and so on. It's slow but works.
 
@@ -83,11 +83,11 @@ Without a decoder: open the file in a spectrogram viewer (Audacity, or a website
 
 **Teaches:** `argv[0]`: a program knows the name it was started under.
 
-The program compares the name it was started under with its true name. The flag is XORed with the true name, so jumping past the check in gdb only prints garbage.
+The program compares the name it was started under with its true name, which is stored as plain text inside it. The flag is XORed with the true name, so jumping past the check in gdb only prints garbage.
 
 1. Log in: `ssh fafnir@192.168.68.101 -p 2252`, password `draco`.
 2. `./fafnir` prints `You called me "fafnir". That is only the name on my door.` and `Fafnir answers to his true name, and to nothing else.`
-3. `ltrace ./fafnir` shows the comparison: `strcmp("fafnir", "gnitaheath-wyrm") = -1`. The first one is the name it was started as, so the second is its true name.
+3. `ltrace ./fafnir` shows the comparison: `strcmp("fafnir", "gnitaheath-wyrm") = -1`. The first one is the name it was started as, so the second is its true name. (`strings fafnir` lists `gnitaheath-wyrm` too, among the program's other text.)
 4. Start it under that name with a link: `ln -sf ~/fafnir /tmp/gnitaheath-wyrm`, then `/tmp/gnitaheath-wyrm`. It prints `You know my true name. STARS{f4fn1r_4nsw3rs_t0_h1s_tru3_n4m3}`.
 
    The box's `/tmp` is shared and persists, so a plain `ln -s` fails with `File exists` on a second attempt. The `-f` overwrites the old link, so you can re-run the solve any time. (Or just run the existing `/tmp/gnitaheath-wyrm` again — the link still works.)

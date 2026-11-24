@@ -84,7 +84,7 @@ PROFILES = {
     },
     "demo2": {
         "ctf_name": "STARS Demo 2",
-        "ctf_description": "A demo of the hardest STARS challenges, one per category.",
+        "ctf_description": "A demo of ★★ Medium STARS challenges, one per category.",
         # Dark red, so the 2nd demo is never mistaken for the first (purple) or a real CTF.
         "theme_color": "#9b2c2c",
         "home": PAGES["demo2"],

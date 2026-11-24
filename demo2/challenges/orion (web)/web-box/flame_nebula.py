@@ -1,4 +1,4 @@
-"""Flame Nebula (Hard): server-side template injection.
+"""Flame Nebula (Medium): server-side template injection.
 
 The register writes the visitor's star name into the source of a small
 template and then renders it, so anything between {{ and }} is worked out as a

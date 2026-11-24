@@ -165,7 +165,8 @@ PAGES = {
         "No login needed. You're already playing as the Demo Team.",
         [("Open the challenges", "/challenges", "btn-primary")],
         steps(
-            "Every challenge here is ★★★ Hard, the hardest kind in STARS, and worth 100 points.",
+            "Every challenge here is ★★ Medium and worth 60 points. Each one tells you the idea it's about and "
+            "the tools you may need.",
             "Everyone here plays as the same Demo Team, so solves, hints and wrong tries are shared by all.",
             hints="Stuck? Each challenge has hints, and here they're free.",
         ),

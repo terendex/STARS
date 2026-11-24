@@ -4,22 +4,26 @@ author: "Axel Jonas C. Tangalin"
 attribution: "Made by Axel Jonas C. Tangalin"
 category: "Draco (Reversing)"
 type: standard
-value: 100
+value: 60
 attempts: 3
 description: |-
   Fafnir is a star in Draco, named after the dragon of Norse legend. In old stories, a dragon only answers to its true name, and this program is the same. Run `./fafnir` and it refuses you, because you called it by the name on its door.
 
-  **Your goal:** find Fafnir's true name, then start the program under that name. It prints the flag.
+  A program always knows the name it was started under. You can't rename `fafnir` itself, but you can make a **link** to it: a second name that points at the same program. Start the program through the link, and the program sees the link's name. Your home folder is read-only, so make the link in `/tmp`.
+
+  **Your goal:** find Fafnir's true name, which is written inside the program, then start the program under that name. It prints the flag.
 
   Log in with the command below and the password `draco`.
+
+  **Commands you may need to solve this level:** `strings` or `ltrace`, `ln`
 connection_info: ssh fafnir@192.168.68.101 -p 2252
 flags:
   - "STARS{f4fn1r_4nsw3rs_t0_h1s_tru3_n4m3}"
 tags:
-  - "★★★ Hard"
+  - "★★ Medium"
 hints:
-  - content: "Run it under `ltrace` and look at what `strcmp` compares. One side is the name the program was started under."
+  - content: "`ltrace ./fafnir` shows what the program checks. Look for the `strcmp` line: one side is the name you started it under, and the other side is the true name."
     cost: 0
-  - content: "A program's name is whatever it was started as. Make a link with the true name and run the link: `ln -sf ~/fafnir /tmp/<true name>`, then `/tmp/<true name>`. (The `-f` lets you re-run it even if the link is already there from a previous try.)"
+  - content: "`ln -sf ~/fafnir /tmp/<true name>` makes the link, and `/tmp/<true name>` runs it. (The `-f` replaces a link left there by an earlier try.)"
     cost: 0
 state: visible
