@@ -88,7 +88,9 @@ The program compares the name it was started under with its true name. The flag 
 1. Log in: `ssh fafnir@192.168.68.101 -p 2252`, password `draco`.
 2. `./fafnir` prints `You called me "fafnir". That is only the name on my door.` and `Fafnir answers to his true name, and to nothing else.`
 3. `ltrace ./fafnir` shows the comparison: `strcmp("fafnir", "gnitaheath-wyrm") = -1`. The first one is the name it was started as, so the second is its true name.
-4. Start it under that name with a link: `ln -s ~/fafnir /tmp/gnitaheath-wyrm`, then `/tmp/gnitaheath-wyrm`. It prints `You know my true name. STARS{f4fn1r_4nsw3rs_t0_h1s_tru3_n4m3}`.
+4. Start it under that name with a link: `ln -sf ~/fafnir /tmp/gnitaheath-wyrm`, then `/tmp/gnitaheath-wyrm`. It prints `You know my true name. STARS{f4fn1r_4nsw3rs_t0_h1s_tru3_n4m3}`.
+
+   The box's `/tmp` is shared and persists, so a plain `ln -s` fails with `File exists` on a second attempt. The `-f` overwrites the old link, so you can re-run the solve any time. (Or just run the existing `/tmp/gnitaheath-wyrm` again — the link still works.)
 
 Another way: `(exec -a gnitaheath-wyrm ./fafnir)`. Keep the brackets, or `exec` replaces your shell and the session ends once the program finishes.
 

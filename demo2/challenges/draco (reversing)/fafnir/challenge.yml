@@ -20,6 +20,6 @@ tags:
 hints:
   - content: "Run it under `ltrace` and look at what `strcmp` compares. One side is the name the program was started under."
     cost: 0
-  - content: "A program's name is whatever it was started as. Make a link with the true name and run the link: `ln -s ~/fafnir /tmp/<true name>`, then `/tmp/<true name>`."
+  - content: "A program's name is whatever it was started as. Make a link with the true name and run the link: `ln -sf ~/fafnir /tmp/<true name>`, then `/tmp/<true name>`. (The `-f` lets you re-run it even if the link is already there from a previous try.)"
     cost: 0
 state: visible
