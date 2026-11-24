@@ -9,7 +9,9 @@ With -AtSignIn, it starts Docker Desktop and the CTF on the current network.
 Without it, it runs whenever Windows connects to a network, and every 5 minutes.
 If the IP has changed, it moves the CTF to the new one. A CTF you've stopped
 stays stopped, and only its files are updated, so it starts on the right
-address next time.
+address next time. It also rebinds any running side CTF (the demos, Classic,
+SITS) that's left answering on an old address, e.g. one started from stale
+containers after the network changed.
 
 It follows any network this PC joins. Everything it does goes in logs\auto-host.log.
 #>
@@ -73,6 +75,47 @@ function Invoke-SetHost([hashtable]$arguments) {
     }
 }
 
+# True if any running container in this compose project still publishes a port
+# on an IP that isn't the current one, i.e. it was started on an old network.
+function Test-StaleBinding([string[]]$compose, [string]$ip) {
+    foreach ($id in @(docker @compose ps -q 2>$null | Where-Object { $_ })) {
+        $hostIps = docker inspect -f '{{range $p, $b := .HostConfig.PortBindings}}{{range $b}}{{.HostIp}} {{end}}{{end}}' $id 2>$null
+        foreach ($h in ($hostIps -split '\s+')) {
+            if ($h -and $h -ne '0.0.0.0' -and $h -ne $ip) { return $true }
+        }
+    }
+    return $false
+}
+
+# Rebind any running side CTF (the demos, Classic, SITS) that's left on an old
+# address, so its SSH and challenge ports answer on $ip again. A stopped side is
+# left alone: its files are already on $ip, so it starts there next time. Only a
+# side whose files already point at $ip is touched, so this never fights set-host
+# and can't loop: the recreate always lands on $ip.
+function Repair-Sides([string]$ip) {
+    foreach ($dir in Get-ChildItem -Directory $root) {
+        if ($dir.FullName -eq $main) { continue }
+        $compose = Join-Path $dir.FullName 'docker-compose.yml'
+        if (-not (Test-Path $compose)) { continue }
+        $co = @('compose', '-f', $compose)
+        if (-not (docker @co ps --status running -q ctfd 2>$null)) { continue }
+
+        $m = Select-String -Path (Join-Path $dir.FullName '.env') -Pattern '^CTF_BIND_IP=(.*)$' -ErrorAction SilentlyContinue
+        if (-not $m) { continue }
+        if ($m.Matches[0].Groups[1].Value.Trim() -ne $ip) { continue }
+        if (-not (Test-StaleBinding $co $ip)) { continue }
+
+        Write-Log "$($dir.Name) is running but bound to an old address. Rebinding to $ip."
+        docker @co up -d --wait --wait-timeout 180 *>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) { Write-Log "  docker compose up failed (exit $LASTEXITCODE)."; continue }
+        if (Test-Path (Join-Path $dir.FullName '.ctf\config')) {
+            docker @co run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py . 2>$null |
+                ForEach-Object { Write-Log "  $_" }
+        }
+        Write-Log "  $($dir.Name) is now on $ip."
+    }
+}
+
 # A sign-in and a network change often happen together, so only one copy runs.
 $mutex = New-Object Threading.Mutex($false, 'Local\STARS-auto-host')
 try { $owned = $mutex.WaitOne(0) } catch [Threading.AbandonedMutexException] { $owned = $true }
@@ -124,21 +167,29 @@ try {
             if (Invoke-SetHost @{ Ip = $ip; FilesOnly = $true }) { Set-Content -Path $pending -Value $ip }
         }
     }
-    elseif ($running -and (Test-Path $pending)) {
-        Write-Log "The CTF is running again: updating the addresses in CTFd to $ip."
-        docker compose run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py . 2>$null |
-            ForEach-Object { Write-Log "  $_" }
-        if ($LASTEXITCODE -eq 0) { Remove-Item $pending -ErrorAction SilentlyContinue }
-    }
-    elseif ($running) {
-        # Same IP, but if the network dropped and came back, Docker may have
-        # stopped listening on it. Only act if CTFd itself is healthy.
-        $healthy = (docker inspect -f '{{.State.Health.Status}}' (docker compose ps -q ctfd) 2>$null) -eq 'healthy'
-        if ($healthy -and -not ((Test-Port $ip 8000) -and (Test-Port $ip 2220))) {
-            Write-Log "CTFd is healthy but $ip isn't answering. Republishing the ports."
-            docker compose up -d --force-recreate --wait --wait-timeout 180 ctfd edge *>&1 | Out-Null
-            Write-Log "  docker compose exit code: $LASTEXITCODE"
+    else {
+        # 2nd Star's files are already on $ip. Pull CTFd and any side CTF back
+        # into line if something is still on an old address.
+        if ($running -and (Test-Path $pending)) {
+            Write-Log "The CTF is running again: updating the addresses in CTFd to $ip."
+            docker compose run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py . 2>$null |
+                ForEach-Object { Write-Log "  $_" }
+            if ($LASTEXITCODE -eq 0) { Remove-Item $pending -ErrorAction SilentlyContinue }
         }
+        elseif ($running) {
+            # Same IP, but if the network dropped and came back, Docker may have
+            # stopped listening on it. Only act if CTFd itself is healthy.
+            $healthy = (docker inspect -f '{{.State.Health.Status}}' (docker compose ps -q ctfd) 2>$null) -eq 'healthy'
+            if ($healthy -and -not ((Test-Port $ip 8000) -and (Test-Port $ip 2220))) {
+                Write-Log "CTFd is healthy but $ip isn't answering. Republishing the ports."
+                docker compose up -d --force-recreate --wait --wait-timeout 180 ctfd edge *>&1 | Out-Null
+                Write-Log "  docker compose exit code: $LASTEXITCODE"
+            }
+        }
+
+        # A running side CTF can be left on the old IP (for example started from
+        # stale containers after the network changed). Rebind any that are.
+        Repair-Sides $ip
     }
 }
 finally {

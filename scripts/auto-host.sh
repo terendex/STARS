@@ -6,8 +6,9 @@
 #   (nothing)   if the IP has changed, move the CTF to it (run every 5 minutes)
 #
 # A CTF you've stopped stays stopped, and only its files are updated, so it
-# starts on the right address next time. It follows any network this PC joins.
-# Everything it does goes in logs/auto-host.log.
+# starts on the right address next time. It also rebinds any running side CTF
+# (the demos, Classic, SITS) left answering on an old address. It follows any
+# network this PC joins. Everything it does goes in logs/auto-host.log.
 set -uo pipefail
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
 
@@ -31,6 +32,41 @@ set_host() {
         grep -E 'Updated the address|now use|CTF is now|failed|No \.ctf' |
         while IFS= read -r line; do log "  $line"; done
     return "${PIPESTATUS[0]}"
+}
+
+# Rebind any running side CTF (the demos, Classic, SITS) left answering on an old
+# address, so its ports come back on $1. A stopped side is left alone; only a
+# side whose files already point at $1 is touched, so this never fights set-host
+# and can't loop: the recreate always lands on $1.
+repair_sides() {
+    local ip=$1 dir co side_bound cid h hostips stale out
+    for dir in "$ROOT"/*/; do
+        dir=${dir%/}
+        [[ $dir == "$MAIN" ]] && continue
+        [[ -f $dir/docker-compose.yml ]] || continue
+        co=(compose -f "$dir/docker-compose.yml")
+        [[ -n $(docker "${co[@]}" ps --status running -q ctfd 2>/dev/null) ]] || continue
+        side_bound=$(sed -n 's/^CTF_BIND_IP=//p' "$dir/.env" 2>/dev/null | tr -d '[:space:]')
+        [[ $side_bound == "$ip" ]] || continue
+        stale=0
+        for cid in $(docker "${co[@]}" ps -q 2>/dev/null); do
+            hostips=$(docker inspect -f '{{range $p, $b := .HostConfig.PortBindings}}{{range $b}}{{.HostIp}} {{end}}{{end}}' "$cid" 2>/dev/null)
+            for h in $hostips; do
+                [[ -n $h && $h != 0.0.0.0 && $h != "$ip" ]] && stale=1
+            done
+        done
+        (( stale )) || continue
+        log "$(basename "$dir") is running but bound to an old address. Rebinding to $ip."
+        if docker "${co[@]}" up -d --wait --wait-timeout 180 >/dev/null 2>&1; then
+            if [[ -f $dir/.ctf/config ]]; then
+                out=$(docker "${co[@]}" run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py . 2>/dev/null)
+                [[ -n $out ]] && log "  $out"
+            fi
+            log "  $(basename "$dir") is now on $ip."
+        else
+            log "  docker compose up failed."
+        fi
+    done
 }
 
 # Only one copy at a time: boot and the 5-minute job can overlap.
@@ -67,10 +103,15 @@ if [[ $ip != "$bound" ]]; then
         log "Network changed from $bound to $ip while the CTF is stopped. Updated its files only."
         set_host "$ip" --files-only && echo "$ip" > "$PENDING"
     fi
-elif ctf_running && [[ -f $PENDING ]]; then
-    log "The CTF is running again: updating the addresses in CTFd to $ip."
-    output=$(cd "$MAIN" && docker compose run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py . 2>/dev/null)
-    status=$?
-    [[ -n $output ]] && log "  $output"
-    [[ $status == 0 ]] && rm -f "$PENDING"
+else
+    # 2nd Star's files are already on $ip. Pull CTFd and any side CTF back into
+    # line if something is still on an old address.
+    if ctf_running && [[ -f $PENDING ]]; then
+        log "The CTF is running again: updating the addresses in CTFd to $ip."
+        output=$(cd "$MAIN" && docker compose run --rm --entrypoint python ctfcli ../scripts/update-connection-info.py . 2>/dev/null)
+        status=$?
+        [[ -n $output ]] && log "  $output"
+        [[ $status == 0 ]] && rm -f "$PENDING"
+    fi
+    repair_sides "$ip"
 fi
