@@ -190,6 +190,8 @@ if __name__ == "__main__":
     index = next(row for row in reply.json()["data"] if row["route"] == "index")
     # The page's title is the browser tab's name, so it follows the CTF's name.
     name = api.get(f"{url}/api/v1/configs/ctf_name", timeout=20).json()["data"]["value"]
-    api.patch(f"{url}/api/v1/pages/{index['id']}", json={"content": PAGES[sys.argv[1]], "title": name},
+    # "html": the pages are hand-written HTML, not markdown (which turns an
+    # indented line after a blank one into a literal code block).
+    api.patch(f"{url}/api/v1/pages/{index['id']}", json={"content": PAGES[sys.argv[1]], "title": name, "format": "html"},
               timeout=20).raise_for_status()
     print(f"Updated the home page of the {sys.argv[1]} CTFd.")

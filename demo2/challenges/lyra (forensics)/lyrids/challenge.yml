@@ -9,7 +9,7 @@ attempts: 3
 description: |-
   Every April, the Lyrids meteor shower seems to pour out of Lyra. On the night of the last one, someone at the observatory phoned in a message by typing it on the phone's keypad, and the call was recorded (download it below).
 
-  **Your goal:** work out which keys were pressed. Between the presses of `*` are numbers, and each number is the character code of one letter of the flag.
+  **Your goal:** decode the tones to find out which keys were pressed. You'll get numbers with `*` between them, where each number is the character code of one character of the flag. Turn those numbers back into text to read the flag.
 files:
   - dist/call.wav
 flags:

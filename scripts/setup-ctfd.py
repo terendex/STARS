@@ -181,7 +181,9 @@ def call(method, path, body=None):
 # Settings the wizard doesn't cover, and the home page.
 call("PATCH", "/configs", profile["configs"])
 index = next(page for page in call("GET", "/pages") if page["route"] == "index")
-call("PATCH", f"/pages/{index['id']}", {"content": profile["home"]})
+# "html", not CTFd's default "markdown": the home pages are hand-written HTML,
+# and markdown turns an indented line after a blank one into a literal code block.
+call("PATCH", f"/pages/{index['id']}", {"content": profile["home"], "format": "html"})
 
 lines = [
     f"{profile['ctf_name']} CTFd logins. Keep this file to yourself.",
