@@ -4,7 +4,7 @@ A short tour of what's under the hood, for when you want to change how STARS beh
 
 ## The big picture
 
-Each CTF (`2nd-star`, `classic`, `demo`, `sits`) is one **Docker Compose project**: a `docker-compose.yml` that starts a set of containers together. They all look like this:
+Each CTF (`2nd-star`, `classic`, `demo`, `demo2`, `sits`) is one **Docker Compose project**: a `docker-compose.yml` that starts a set of containers together. They all look like this:
 
 ```text
                  players' laptops (same Wi-Fi)
@@ -34,13 +34,13 @@ Every container only publishes on the address in the CTF's `.env` (`CTF_BIND_IP`
 
 ## Where the data lives
 
-Everything players do (accounts, teams, solves, hints bought, the help queue, the clock) is in Docker **volumes**, named after the CTF: `stars_db_data` for 2nd Star, `stars-classic_db_data`, `stars-demo_db_data` and `sits_db_data`. They survive stopping, restarting and rebuilding. Only `docker compose down -v` deletes them.
+Everything players do (accounts, teams, solves, hints bought, the help queue, the clock) is in Docker **volumes**, named after the CTF: `stars_db_data` for 2nd Star, `stars-classic_db_data`, `stars-demo_db_data`, `stars-demo2_db_data` and `sits_db_data`. They survive stopping, restarting and rebuilding. Only `docker compose down -v` deletes them.
 
 To keep a copy, use **Admin Panel > Config > Backup** in each CTFd. It downloads a zip you can restore with **Import**. Old backups of the whole folder can go in `backups\`, which git ignores.
 
 ## The CTFd plugin (`ctfd-plugin/`)
 
-The features CTFd doesn't have come from a plugin. 2nd Star, Classic and SITS mount this folder into their CTFd. The demo has its own, smaller one in `demo/ctfd-plugin/`.
+The features CTFd doesn't have come from a plugin. 2nd Star, Classic and SITS mount this folder into their CTFd. The two demos share their own, smaller one in `demo/ctfd-plugin/`.
 
 | File | What it does |
 |---|---|
@@ -53,7 +53,7 @@ The features CTFd doesn't have come from a plugin. 2nd Star, Classic and SITS mo
 | `assets/admin-extras.js` | The First Bloods table on Statistics and the waiting count next to **Help Queue** in the admin menu. |
 | `templates/` | The HTML for the Mission Clock page, the projector page and the Help Queue page. |
 
-The demo's `demo/ctfd-plugin/__init__.py` signs every visitor in as `demo1` (`STARS_DEMO_AUTOLOGIN` in `demo/docker-compose.yml`), so nobody needs an account to try it.
+The demos' `demo/ctfd-plugin/__init__.py` signs every visitor in as `demo1` (`STARS_DEMO_AUTOLOGIN` in each demo's `docker-compose.yml`), so nobody needs an account to try them. `STARS_SESSION_COOKIE` gives each demo its own login cookie.
 
 **To change the plugin:** edit the file, then restart CTFd in every CTF that uses it. From each CTF's folder: `docker compose restart ctfd`. Don't do it during an event: CTFd is down for a few seconds. For JavaScript, refresh the browser too.
 
@@ -69,7 +69,7 @@ Each Windows script (`.ps1`) has a Linux version (`.sh`) with the same name, exc
 | `start-stars.ps1`, `stop-stars.ps1` | The **Start STARS** and **Stop STARS** buttons. Stop stops every CTF. |
 | `start-sits.ps1` | The **Start SITS CTF** button. |
 | `install-shortcuts.ps1` | Puts those buttons on the desktop. |
-| `classic.ps1`, `demo.ps1`, `sits.ps1` | `setup`, `start`, `stop`, `sync` and `teams` for each side CTF. |
+| `classic.ps1`, `demo.ps1`, `demo2.ps1`, `sits.ps1` | `setup`, `start`, `stop`, `sync` and `teams` for each side CTF. |
 | `set-host.ps1` | Moves every CTF to a new IP: `.env` files, `connection_info`, answer sheets, CTFd. |
 | `auto-host.ps1`, `install-auto-host.ps1` | The scheduled task that runs set-host when the network changes. Its log is `logs\auto-host.log`. |
 | `check.ps1`, `check-challenges.py` | The challenge checker (see [making-challenges.md](making-challenges.md)). |

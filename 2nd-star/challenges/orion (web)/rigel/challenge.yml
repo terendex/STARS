@@ -21,7 +21,7 @@ description: |-
   **Your goal:** open the staff portal at the address below, and sign in as a staff member who's allowed to see the telescope key. That key is the flag.
 
   **Tools you may need to solve this level:** SQL injection with `'`, `OR` and `--`
-connection_info: http://192.168.68.103:8081
+connection_info: http://192.168.68.101:8081
 flags:
   - "STARS{r1g3l_c0mm3nt3d_0ut_th3_p4ssw0rd}"
 tags:

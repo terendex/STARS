@@ -41,6 +41,6 @@ docker compose run --rm --entrypoint python ctfcli ../scripts/make-teams.py 15  
 | `ANSWERS.md` | Walkthroughs of every challenge. Organizers only. |
 | `.env`, `.ctf/config`, `LOGINS.txt` | Passwords, the CTFd token and the logins. Made by setup, never in git. |
 
-The demo's SSH boxes and pwn programs are built from this folder's Dockerfiles, so changes to those Dockerfiles affect the demo too.
+Both demos build their SSH boxes from this folder's Dockerfiles, and the first demo its pwn programs too, so changes to those Dockerfiles affect the demos as well.
 
 See [docs/](../docs/) for how to run an event and how to make challenges.

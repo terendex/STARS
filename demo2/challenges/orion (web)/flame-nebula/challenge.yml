@@ -1,0 +1,25 @@
+version: "0.1"
+name: "Flame Nebula"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Orion (Web)"
+type: standard
+value: 100
+attempts: 3
+description: |-
+  The Flame Nebula glows beside Orion's belt, and its star register lets anyone name a star of their own. Type a name, and the site makes you a welcome card with it.
+
+  The card is built from a template every time, and whatever you type becomes part of that template, not just text printed on it.
+
+  **Your goal:** open the register at the address below and get it to show you the site's secret settings. The flag is one of them.
+connection_info: http://192.168.68.101:8501
+flags:
+  - "STARS{fl4m3_t3mpl4t3s_sp1ll_s3cr3ts}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "Templates work out anything between double curly braces. Try naming your star `{{7*7}}` and see what the card says."
+    cost: 0
+  - content: "This site's template engine is Jinja, and its settings are in a variable called `config`. Search for \"Jinja template injection config\"."
+    cost: 0
+state: visible

@@ -25,7 +25,7 @@ description: |-
   The program's source code is attached below as a download. Reading it is how you find the weakness.
 
   **Commands you may need to solve this level:** `ssh`, `nc`
-connection_info: ssh dschubba@192.168.68.103 -p 2230
+connection_info: ssh dschubba@192.168.68.101 -p 2230
 files:
   - dist/dschubba.c
 flags:

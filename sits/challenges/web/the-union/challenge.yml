@@ -19,7 +19,7 @@ description: |-
   The library runs on **SQLite**. `UNION SELECT` lets you add rows from another query to the search results, as long as your query returns as many columns as the results table shows.
 
   **Your goal:** open the library at the address below, find the hidden table's name, then use the search box to read the flag out of it.
-connection_info: http://192.168.68.103:8314
+connection_info: http://192.168.68.101:8314
 flags:
   - "FLAG{un10n_s3l3ct_f0und_th3_st4sh}"
 tags:

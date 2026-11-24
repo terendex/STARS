@@ -8,8 +8,8 @@
 # connection_info, republishes the ports on that address, and pushes the new
 # addresses to CTFd. --files-only rewrites the files without starting anything.
 #
-# The side CTFs move with it: the demo in demo/, STARS Classic in classic/ and
-# the SITS competition in sits/.
+# The side CTFs move with it: the demos in demo/ and demo2/, STARS Classic in
+# classic/ and the SITS competition in sits/.
 # If one has been set up, its files move to the same IP too, and if it's
 # running, it's republished there. A stopped one stays stopped.
 set -euo pipefail
@@ -25,7 +25,7 @@ ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 MAIN="$ROOT/2nd-star"
 # The CTFs that run beside the real one, on the same IP, as folder:port.
 # A new event only needs adding here (and in set-host.ps1).
-SIDES=("demo:8100" "classic:8200" "sits:8300")
+SIDES=("demo:8100" "demo2:8500" "classic:8200" "sits:8300")
 # Every CTF's folder: 2nd Star first, then the sides.
 FOLDERS=("$MAIN")
 for side in "${SIDES[@]}"; do FOLDERS+=("$ROOT/${side%%:*}"); done

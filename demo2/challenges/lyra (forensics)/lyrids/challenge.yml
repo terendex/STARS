@@ -1,0 +1,24 @@
+version: "0.1"
+name: "Lyrids"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Lyra (Forensics)"
+type: standard
+value: 100
+attempts: 3
+description: |-
+  Every April, the Lyrids meteor shower seems to pour out of Lyra. On the night of the last one, someone at the observatory phoned in a message by typing it on the phone's keypad, and the call was recorded (download it below).
+
+  **Your goal:** work out which keys were pressed. Between the presses of `*` are numbers, and each number is the character code of one letter of the flag.
+files:
+  - dist/call.wav
+flags:
+  - "STARS{lyr1ds_d14l_t0n3s}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "The beeps are DTMF tones, the sounds a phone's keys make. Search for an online DTMF decoder that takes an audio file, and give it `call.wav`. If a decoder struggles, a spectrogram shows two lines for each beep, and the DTMF table on Wikipedia says which key each pair means."
+    cost: 0
+  - content: "The numbers are decimal ASCII codes. In CyberChef, paste the keys, replace `*` with a space (Find / Replace), then add From Decimal."
+    cost: 0
+state: visible

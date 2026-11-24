@@ -73,7 +73,7 @@ STARS never starts by itself when the PC starts, and Docker doesn't restart its 
 
 - **Start STARS** starts Docker Desktop if it's closed, then 2nd Star on this PC's current network. When it's done, its window shows the players' address and the Mission Clock's.
 - **Start SITS CTF** does the same for SITS.
-- **Stop STARS** stops every CTF: 2nd Star, Classic, the demo and SITS. Accounts, scores and the clock are kept.
+- **Stop STARS** stops every CTF: 2nd Star, Classic, both demos and SITS. Accounts, scores and the clock are kept.
 
 First-time setup puts the buttons there. To add them again, for example after moving the STARS folder, run `scripts\install-shortcuts.ps1`.
 
@@ -81,7 +81,7 @@ The same from a terminal:
 
 ```powershell
 scripts\start-stars.ps1        # start 2nd Star
-scripts\sits.ps1 start         # start SITS (also: classic.ps1, demo.ps1)
+scripts\sits.ps1 start         # start SITS (also: classic.ps1, demo.ps1, demo2.ps1)
 scripts\stop-stars.ps1         # stop everything, keeping scores and accounts
 cd 2nd-star; docker compose logs -f    # watch a CTF's logs
 ```
@@ -132,7 +132,7 @@ Sign in as admin and open **Admin Panel > Mission Clock**. It has:
 - **Music:** where the music plays: **This page** (the Mission Clock page), **Projector page**, or **Off**. Only the chosen page plays, so it never plays twice.
 - **Full screen** (or press F): fills your screen with the countdown, for the projector.
 
-**On the projector,** either press **Full screen** on the Mission Clock page, or open the projector page on the CTF PC, which shows the same countdown with no controls. It's `http://localhost:8001/timer` for 2nd Star, `8002` for Classic and `8003` for SITS. These `localhost` addresses only work on the CTF PC itself. The demo has no clock.
+**On the projector,** either press **Full screen** on the Mission Clock page, or open the projector page on the CTF PC, which shows the same countdown with no controls. It's `http://localhost:8001/timer` for 2nd Star, `8002` for Classic and `8003` for SITS. These `localhost` addresses only work on the CTF PC itself. The demos have no clock.
 
 **Music:** while the clock runs, the chosen page plays the tracks of a Spotify album in a random order, with a new order on every Start or Restart. N or **Skip** skips a track. It pauses when the clock ends or goes back to standby. Browsers only allow sound after a click on the page:
 
@@ -161,7 +161,7 @@ The tracks are listed in `ctfd-plugin/assets/playlist.json`. To use another albu
 - The player sees their place in the queue, then "An organizer is on the way". They can also cancel.
 - Finished requests stay listed until you press **Clear finished**. CTFd's own Reset doesn't clear them.
 
-2nd Star, Classic and SITS have both. The demo doesn't.
+2nd Star, Classic and SITS have both. The demos don't.
 
 ## If your IP changes
 
@@ -183,7 +183,7 @@ All of these only change the addresses in CTFd, so they're safe during an event.
 
 - **Clear scores between runs:** in that CTF's CTFd, **Admin Panel > Config > Backup** first, to keep a copy of the results. Then **Admin Panel > Config > Reset**, and tick **Submissions** only, which keeps the accounts and teams. Then sync (`cd 2nd-star; docker compose run --rm ctfcli challenge sync`, or `scripts\sits.ps1 sync`), so every challenge goes back to its starting points, and put the [mission clock](#mission-clock) in standby.
 - **Delete everything in 2nd Star, including accounts and challenges:** remove auto-host first (`scripts\install-auto-host.ps1 -Remove`), or it can open CTFd to the network before setup has claimed it. Then, in `2nd-star`, run `docker compose down -v`, delete `.env`, `.ctf\` and `LOGINS.txt`, and run [first-time setup](#first-time-setup) again. Setup turns auto-host back on.
-- **Delete everything in Classic, the demo or SITS:** in its folder, run `docker compose down -v`, delete its `.env`, `.ctf\` and `LOGINS.txt`, then run its `setup` again (for example `scripts\sits.ps1 setup`).
+- **Delete everything in Classic, a demo or SITS:** in its folder, run `docker compose down -v`, delete its `.env`, `.ctf\` and `LOGINS.txt`, then run its `setup` again (for example `scripts\sits.ps1 setup`).
 
 ## Replacing the admin token
 
@@ -196,7 +196,7 @@ Each CTF has its own token in its `.ctf\config`. To replace one, for example if 
 
 ## Troubleshooting
 
-Run `docker compose` commands from the CTF's own folder (`2nd-star`, `classic`, `demo` or `sits`). For error messages from commands, see [If you see this error](start-here.md#if-you-see-this-error).
+Run `docker compose` commands from the CTF's own folder (`2nd-star`, `classic`, `demo`, `demo2` or `sits`). For error messages from commands, see [If you see this error](start-here.md#if-you-see-this-error).
 
 - **Other devices can't connect:** check they're on the same network. Guest networks and some routers block devices from reaching each other. Then check the IP with `ipconfig` (Linux: `ip -4 addr`). On Linux, also check the firewall (see [Linux](#linux)).
 - **An SSH box is stuck, for example after a fork bomb:** `docker compose restart ssh-box` (or `draco-box`; in SITS, `linux-box` or `rev-box`).
@@ -246,6 +246,8 @@ Everything runs the same on Linux. Every Windows script except the desktop butto
   sudo ufw allow 8000/tcp && sudo ufw allow 2220/tcp && sudo ufw allow 2222/tcp && sudo ufw allow 8081:8090/tcp && sudo ufw allow 9001:9006/tcp
   # The demo
   sudo ufw allow 8100/tcp && sudo ufw allow 2221/tcp && sudo ufw allow 2223/tcp && sudo ufw allow 8091:8092/tcp && sudo ufw allow 9021:9022/tcp
+  # The 2nd demo
+  sudo ufw allow 8500/tcp && sudo ufw allow 2250/tcp && sudo ufw allow 2252/tcp && sudo ufw allow 8501/tcp && sudo ufw allow 9051/tcp
   # STARS Classic
   sudo ufw allow 8200/tcp && sudo ufw allow 2230/tcp && sudo ufw allow 2232/tcp && sudo ufw allow 8201:8206/tcp && sudo ufw allow 9031:9036/tcp
   # SITS

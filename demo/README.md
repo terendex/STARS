@@ -24,6 +24,6 @@ To manage it, open `http://<host>:8100/login` and sign in as admin. Signing out 
 - **Unlock a challenge after 3 wrong flags:** delete one of the Demo Team's wrong submissions in **Admin Panel > Submissions**.
 - **Start over completely:** `docker compose -f demo\docker-compose.yml down -v`, delete `demo\.env`, `demo\.ctf\` and `demo\LOGINS.txt`, then run `scripts\demo.ps1 setup`.
 
-The demo has no mission clock, its points don't drop, and it has no first blood or help queue. It builds its SSH boxes and pwn programs with 2nd Star's Dockerfiles, using its own levels in `demo\challenges\`. It has its own small plugin in `demo\ctfd-plugin\` for the automatic login.
+The demo has no mission clock, its points don't drop, and it has no first blood or help queue. It builds its SSH boxes and pwn programs with 2nd Star's Dockerfiles, using its own levels in `demo\challenges\`. It has its own small plugin in `demo\ctfd-plugin\` for the automatic login, which the [2nd demo](../demo2/README.md) uses too.
 
 See [docs/](../docs/) for how to run an event and how to make challenges.

@@ -23,7 +23,7 @@ description: |-
   If you run `./vip` on its own, it just waits. Press Ctrl+C to stop it. gdb may warn that it can't find `vip.c`. That's normal: you have the program, not the code it was written from.
 
   Log in with the command below and the password `reverse`.
-connection_info: ssh tworeturns@192.168.68.103 -p 2242
+connection_info: ssh tworeturns@192.168.68.101 -p 2242
 flags:
   - "FLAG{tw0_r3turns_g0t_m3_1n}"
 tags:

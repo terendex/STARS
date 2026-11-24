@@ -1,0 +1,25 @@
+version: "0.1"
+name: "Fafnir"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Draco (Reversing)"
+type: standard
+value: 100
+attempts: 3
+description: |-
+  Fafnir is a star in Draco, named after the dragon of Norse legend. In old stories, a dragon only answers to its true name, and this program is the same. Run `./fafnir` and it refuses you, because you called it by the name on its door.
+
+  **Your goal:** find Fafnir's true name, then start the program under that name. It prints the flag.
+
+  Log in with the command below and the password `draco`.
+connection_info: ssh fafnir@192.168.68.101 -p 2252
+flags:
+  - "STARS{f4fn1r_4nsw3rs_t0_h1s_tru3_n4m3}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "Run it under `ltrace` and look at what `strcmp` compares. One side is the name the program was started under."
+    cost: 0
+  - content: "A program's name is whatever it was started as. Make a link with the true name and run the link: `ln -s ~/fafnir /tmp/<true name>`, then `/tmp/<true name>`."
+    cost: 0
+state: visible

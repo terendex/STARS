@@ -4,13 +4,13 @@ How to make a new CTF next to the others, for example next year's SITS, by copyi
 
 Each CTF runs on its own ports, so several can run on one PC at the same time. Every CTF needs its own block of ports, and its own name for Docker. In the examples below, `sits` is copied to `sits-2027` and given ports in the 8400s.
 
-| Ports already used | 2nd Star | Demo | Classic | SITS |
-|---|---|---|---|---|
-| CTFd | 8000 | 8100 | 8200 | 8300 |
-| Projector page (this PC only) | 8001 | none | 8002 | 8003 |
-| SSH boxes | 2220, 2222 | 2221, 2223 | 2230, 2232 | 2240, 2242 |
-| Web | 8081-8090 | 8091-8092 | 8201-8206 | 8301-8315 |
-| Pwn | 9001-9006 | 9021-9022 | 9031-9036 | 9041-9048 |
+| Ports already used | 2nd Star | Demo | Demo 2 | Classic | SITS |
+|---|---|---|---|---|---|
+| CTFd | 8000 | 8100 | 8500 | 8200 | 8300 |
+| Projector page (this PC only) | 8001 | none | none | 8002 | 8003 |
+| SSH boxes | 2220, 2222 | 2221, 2223 | 2250, 2252 | 2230, 2232 | 2240, 2242 |
+| Web | 8081-8090 | 8091-8092 | 8501 | 8201-8206 | 8301-8315 |
+| Pwn | 9001-9006 | 9021-9022 | 9051 | 9031-9036 | 9041-9048 |
 
 Avoid port 9012 on the original CTF PC: an ASUS program (Armoury Crate) uses it.
 
@@ -29,7 +29,7 @@ In `sits-2027/docker-compose.yml`:
 1. Change the first line, `name: sits`, to `name: sits-2027`. Docker uses this name for the event's containers and saved data, so it must be different from every other CTF's.
 2. Change the CTFd ports: `"${CTF_BIND_IP}:8300:8000"` → `8400`, the projector's `"127.0.0.1:8003:8000"` → `8004`, and `STARS_PROJECTOR_URL` to match (`http://localhost:8004/timer`).
 3. Change `STARS_SESSION_COOKIE` to a new name, like `sits2027_session`. Otherwise signing in to one CTF signs you out of the other.
-4. Change the `edge` service's ports to the new block, for example `2250`, `2252`, `8401-8415` and `9051-9058`.
+4. Change the `edge` service's ports to the new block, for example `2260`, `2262`, `8401-8415` and `9061-9068`.
 5. Update the comment at the top that lists the ports.
 
 In `sits-2027/edge/nginx.conf`, change every `listen` port to match. The part after `set $upstream` stays the same.

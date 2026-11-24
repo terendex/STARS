@@ -19,7 +19,7 @@ description: |-
   **Your goal:** open the festival site at the address below and change your ticket so the site lets you backstage. The flag is there.
 
   The cookie is called `ticket`. It's under **Application** > **Cookies** in developer tools (F12), or **Storage** > **Cookies** in Firefox. Its value is encoded, and the page shows what it reads from it, so you can check your work.
-connection_info: http://192.168.68.103:8313
+connection_info: http://192.168.68.101:8313
 flags:
   - "FLAG{tw0_f13lds_sw4pp3d}"
 tags:

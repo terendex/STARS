@@ -30,7 +30,7 @@ description: |-
   **Then:** copy the flag into the box below. To copy from PowerShell, highlight the text with the mouse, then right-click. Type `exit` to leave the server.
 
   **Commands you may need to solve this level:** `ssh`, `ls`, `cat`
-connection_info: ssh welcome@192.168.68.103 -p 2240
+connection_info: ssh welcome@192.168.68.101 -p 2240
 flags:
   - "FLAG{w3lc0m3_t0_th3_sh3ll}"
 tags:

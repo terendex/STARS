@@ -1,6 +1,6 @@
 # STARS Classic
 
-The first orientation's 36 challenges, kept exactly as they were, as their own CTF, for a group that hasn't played them yet. Flags look like `STARS{...}`. It has the same features as 2nd Star: points that drop with each solve, its own mission clock with music, first blood, the help queue, and teams of 3. Its navbar is green, so you can tell it apart from 2nd Star (dark), the demo (purple) and SITS (blue).
+The first orientation's 36 challenges, kept exactly as they were, as their own CTF, for a group that hasn't played them yet. Flags look like `STARS{...}`. It has the same features as 2nd Star: points that drop with each solve, its own mission clock with music, first blood, the help queue, and teams of 3. Its navbar is green, so you can tell it apart from 2nd Star (dark), the demos (purple and dark red) and SITS (blue).
 
 It has its own CTFd, accounts, scores and ports, and runs beside the others on the same IP:
 

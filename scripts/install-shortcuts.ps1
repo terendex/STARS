@@ -6,7 +6,7 @@ or removes them with -Remove.
 .DESCRIPTION
 Start STARS runs scripts\start-stars.ps1 (Docker Desktop, then the real CTF on
 this PC's current network). Stop STARS runs scripts\stop-stars.ps1 (the real
-CTF, STARS Classic, the demo and SITS). Start SITS CTF runs
+CTF, STARS Classic, both demos and SITS). Start SITS CTF runs
 scripts\start-sits.ps1. Each opens a small window that says what it did. Run this again if you move the STARS folder.
 
     scripts\install-shortcuts.ps1
@@ -18,7 +18,7 @@ $ErrorActionPreference = 'Stop'
 $desktop = [Environment]::GetFolderPath('Desktop')
 $buttons = @(
     @{ Name = 'Start STARS'; Script = 'start-stars.ps1'; Text = 'Starts Docker Desktop and the STARS CTF on this PC''s network.' },
-    @{ Name = 'Stop STARS'; Script = 'stop-stars.ps1'; Text = 'Stops every CTF on this PC: STARS, STARS Classic, the demo and SITS. Scores are kept.' },
+    @{ Name = 'Stop STARS'; Script = 'stop-stars.ps1'; Text = 'Stops every CTF on this PC: STARS, STARS Classic, both demos and SITS. Scores are kept.' },
     @{ Name = 'Start SITS CTF'; Script = 'start-sits.ps1'; Text = 'Starts Docker Desktop and the SITS Capture The Flag Competition 2026.' }
 )
 

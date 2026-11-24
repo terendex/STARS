@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
-Stops STARS: the real CTF, STARS Classic and the demo. Accounts, scores and the
-clock are kept. The "Stop STARS" button on the desktop runs this.
+Stops STARS: the real CTF, STARS Classic, both demos and SITS. Accounts, scores
+and the clock are kept. The "Stop STARS" button on the desktop runs this.
 
     scripts\stop-stars.ps1
 #>
@@ -19,6 +19,7 @@ else {
         @{ Name = 'The real CTF (2nd Star)'; File = Join-Path $root '2nd-star\docker-compose.yml' },
         @{ Name = 'STARS Classic'; File = Join-Path $root 'classic\docker-compose.yml' },
         @{ Name = 'The demo'; File = Join-Path $root 'demo\docker-compose.yml' },
+        @{ Name = 'The 2nd demo'; File = Join-Path $root 'demo2\docker-compose.yml' },
         @{ Name = 'The SITS competition'; File = Join-Path $root 'sits\docker-compose.yml' }
     )
     foreach ($ctf in $ctfs) {

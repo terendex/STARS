@@ -1,0 +1,177 @@
+name: stars-demo2
+
+# The second demo CTF: the hardest kind of STARS challenge, one ★★★ Hard per
+# category, none of which are in a real event, so it's safe to show anyone.
+# It works like the first demo: no login, no mission clock, fixed points.
+# Use scripts\demo2.ps1 to set it up, start it and stop it. It has its own
+# CTFd, accounts and scores, and these ports:
+#   8500 CTFd   2250 SSH box   2252 Draco box   8501 Orion   9051 Scorpius
+
+# Shared limits for anything players can touch.
+x-challenge: &challenge
+  # Never restarts by itself, so STARS doesn't start when Docker Desktop does.
+  # If something stops during an event, docker compose up -d brings it back.
+  restart: "no"
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  networks: [challenges]
+  cpus: 1.0
+  mem_limit: 256m
+  pids_limit: 128
+
+services:
+  # --- Scoreboard ---------------------------------------------------------
+  ctfd:
+    image: ctfd/ctfd:3.8.9
+    restart: "no"
+    ports:
+      - "${CTF_BIND_IP}:8500:8000"
+    environment:
+      UPLOAD_FOLDER: /var/uploads
+      DATABASE_URL: mysql+pymysql://ctfd:${DB_PASSWORD}@db/ctfd
+      REDIS_URL: redis://cache:6379
+      SECRET_KEY: ${SECRET_KEY}
+      WORKERS: 1
+      LOG_FOLDER: /var/log/CTFd
+      ACCESS_LOG: "-"
+      ERROR_LOG: "-"
+      # Everyone who opens the demo is signed in as this player, so nobody has
+      # to log in. Leave it empty to require logins again.
+      STARS_DEMO_AUTOLOGIN: demo1
+      # Its own login cookie, so it doesn't sign you out of the first demo or
+      # the real CTFs.
+      STARS_SESSION_COOKIE: stars_demo2_session
+    volumes:
+      - ctfd_logs:/var/log/CTFd
+      - ctfd_uploads:/var/uploads
+      # The first demo's plugin: the automatic sign-in and the cookie above.
+      - ../demo/ctfd-plugin:/opt/CTFd/CTFd/plugins/stars_demo:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthcheck')"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 30s
+    depends_on: [db, cache]
+    networks: [ctfd_public, ctfd_internal]
+
+  db:
+    image: mariadb:10.11
+    restart: "no"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_USER: ctfd
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ctfd
+      MARIADB_AUTO_UPGRADE: "1"
+    volumes:
+      - db_data:/var/lib/mysql
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --wait_timeout=28800
+      - --log-warnings=0
+    networks: [ctfd_internal]
+
+  cache:
+    image: redis:4
+    restart: "no"
+    volumes:
+      - cache_data:/data
+    networks: [ctfd_internal]
+
+  # --- Challenge entry point ----------------------------------------------
+  edge:
+    <<: *challenge
+    image: nginx:stable
+    cap_add: [CHOWN, SETGID, SETUID]
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+    volumes:
+      - ./edge/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "${CTF_BIND_IP}:2250:2250"
+      - "${CTF_BIND_IP}:2252:2252"
+      - "${CTF_BIND_IP}:8501:8501"
+      - "${CTF_BIND_IP}:9051:9051"
+    networks: [edge_public, challenges]
+
+  # --- Ursa Minor: SSH box --------------------------------------------------
+  # Same Dockerfile as 2nd Star's SSH box, with this demo's own level.
+  ssh-box:
+    <<: *challenge
+    build:
+      context: "./challenges/ursa-minor (linux)/ssh-box"
+      dockerfile: "../../../../2nd-star/challenges/ursa-minor (linux)/ssh-box/Dockerfile"
+    cap_add: [CHOWN, SETGID, SETUID, SYS_CHROOT, KILL, AUDIT_WRITE]
+    cpus: 2.0
+    mem_limit: 1g
+    pids_limit: 1024
+    tmpfs:
+      - /tmp:size=64m,mode=1777,noexec,nosuid,nodev
+      - /run:size=1m,mode=755
+      - /dev/shm:ro,size=4k
+      - /dev/mqueue:ro,size=4k
+
+  # --- Draco: SSH box with the reversing tools ------------------------------
+  # Same Dockerfile as 2nd Star's Draco box, with this demo's own level.
+  draco-box:
+    <<: *challenge
+    build:
+      context: "./challenges/draco (reversing)/draco-box"
+      dockerfile: "../../../../2nd-star/challenges/draco (reversing)/draco-box/Dockerfile"
+    cap_add: [CHOWN, SETGID, SETUID, SYS_CHROOT, KILL, AUDIT_WRITE]
+    cpus: 2.0
+    mem_limit: 2g
+    pids_limit: 1024
+    tmpfs:
+      - /tmp:size=64m,mode=1777,noexec,nosuid,nodev
+      - /run:size=1m,mode=755
+      - /dev/shm:ro,size=4k
+      - /dev/mqueue:ro,size=4k
+
+  # --- Orion ---------------------------------------------------------------
+  flame-nebula:
+    <<: *challenge
+    build: "./challenges/orion (web)/web-box"
+    command: ["flame_nebula:app"]
+    tmpfs:
+      - /tmp
+
+  # --- Scorpius: pwn -------------------------------------------------------
+  # Built with 2nd Star's Scorpius Dockerfile, like the first demo's pwn stars.
+  jabbah:
+    <<: *challenge
+    build:
+      context: "./challenges/scorpius (pwn)"
+      dockerfile: "../../../2nd-star/challenges/scorpius (pwn)/Dockerfile"
+      target: service
+      args: {STAR: jabbah}
+
+  # --- Tools --------------------------------------------------------------
+  # Mounts the whole STARS folder so the shared scripts are available, but
+  # runs from demo2/, where this demo's .ctf/config lives.
+  ctfcli:
+    build: ../tools/ctfcli
+    profiles: [tools]
+    volumes:
+      - ..:/work
+    working_dir: /work/demo2
+    networks: [ctfd_internal]
+
+volumes:
+  ctfd_logs:
+  ctfd_uploads:
+  db_data:
+  cache_data:
+
+networks:
+  ctfd_public:
+  ctfd_internal:
+    internal: true
+  edge_public:
+  challenges:
+    internal: true

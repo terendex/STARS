@@ -21,7 +21,7 @@ description: |-
   **Your goal:** open the staff portal at the address below, and sign in as the manager without knowing the password. The safe code is the flag.
 
   **Tools you may need to solve this level:** SQL injection with `'`, `OR` and `--`
-connection_info: http://192.168.68.103:8312
+connection_info: http://192.168.68.101:8312
 flags:
   - "FLAG{s1gn3d_1n_w1th0ut_4_p4ssw0rd}"
 tags:

@@ -19,7 +19,7 @@ description: |-
   **Your goal:** make the program run `supernova`, which prints the flag.
 
   This one needs raw bytes, which a normal keyboard can't send, so there's no SSH login for it. If you don't have `nc` on your computer, log in to any Linux challenge account (its shell has `nc` and `printf`) and work from there. The program is reachable from that shell as `nc antares 9001`, and from your own computer with the `nc` command below.
-connection_info: nc 192.168.68.103 9048
+connection_info: nc 192.168.68.101 9048
 files:
   - dist/antares
   - dist/antares.c

@@ -11,8 +11,8 @@ Run it from anywhere, for example after your Wi-Fi IP changes:
 
 With auto-host installed, this happens by itself.
 
-The side CTFs move with it: the demo in demo\, STARS Classic in classic\ and
-the SITS competition in sits\.
+The side CTFs move with it: the demos in demo\ and demo2\, STARS Classic in
+classic\ and the SITS competition in sits\.
 If one has been set up, its files move to the same IP too, and if it's
 running, it's republished there. A stopped one stays stopped.
 #>
@@ -36,6 +36,7 @@ $utf8 = New-Object System.Text.UTF8Encoding $false
 # adding here (and in set-host.sh).
 $sides = @(
     @{ Dir = (Join-Path $root 'demo'); Name = 'Demo CTF'; Port = 8100 },
+    @{ Dir = (Join-Path $root 'demo2'); Name = 'The 2nd demo'; Port = 8500 },
     @{ Dir = (Join-Path $root 'classic'); Name = 'STARS Classic'; Port = 8200 },
     @{ Dir = (Join-Path $root 'sits'); Name = 'SITS'; Port = 8300 }
 )

@@ -19,7 +19,7 @@ description: |-
   **Your goal:** open the site at the address below, then find the bonus track it saved in your browser. The bonus track is the flag.
 
   **Tools you may need to solve this level:** Your browser's developer tools (F12)
-connection_info: http://192.168.68.103:8305
+connection_info: http://192.168.68.101:8305
 flags:
   - "FLAG{l0c4l_st0r4g3_r3m3mb3rs}"
 tags:

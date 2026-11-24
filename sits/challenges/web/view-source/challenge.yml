@@ -28,7 +28,7 @@ description: |-
   Use View page source rather than Inspect, which also shows code your browser extensions add.
 
   **Tools you may need to solve this level:** View page source (Ctrl+U)
-connection_info: http://192.168.68.103:8301
+connection_info: http://192.168.68.101:8301
 flags:
   - "FLAG{v13w_s0urc3_r3v34ls_4ll}"
 tags:

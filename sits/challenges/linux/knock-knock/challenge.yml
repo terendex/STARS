@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `whosthere`.
 
   **Commands you may need to solve this level:** `nc`, `grep`
-connection_info: ssh knock@192.168.68.103 -p 2240
+connection_info: ssh knock@192.168.68.101 -p 2240
 flags:
   - "FLAG{kn0ck_kn0ck_wh0s_p0rt_5287}"
 tags:

@@ -1,0 +1,27 @@
+version: "0.1"
+name: "Calvera"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Ursa Minor (Linux)"
+type: standard
+value: 100
+attempts: 3
+description: |-
+  Calvera is a lonely neutron star in the Little Dipper, named after the villain of the film The Magnificent Seven. It gives off no light we can see, so it hides in plain sight.
+
+  On this account, some everyday commands have been quietly swapped for look-alikes. They work like the real ones, except that they hide anything shaped like a flag.
+
+  **Your goal:** read the real contents of `report.txt` in your home folder. The flag is in it.
+
+  Log in with the command below and the password `neutronstar`.
+connection_info: ssh calvera@192.168.68.101 -p 2250
+flags:
+  - "STARS{c4lv3r4_tru5ts_n0_p4th}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "When you type a command's name, the shell runs the first program with that name it finds in the folders listed in `$PATH`. `type cat` shows which one that is, and `echo $PATH` shows the list."
+    cost: 0
+  - content: "The real programs are in `/usr/bin`. Run them by their full path, like `/usr/bin/cat report.txt`. That goes for every command in a pipe, too."
+    cost: 0
+state: visible

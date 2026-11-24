@@ -1,0 +1,25 @@
+version: "0.1"
+name: "Jellyfish"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Gemini (Crypto)"
+type: standard
+value: 100
+attempts: 3
+description: |-
+  The Jellyfish Nebula drifts near Propus, at the feet of Gemini's twins. Its station sent two signals, both encrypted with the same one-time key (download them below). A one-time key can't be broken if it's used once. This one was used twice, and the station later printed the first message in its newsletter (download it below too).
+
+  **Your goal:** use the printed message to recover the key, then decrypt Signal 2. The flag is in it.
+files:
+  - dist/signals.txt
+  - dist/newsletter.txt
+flags:
+  - "STARS{tw1n_k3ys_c4nc3l_0ut}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "The signals were made with XOR, which undoes itself: if signal = message XOR key, then key = signal XOR message. In CyberChef, paste Signal 1, add From Hex, then XOR with the newsletter's message as the key (choose UTF8)."
+    cost: 0
+  - content: "Now XOR Signal 2 with that key. A shortcut in one recipe: paste Signal 2, then From Hex, XOR with Signal 1 (choose HEX), and XOR with the newsletter's message (choose UTF8)."
+    cost: 0
+state: visible

@@ -1,0 +1,29 @@
+version: "0.1"
+name: "Jabbah"
+author: "Axel Jonas C. Tangalin"
+attribution: "Made by Axel Jonas C. Tangalin"
+category: "Scorpius (Pwn)"
+type: standard
+value: 100
+attempts: 3
+description: |-
+  Jabbah is a star system in the head of Scorpius, near the end of its life. Its core monitor takes a fusion reading and logs it, but it was never told what to do with a reading that's too big.
+
+  The program has a function called `supernova` that nothing ever calls, and it even tells you where that function is. Overflow the buffer far enough to overwrite the **return address**, the place the program goes back to when a function ends, and send it to `supernova`.
+
+  **Your goal:** make the program run `supernova`, which prints the flag. Read its source below.
+
+  This needs raw bytes, so a normal keyboard won't do. Connect with the command below from PowerShell, or if you don't have `nc`, log in to the Calvera account on this CTF (port 2250, password `neutronstar`) and run `nc jabbah 9001` from there.
+connection_info: nc 192.168.68.101 9051
+files:
+  - dist/jabbah.c
+flags:
+  - "STARS{j4bb4h_r3turns_t0_th3_c0r3}"
+tags:
+  - "★★★ Hard"
+hints:
+  - content: "The buffer is 64 bytes, and 8 more bytes of saved data sit before the return address. That's 72 bytes in total."
+    cost: 0
+  - content: "Addresses are stored backwards (little-endian) in 8 bytes. Read `supernova()`'s address from the program's own line (it stays the same unless the program is rebuilt), then send 72 bytes of padding followed by that address. On your own machine with Python: read the banner, pull the address out with a regex, then send `b'A'*72 + struct.pack('<Q', addr)`. From the Calvera account there's no Python, so use `printf`: for the address `0x4017c5` that's `printf 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\\xc5\\x17\\x40\\x00\\x00\\x00\\x00\\x00' | nc jabbah 9001`."
+    cost: 0
+state: visible

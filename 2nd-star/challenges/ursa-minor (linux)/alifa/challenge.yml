@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `inherited`.
 
   **Commands you may need to solve this level:** `env`, `grep`
-connection_info: ssh alifa@192.168.68.103 -p 2220
+connection_info: ssh alifa@192.168.68.101 -p 2220
 flags:
   - "STARS{4l1f4_l1v3s_1n_th3_3nv1r0nm3nt}"
 tags:

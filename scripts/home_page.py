@@ -1,5 +1,5 @@
 """The CTFd home pages for the real CTF ("main"), STARS Classic ("classic"), the
-demo ("demo") and the SITS competition ("sits"), with a short "How to play"
+demos ("demo" and "demo2") and the SITS competition ("sits"), with a short "How to play"
 guide for beginners and the credit line.
 
 setup-ctfd.py uses these when it sets up a fresh CTFd. After editing them,
@@ -9,6 +9,7 @@ points at that CTFd (it reads the admin token from there and never prints it):
     docker compose -f 2nd-star/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py main
     docker compose -f classic/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py classic
     docker compose -f demo/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py demo
+    docker compose -f demo2/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py demo2
     docker compose -f sits/docker-compose.yml run --rm --entrypoint python ctfcli ../scripts/home_page.py sits
 """
 import configparser
@@ -70,7 +71,8 @@ def page(heading, text, buttons, steps, extra):
 </div>"""
 
 
-def steps(scoring, sharing, clock=False, flag="STARS{...}"):
+def steps(scoring, sharing, clock=False, flag="STARS{...}",
+          hints="Stuck? Each challenge has hints, but they cost points, so try first."):
     found = [
         f"Open <b>Challenges</b>. Each category is a constellation, and each challenge is one of its stars. {scoring}",
         "Click a challenge and read it. It tells you your goal. The address, login or file you need is in the same "
@@ -78,7 +80,7 @@ def steps(scoring, sharing, clock=False, flag="STARS{...}"):
         f"Find the flag. Every flag looks like <code>{flag}</code>.",
         "Paste the flag into the box at the bottom of the challenge and press <b>Submit</b>. Copy it exactly: each "
         "challenge allows 3 wrong tries, and typos count.",
-        f"Stuck? Each challenge has hints, but they cost points, so try first. {sharing}",
+        f"{hints} {sharing}",
     ]
     if clock:
         found.insert(0, "The challenges open when your organizer starts the clock, and flag submissions "
@@ -158,6 +160,17 @@ PAGES = {
         ),
         "",
     ),
+    "demo2": page(
+        "STARS CTF Demo 2",
+        "No login needed. You're already playing as the Demo Team.",
+        [("Open the challenges", "/challenges", "btn-primary")],
+        steps(
+            "Every challenge here is ★★★ Hard, the hardest kind in STARS, and worth 100 points.",
+            "Everyone here plays as the same Demo Team, so solves, hints and wrong tries are shared by all.",
+            hints="Stuck? Each challenge has hints, and here they're free.",
+        ),
+        "",
+    ),
 }
 
 
@@ -165,7 +178,7 @@ if __name__ == "__main__":
     import requests
 
     if len(sys.argv) != 2 or sys.argv[1] not in PAGES:
-        sys.exit("Usage: home_page.py main|classic|demo|sits")
+        sys.exit("Usage: home_page.py main|classic|demo|demo2|sits")
     config = configparser.ConfigParser()
     config.read(pathlib.Path.cwd() / ".ctf" / "config")
     url = config["config"]["url"].rstrip("/")

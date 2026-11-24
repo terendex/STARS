@@ -36,9 +36,9 @@ The rest of this page explains each step. These steps were tested on 2026-11-23 
 
 ## Where things are
 
-Each CTF is a folder: `2nd-star`, `classic`, `demo` and `sits`. Inside each, every challenge has its own folder with a `challenge.yml`. Challenges that run on a server also have a part in a shared "box" (an SSH server or a web app container).
+Each CTF is a folder: `2nd-star`, `classic`, `demo`, `demo2` and `sits`. Inside each, every challenge has its own folder with a `challenge.yml`. Challenges that run on a server also have a part in a shared "box" (an SSH server or a web app container).
 
-The STARS CTFs (2nd Star, Classic and the demo) name each category after a constellation and each challenge after one of its stars. SITS uses plain names.
+The STARS CTFs (2nd Star, Classic and both demos) name each category after a constellation and each challenge after one of its stars. SITS uses plain names.
 
 | What | STARS CTFs | SITS |
 |---|---|---|
@@ -52,7 +52,7 @@ The STARS CTFs (2nd Star, Classic and the demo) name each category after a const
 | Ports and services | `docker-compose.yml` and `edge/nginx.conf` | the same |
 | Answer sheet | `ANSWERS.md` | the same |
 
-The demo has fewer challenges and uses 2nd Star's SSH box and pwn Dockerfiles with its own levels.
+The demos have fewer challenges and build their SSH boxes (and the first demo's pwn programs) with 2nd Star's Dockerfiles, using their own levels.
 
 Folder names in the STARS CTFs contain spaces, so always put quotes around their paths in commands.
 
@@ -260,7 +260,7 @@ docker compose run --rm ctfcli challenge sync                                  #
 docker compose run --rm ctfcli challenge sync "challenges/orion (web)/bellatrix"   # just one
 ```
 
-Classic, the demo and SITS also have a shortcut: `scripts\classic.ps1 sync`, `scripts\demo.ps1 sync`, `scripts\sits.ps1 sync`.
+Classic, the demos and SITS also have a shortcut: `scripts\classic.ps1 sync`, `scripts\demo.ps1 sync`, `scripts\demo2.ps1 sync`, `scripts\sits.ps1 sync`.
 
 - **Always edit the YAML, not the admin panel.** Sync replaces what's in CTFd with what's in the files, so changes made only in the admin panel are lost.
 - **Avoid syncing while teams are playing.** Sync recreates flags, hints and files, so teams can lose hints they already bought. If something must be fixed mid-event, fix just that challenge in the admin panel, then make the same change in the YAML afterwards.
@@ -295,7 +295,7 @@ Each flag lives in `challenge.yml` and in one other place, and the two have to m
 | Reversing | `reversing/rev-box/levels/<NN-name>/setup.sh` | `docker compose up -d --build rev-box` |
 | Pwn | `pwn/<name>/src/flag.txt` | `docker compose up -d --build <name>` |
 
-The demo works like 2nd Star, with its own folders under `demo/challenges/`.
+The demos work like 2nd Star, with their own folders under `demo/challenges/` and `demo2/challenges/`.
 
 Some forensics flags are drawn on a picture by `make_files.py`, so they can only use the characters in its font: capital letters, `_`, `{` and `}`. Those flags are `case_insensitive` in their `challenge.yml`.
 

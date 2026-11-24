@@ -1,5 +1,5 @@
 """One-time setup for a fresh CTFd: the real CTF ("main"), STARS Classic
-("classic"), the demo ("demo") or the SITS competition ("sits").
+("classic"), the demos ("demo" and "demo2") or the SITS competition ("sits").
 
 scripts/setup.ps1 and setup.sh run this for the real CTF, and demo.ps1 and
 demo.sh run it for the demo. Each starts CTFd on this PC only first, because the
@@ -82,6 +82,16 @@ PROFILES = {
         "configs": {"team_creation": "false", "team_disbanding": "disabled", "name_changes": "false"},
         "demo_team": True,
     },
+    "demo2": {
+        "ctf_name": "STARS Demo 2",
+        "ctf_description": "A demo of the hardest STARS challenges, one per category.",
+        # Dark red, so the 2nd demo is never mistaken for the first (purple) or a real CTF.
+        "theme_color": "#9b2c2c",
+        "home": PAGES["demo2"],
+        # Name changes are off because everyone shares the demo1 account.
+        "configs": {"team_creation": "false", "team_disbanding": "disabled", "name_changes": "false"},
+        "demo_team": True,
+    },
 }
 
 
@@ -93,7 +103,7 @@ def find(pattern, html, what):
 
 
 if len(sys.argv) != 2 or sys.argv[1] not in PROFILES:
-    sys.exit("Usage: setup-ctfd.py main|classic|demo|sits")
+    sys.exit("Usage: setup-ctfd.py main|classic|demo|demo2|sits")
 profile = PROFILES[sys.argv[1]]
 
 browser = requests.Session()
