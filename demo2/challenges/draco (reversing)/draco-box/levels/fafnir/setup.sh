@@ -38,5 +38,17 @@ strings "$home/fafnir" | grep -qxF "$TRUE_NAME"
 if strings "$home/fafnir" | grep -qF 'STARS{'; then echo "strings finds fafnir's flag" >&2; exit 1; fi
 ltrace "$home/fafnir" 2>&1 | grep -qF "\"$TRUE_NAME\""
 
+# Reset this level on logout. The shared /tmp is the only writable place (the
+# home is read-only while the box runs), so a link or a stray folder left under
+# the true name sticks around and the next player's `ln -s` fails with
+# "File exists" or lands inside the folder. bash runs ~/.bash_logout when a
+# login shell exits, so clearing this account's own /tmp entries there hands the
+# next session a clean slate. Scoped to this user, which is all the sticky /tmp
+# lets it remove anyway.
+cat > "$home/.bash_logout" <<EOF
+# Clear this account's scratch in the shared /tmp when the login shell exits.
+find /tmp -mindepth 1 -maxdepth 1 -user $user -exec rm -rf {} + 2>/dev/null
+EOF
+
 chown -R "root:$user" "$home"
 chmod 750 "$home" "$home/fafnir"

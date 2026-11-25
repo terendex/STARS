@@ -90,7 +90,7 @@ The program compares the name it was started under with its true name, which is 
 3. `ltrace ./fafnir` shows the comparison: `strcmp("fafnir", "gnitaheath-wyrm") = -1`. The first one is the name it was started as, so the second is its true name. (`strings fafnir` lists `gnitaheath-wyrm` too, among the program's other text.)
 4. Start it under that name with a link: `ln -sf ~/fafnir /tmp/gnitaheath-wyrm`, then `/tmp/gnitaheath-wyrm`. It prints `You know my true name. STARS{f4fn1r_4nsw3rs_t0_h1s_tru3_n4m3}`.
 
-   The box's `/tmp` is shared and persists, so a plain `ln -s` fails with `File exists` on a second attempt. The `-f` overwrites the old link, so you can re-run the solve any time. (Or just run the existing `/tmp/gnitaheath-wyrm` again — the link still works.)
+   The box clears this account's `/tmp` when you log out (`~/.bash_logout`), so every session starts clean. Within one session a second plain `ln -s` would fail with `File exists`; the `-f` overwrites the old link, so you can re-run the solve freely. (A folder left under that name by an abandoned try is cleared on logout too, which a plain `ln -sf` can't overwrite.)
 
 Another way: `(exec -a gnitaheath-wyrm ./fafnir)`. Keep the brackets, or `exec` replaces your shell and the session ends once the program finishes.
 
