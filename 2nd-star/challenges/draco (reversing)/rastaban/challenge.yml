@@ -25,7 +25,7 @@ description: |-
   Log in with the command below and the password `draco`.
 
   **Tools you may need to solve this level:** `cat`, `python3`, [CyberChef](https://gchq.github.io/CyberChef/)
-connection_info: ssh rastaban@192.168.68.101 -p 2222
+connection_info: ssh rastaban@192.168.8.109 -p 2222
 flags:
   - "STARS{r4st4b4n_sp34ks_1n_numb3rs}"
 tags:

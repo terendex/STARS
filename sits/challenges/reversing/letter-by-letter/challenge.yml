@@ -23,7 +23,7 @@ description: |-
   Log in with the command below and the password `reverse`.
 
   **Commands you may need to solve this level:** `cat`, `python3`
-connection_info: ssh letters@192.168.68.101 -p 2242
+connection_info: ssh letters@192.168.8.109 -p 2242
 flags:
   - "FLAG{c0unt1ng_st4rts_4t_z3r0}"
 tags:

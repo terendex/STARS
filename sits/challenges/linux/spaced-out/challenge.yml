@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `spacebar`.
 
   **Commands you may need to solve this level:** `ls`, `cat`
-connection_info: ssh spaced@192.168.68.101 -p 2240
+connection_info: ssh spaced@192.168.8.109 -p 2240
 flags:
   - "FLAG{qu0t3s_h4ndl3_sp4c3s}"
 tags:

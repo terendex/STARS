@@ -23,7 +23,7 @@ description: |-
   Log in with the command below and the password `draco`.
 
   **Commands you may need to solve this level:** `ltrace`
-connection_info: ssh eltanin@192.168.68.101 -p 2222
+connection_info: ssh eltanin@192.168.8.109 -p 2222
 flags:
   - "STARS{3lt4n1n_s4w_th3_c0mp4r1s0n}"
 tags:

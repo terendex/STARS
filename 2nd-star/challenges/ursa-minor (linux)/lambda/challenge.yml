@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `twocopies`.
 
   **Commands you may need to solve this level:** `ls`, `diff`
-connection_info: ssh lambda@192.168.68.101 -p 2220
+connection_info: ssh lambda@192.168.8.109 -p 2220
 flags:
   - "STARS{l4mbd4_sp0tt3d_th3_d1ff3r3nc3}"
 tags:

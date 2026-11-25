@@ -19,7 +19,7 @@ description: |-
   This time there's a **safety filter**: before opening anything, the site deletes every `../` from the name you give it. The page shows you what you asked for and what's left after the filter, so you can watch it work. But it only runs once.
 
   **Your goal:** get past the filter and open `flag.txt`.
-connection_info: http://192.168.68.101:8315
+connection_info: http://192.168.8.109:8315
 flags:
   - "FLAG{f1lt3r_d0dg3d_w1th_d0ts}"
 tags:

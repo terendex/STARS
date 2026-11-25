@@ -16,7 +16,7 @@ description: |-
   Log in with the command below and the password `draco`.
 
   **Commands you may need to solve this level:** `strings` or `ltrace`, `ln`
-connection_info: ssh fafnir@192.168.68.101 -p 2252
+connection_info: ssh fafnir@192.168.8.109 -p 2252
 flags:
   - "STARS{f4fn1r_4nsw3rs_t0_h1s_tru3_n4m3}"
 tags:

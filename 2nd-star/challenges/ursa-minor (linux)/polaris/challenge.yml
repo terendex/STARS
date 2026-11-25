@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `polestar`.
 
   **Commands you may need to solve this level:** `ls`, `cd`, `cat`
-connection_info: ssh polaris@192.168.68.101 -p 2220
+connection_info: ssh polaris@192.168.8.109 -p 2220
 flags:
   - "STARS{p0l4r1s_h1d1ng_1n_pl41n_s1ght}"
 tags:

@@ -21,7 +21,7 @@ description: |-
   **Your goal:** change the address so the site opens `flag.txt` instead of a recipe.
 
   **Tools you may need to solve this level:** Your browser's address bar
-connection_info: http://192.168.68.101:8311
+connection_info: http://192.168.8.109:8311
 flags:
   - "FLAG{cl1mb3d_0n3_f0ld3r_up}"
 tags:

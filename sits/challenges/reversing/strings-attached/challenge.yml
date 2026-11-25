@@ -28,7 +28,7 @@ description: |-
   **Then:** paste the flag into the box below. Type `exit` to leave.
 
   **Commands you may need to solve this level:** `ssh`, `ls`, `strings`, `grep`
-connection_info: ssh strings@192.168.68.101 -p 2242
+connection_info: ssh strings@192.168.8.109 -p 2242
 flags:
   - "FLAG{str1ngs_sp1ll_th3_b34ns}"
 tags:

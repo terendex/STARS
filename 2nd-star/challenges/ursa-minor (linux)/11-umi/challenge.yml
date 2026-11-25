@@ -23,7 +23,7 @@ description: |-
   Log in with the command below and the password `beaconhunt`. The account is named `umi11`.
 
   **Commands you may need to solve this level:** `nc`, `grep`
-connection_info: ssh umi11@192.168.68.101 -p 2220
+connection_info: ssh umi11@192.168.8.109 -p 2220
 flags:
   - "STARS{11um1_b34c0n_kn0ck_kn0ck}"
 tags:

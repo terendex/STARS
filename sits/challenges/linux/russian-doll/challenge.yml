@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `matryoshka`. Your home folder is read-only, so work in a folder of your own in `/tmp`: `cd "$(mktemp -d)"` makes one and goes into it.
 
   `file` tells you what kind of file you have. `gunzip`, `base64 -d` and `tar` each open one kind of layer.
-connection_info: ssh russiandoll@192.168.68.101 -p 2240
+connection_info: ssh russiandoll@192.168.8.109 -p 2240
 flags:
   - "FLAG{0p3n3d_3v3ry_s1ngl3_d0ll}"
 tags:

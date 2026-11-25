@@ -23,7 +23,7 @@ description: |-
   Log in with the command below and the password `draco`.
 
   **Tools you may need to solve this level:** `cat`, `python3`
-connection_info: ssh alsafi@192.168.68.101 -p 2222
+connection_info: ssh alsafi@192.168.8.109 -p 2222
 flags:
   - "STARS{4ls4f1_c0unts_fr0m_z3r0}"
 tags:

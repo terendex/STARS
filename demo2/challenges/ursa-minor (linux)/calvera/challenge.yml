@@ -16,7 +16,7 @@ description: |-
   Log in with the command below and the password `neutronstar`.
 
   **Commands you may need to solve this level:** `echo $PATH`, `type`, `cat`
-connection_info: ssh calvera@192.168.68.101 -p 2250
+connection_info: ssh calvera@192.168.8.109 -p 2250
 flags:
   - "STARS{c4lv3r4_tru5ts_n0_p4th}"
 tags:

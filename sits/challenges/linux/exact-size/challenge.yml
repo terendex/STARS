@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `measuring`.
 
   **Commands you may need to solve this level:** `find`, `grep`
-connection_info: ssh exactsize@192.168.68.101 -p 2240
+connection_info: ssh exactsize@192.168.8.109 -p 2240
 flags:
   - "FLAG{s1z3d_4nd_s1gn3d_f0r}"
 tags:

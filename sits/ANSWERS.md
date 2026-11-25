@@ -4,7 +4,7 @@ Made by Axel Jonas C. Tangalin.
 
 **Organizers only. Don't share this file or show it on screen during the event.**
 
-The commands use `192.168.68.101`. If your IP has changed, use the new one.
+The commands use `192.168.8.109`. If your IP has changed, use the new one.
 
 Every walkthrough below was played by a test that followed only the challenge's description and hints, and the outputs quoted are the ones it really got. Values that change on every build of a box (random file names and decoy codes) are marked as such: tell teams the *method*, not the value.
 
@@ -26,41 +26,41 @@ Flags are case-sensitive unless the summary says "any capitals" (flags read off 
 
 | # | Challenge | Level | Where | Flag |
 |---|---|---|---|---|
-| 1 | Welcome Mat | ★ Easy | `ssh welcome@192.168.68.101 -p 2240`, password `doormat` | `FLAG{w3lc0m3_t0_th3_sh3ll}` |
-| 2 | Hide and Seek | ★ Easy | `ssh hideseek@192.168.68.101 -p 2240`, password `countto10` | `FLAG{y0u_f0und_m3_1n_th3_cl0s3t}` |
-| 3 | Lost Keys | ★ Easy | `ssh lostkeys@192.168.68.101 -p 2240`, password `jinglejingle` | `FLAG{f1nd_f0und_th3_k3ys}` |
-| 4 | Spaced Out | ★ Easy | `ssh spaced@192.168.68.101 -p 2240`, password `spacebar` | `FLAG{qu0t3s_h4ndl3_sp4c3s}` |
-| 5 | Sticky Note | ★ Easy | `ssh sticky@192.168.68.101 -p 2240`, password `postit` | `FLAG{st1cky_n0t3_1n_th3_3nv}` |
-| 6 | Spot the Difference | ★ Easy | `ssh spotdiff@192.168.68.101 -p 2240`, password `twinphotos` | `FLAG{0n3_l1n3_ch4ng3d}` |
-| 7 | Needle in the Logs | ★★ Medium | `ssh needle@192.168.68.101 -p 2240`, password `haystack` | `FLAG{tw0_gr3ps_1n_4_r0w}` |
-| 8 | Exact Size | ★★ Medium | `ssh exactsize@192.168.68.101 -p 2240`, password `measuring` | `FLAG{s1z3d_4nd_s1gn3d_f0r}` |
-| 9 | Odd One Out | ★★ Medium | `ssh oddone@192.168.68.101 -p 2240`, password `pairsonly` | `FLAG{th3_l0n3ly_s0ck}` |
-| 10 | Crowd Favourite | ★★ Medium | `ssh favourite@192.168.68.101 -p 2240`, password `mostvotes` | `FLAG{th3_cr0wd_h4s_sp0k3n}` |
-| 11 | Time Capsule | ★★ Medium | `ssh capsule@192.168.68.101 -p 2240`, password `buriedtreasure` | `FLAG{d4t3d_v4l3nt1n3s_d4y}` |
-| 12 | Knock Knock | ★★ Medium | `ssh knock@192.168.68.101 -p 2240`, password `whosthere` | `FLAG{kn0ck_kn0ck_wh0s_p0rt_5287}` |
-| 13 | Russian Doll | ★★★ Hard | `ssh russiandoll@192.168.68.101 -p 2240`, password `matryoshka` | `FLAG{0p3n3d_3v3ry_s1ngl3_d0ll}` |
-| 14 | Undo History | ★★★ Hard | `ssh history@192.168.68.101 -p 2240`, password `undoredo` | `FLAG{g1t_n3v3r_f0rg3ts}` |
-| 15 | Spare Key | ★★★ Hard | `ssh sparekey@192.168.68.101 -p 2240`, password `underthemat` | `FLAG{sp4r3_k3y_und3r_th3_m4t}` |
+| 1 | Welcome Mat | ★ Easy | `ssh welcome@192.168.8.109 -p 2240`, password `doormat` | `FLAG{w3lc0m3_t0_th3_sh3ll}` |
+| 2 | Hide and Seek | ★ Easy | `ssh hideseek@192.168.8.109 -p 2240`, password `countto10` | `FLAG{y0u_f0und_m3_1n_th3_cl0s3t}` |
+| 3 | Lost Keys | ★ Easy | `ssh lostkeys@192.168.8.109 -p 2240`, password `jinglejingle` | `FLAG{f1nd_f0und_th3_k3ys}` |
+| 4 | Spaced Out | ★ Easy | `ssh spaced@192.168.8.109 -p 2240`, password `spacebar` | `FLAG{qu0t3s_h4ndl3_sp4c3s}` |
+| 5 | Sticky Note | ★ Easy | `ssh sticky@192.168.8.109 -p 2240`, password `postit` | `FLAG{st1cky_n0t3_1n_th3_3nv}` |
+| 6 | Spot the Difference | ★ Easy | `ssh spotdiff@192.168.8.109 -p 2240`, password `twinphotos` | `FLAG{0n3_l1n3_ch4ng3d}` |
+| 7 | Needle in the Logs | ★★ Medium | `ssh needle@192.168.8.109 -p 2240`, password `haystack` | `FLAG{tw0_gr3ps_1n_4_r0w}` |
+| 8 | Exact Size | ★★ Medium | `ssh exactsize@192.168.8.109 -p 2240`, password `measuring` | `FLAG{s1z3d_4nd_s1gn3d_f0r}` |
+| 9 | Odd One Out | ★★ Medium | `ssh oddone@192.168.8.109 -p 2240`, password `pairsonly` | `FLAG{th3_l0n3ly_s0ck}` |
+| 10 | Crowd Favourite | ★★ Medium | `ssh favourite@192.168.8.109 -p 2240`, password `mostvotes` | `FLAG{th3_cr0wd_h4s_sp0k3n}` |
+| 11 | Time Capsule | ★★ Medium | `ssh capsule@192.168.8.109 -p 2240`, password `buriedtreasure` | `FLAG{d4t3d_v4l3nt1n3s_d4y}` |
+| 12 | Knock Knock | ★★ Medium | `ssh knock@192.168.8.109 -p 2240`, password `whosthere` | `FLAG{kn0ck_kn0ck_wh0s_p0rt_5287}` |
+| 13 | Russian Doll | ★★★ Hard | `ssh russiandoll@192.168.8.109 -p 2240`, password `matryoshka` | `FLAG{0p3n3d_3v3ry_s1ngl3_d0ll}` |
+| 14 | Undo History | ★★★ Hard | `ssh history@192.168.8.109 -p 2240`, password `undoredo` | `FLAG{g1t_n3v3r_f0rg3ts}` |
+| 15 | Spare Key | ★★★ Hard | `ssh sparekey@192.168.8.109 -p 2240`, password `underthemat` | `FLAG{sp4r3_k3y_und3r_th3_m4t}` |
 
 ### Web
 
 | # | Challenge | Level | Where | Flag |
 |---|---|---|---|---|
-| 1 | View Source | ★ Easy | `http://192.168.68.101:8301` | `FLAG{v13w_s0urc3_r3v34ls_4ll}` |
-| 2 | Robots Only | ★ Easy | `http://192.168.68.101:8302` | `FLAG{r0b0ts_txt_p01nts_th3_w4y}` |
-| 3 | Client-Side Lock | ★ Easy | `http://192.168.68.101:8303` | `FLAG{th3_br0ws3r_kn3w_th3_c0d3}` |
-| 4 | Greyed Out | ★ Easy | `http://192.168.68.101:8304` | `FLAG{gr3y3d_0ut_but_n0t_l0ck3d}` |
-| 5 | Saved for Later | ★ Easy | `http://192.168.68.101:8305` | `FLAG{l0c4l_st0r4g3_r3m3mb3rs}` |
-| 6 | Header Hunt | ★ Easy | `http://192.168.68.101:8306` | `FLAG{h34d3rs_c4rry_s3cr3ts}` |
-| 7 | Blink | ★★ Medium | `http://192.168.68.101:8307` | `FLAG{r3d1r3ct_t00_f4st}` |
-| 8 | Next Order | ★★ Medium | `http://192.168.68.101:8308` | `FLAG{0rd3r_numb3rs_4r3_gu3ss4bl3}` |
-| 9 | Cookie Jar | ★★ Medium | `http://192.168.68.101:8309` | `FLAG{c00k13s_c4n_b3_3d1t3d}` |
-| 10 | Secret Agent | ★★ Medium | `http://192.168.68.101:8310` | `FLAG{y0u_4r3_wh0_y0u_s4y_y0u_4r3}` |
-| 11 | Up a Folder | ★★ Medium | `http://192.168.68.101:8311` | `FLAG{cl1mb3d_0n3_f0ld3r_up}` |
-| 12 | Sign In Anyway | ★★ Medium | `http://192.168.68.101:8312` | `FLAG{s1gn3d_1n_w1th0ut_4_p4ssw0rd}` |
-| 13 | Badge Swap | ★★★ Hard | `http://192.168.68.101:8313` | `FLAG{tw0_f13lds_sw4pp3d}` |
-| 14 | The Union | ★★★ Hard | `http://192.168.68.101:8314` | `FLAG{un10n_s3l3ct_f0und_th3_st4sh}` |
-| 15 | Filter Dodge | ★★★ Hard | `http://192.168.68.101:8315` | `FLAG{f1lt3r_d0dg3d_w1th_d0ts}` |
+| 1 | View Source | ★ Easy | `http://192.168.8.109:8301` | `FLAG{v13w_s0urc3_r3v34ls_4ll}` |
+| 2 | Robots Only | ★ Easy | `http://192.168.8.109:8302` | `FLAG{r0b0ts_txt_p01nts_th3_w4y}` |
+| 3 | Client-Side Lock | ★ Easy | `http://192.168.8.109:8303` | `FLAG{th3_br0ws3r_kn3w_th3_c0d3}` |
+| 4 | Greyed Out | ★ Easy | `http://192.168.8.109:8304` | `FLAG{gr3y3d_0ut_but_n0t_l0ck3d}` |
+| 5 | Saved for Later | ★ Easy | `http://192.168.8.109:8305` | `FLAG{l0c4l_st0r4g3_r3m3mb3rs}` |
+| 6 | Header Hunt | ★ Easy | `http://192.168.8.109:8306` | `FLAG{h34d3rs_c4rry_s3cr3ts}` |
+| 7 | Blink | ★★ Medium | `http://192.168.8.109:8307` | `FLAG{r3d1r3ct_t00_f4st}` |
+| 8 | Next Order | ★★ Medium | `http://192.168.8.109:8308` | `FLAG{0rd3r_numb3rs_4r3_gu3ss4bl3}` |
+| 9 | Cookie Jar | ★★ Medium | `http://192.168.8.109:8309` | `FLAG{c00k13s_c4n_b3_3d1t3d}` |
+| 10 | Secret Agent | ★★ Medium | `http://192.168.8.109:8310` | `FLAG{y0u_4r3_wh0_y0u_s4y_y0u_4r3}` |
+| 11 | Up a Folder | ★★ Medium | `http://192.168.8.109:8311` | `FLAG{cl1mb3d_0n3_f0ld3r_up}` |
+| 12 | Sign In Anyway | ★★ Medium | `http://192.168.8.109:8312` | `FLAG{s1gn3d_1n_w1th0ut_4_p4ssw0rd}` |
+| 13 | Badge Swap | ★★★ Hard | `http://192.168.8.109:8313` | `FLAG{tw0_f13lds_sw4pp3d}` |
+| 14 | The Union | ★★★ Hard | `http://192.168.8.109:8314` | `FLAG{un10n_s3l3ct_f0und_th3_st4sh}` |
+| 15 | Filter Dodge | ★★★ Hard | `http://192.168.8.109:8315` | `FLAG{f1lt3r_d0dg3d_w1th_d0ts}` |
 
 ### Crypto
 
@@ -106,34 +106,34 @@ Flags are case-sensitive unless the summary says "any capitals" (flags read off 
 
 | # | Challenge | Level | Where | Flag |
 |---|---|---|---|---|
-| 1 | Strings Attached | ★ Easy | `ssh strings@192.168.68.101 -p 2242`, password `reverse` | `FLAG{str1ngs_sp1ll_th3_b34ns}` |
-| 2 | Compare Notes | ★ Easy | `ssh compare@192.168.68.101 -p 2242`, password `reverse` | `FLAG{ltr4c3_s4w_th3_c0mp4r3}` |
-| 3 | Backwards | ★ Easy | `ssh backwards@192.168.68.101 -p 2242`, password `reverse` | `FLAG{r34d_1t_b4ckw4rds}` |
-| 4 | By the Numbers | ★ Easy | `ssh numbers@192.168.68.101 -p 2242`, password `reverse` | `FLAG{ch4r_c0d3s_t0_l3tt3rs}` |
-| 5 | Letter by Letter | ★ Easy | `ssh letters@192.168.68.101 -p 2242`, password `reverse` | `FLAG{c0unt1ng_st4rts_4t_z3r0}` |
-| 6 | Setting | ★ Easy | `ssh setting@192.168.68.101 -p 2242`, password `reverse` | `FLAG{3nv1r0nm3nt_s3tt1ng_f0und}` |
-| 7 | Freeze Frame | ★★ Medium | `ssh freeze@192.168.68.101 -p 2242`, password `reverse` | `FLAG{c4ught_b3f0r3_th3_burn}` |
-| 8 | Unscramble | ★★ Medium | `ssh unscramble@192.168.68.101 -p 2242`, password `reverse` | `FLAG{und0n3_1n_r3v3rs3_0rd3r}` |
-| 9 | Mixed Up | ★★ Medium | `ssh mixedup@192.168.68.101 -p 2242`, password `reverse` | `FLAG{h3x_r3v3rs3_sh1ft_und0n3}` |
-| 10 | Read the Assembly | ★★ Medium | `ssh assembly@192.168.68.101 -p 2242`, password `reverse` | `FLAG{1t_w4s_1n_th3_4ss3mbly}` |
-| 11 | Level Up | ★★ Medium | `ssh levelup@192.168.68.101 -p 2242`, password `reverse` | `FLAG{1ts_0v3r_n1n3_th0us4nd}` |
-| 12 | Skip the Wait | ★★ Medium | `ssh skipwait@192.168.68.101 -p 2242`, password `reverse` | `FLAG{sk1pp3d_th3_wh0l3_qu3u3}` |
-| 13 | Two Returns | ★★★ Hard | `ssh tworeturns@192.168.68.101 -p 2242`, password `reverse` | `FLAG{tw0_r3turns_g0t_m3_1n}` |
-| 14 | License Key | ★★★ Hard | `ssh license@192.168.68.101 -p 2242`, password `reverse` | `FLAG{m4d3_my_0wn_k3yg3n}` |
-| 15 | No Names | ★★★ Hard | `ssh nonames@192.168.68.101 -p 2242`, password `reverse` | `FLAG{n0_n4m3s_n0_pr0bl3m}` |
+| 1 | Strings Attached | ★ Easy | `ssh strings@192.168.8.109 -p 2242`, password `reverse` | `FLAG{str1ngs_sp1ll_th3_b34ns}` |
+| 2 | Compare Notes | ★ Easy | `ssh compare@192.168.8.109 -p 2242`, password `reverse` | `FLAG{ltr4c3_s4w_th3_c0mp4r3}` |
+| 3 | Backwards | ★ Easy | `ssh backwards@192.168.8.109 -p 2242`, password `reverse` | `FLAG{r34d_1t_b4ckw4rds}` |
+| 4 | By the Numbers | ★ Easy | `ssh numbers@192.168.8.109 -p 2242`, password `reverse` | `FLAG{ch4r_c0d3s_t0_l3tt3rs}` |
+| 5 | Letter by Letter | ★ Easy | `ssh letters@192.168.8.109 -p 2242`, password `reverse` | `FLAG{c0unt1ng_st4rts_4t_z3r0}` |
+| 6 | Setting | ★ Easy | `ssh setting@192.168.8.109 -p 2242`, password `reverse` | `FLAG{3nv1r0nm3nt_s3tt1ng_f0und}` |
+| 7 | Freeze Frame | ★★ Medium | `ssh freeze@192.168.8.109 -p 2242`, password `reverse` | `FLAG{c4ught_b3f0r3_th3_burn}` |
+| 8 | Unscramble | ★★ Medium | `ssh unscramble@192.168.8.109 -p 2242`, password `reverse` | `FLAG{und0n3_1n_r3v3rs3_0rd3r}` |
+| 9 | Mixed Up | ★★ Medium | `ssh mixedup@192.168.8.109 -p 2242`, password `reverse` | `FLAG{h3x_r3v3rs3_sh1ft_und0n3}` |
+| 10 | Read the Assembly | ★★ Medium | `ssh assembly@192.168.8.109 -p 2242`, password `reverse` | `FLAG{1t_w4s_1n_th3_4ss3mbly}` |
+| 11 | Level Up | ★★ Medium | `ssh levelup@192.168.8.109 -p 2242`, password `reverse` | `FLAG{1ts_0v3r_n1n3_th0us4nd}` |
+| 12 | Skip the Wait | ★★ Medium | `ssh skipwait@192.168.8.109 -p 2242`, password `reverse` | `FLAG{sk1pp3d_th3_wh0l3_qu3u3}` |
+| 13 | Two Returns | ★★★ Hard | `ssh tworeturns@192.168.8.109 -p 2242`, password `reverse` | `FLAG{tw0_r3turns_g0t_m3_1n}` |
+| 14 | License Key | ★★★ Hard | `ssh license@192.168.8.109 -p 2242`, password `reverse` | `FLAG{m4d3_my_0wn_k3yg3n}` |
+| 15 | No Names | ★★★ Hard | `ssh nonames@192.168.8.109 -p 2242`, password `reverse` | `FLAG{n0_n4m3s_n0_pr0bl3m}` |
 
 ### Pwn
 
 | # | Challenge | Level | Where | Flag |
 |---|---|---|---|---|
-| 1 | Secret Menu | ★ Easy | `ssh menu@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9041` | `FLAG{s3cr3t_m3nu_unl0ck3d}` |
-| 2 | Store Credit | ★ Easy | `ssh shop@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9042` | `FLAG{n3g4t1v3_sh0pp1ng_spr33}` |
-| 3 | Name Tag | ★ Easy | `ssh nametag@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9043` | `FLAG{n4m3_t00_l0ng_f0r_th3_t4g}` |
-| 4 | Blank Password | ★ Easy | `ssh vault@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9044` | `FLAG{bl4nk_p4ssw0rd_w0rks}` |
-| 5 | Greeter | ★ Easy | `ssh greeter@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9045` | `FLAG{s3m1c0l0n_s4ys_h3ll0}` |
-| 6 | Exact Fit | ★★ Medium | `ssh exactfit@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9046` | `FLAG{3x4ct_f1t_k3y}` |
-| 7 | Echo Echo | ★★ Medium | `ssh echoecho@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9047` | `FLAG{3ch0_3ch0_l34k3d}` |
-| 8 | Return to Sender | ★★★ Hard | `nc 192.168.68.101 9048` (raw bytes needed; from a Linux account, `nc antares 9001`) | `FLAG{r3turn_t0_s3nd3r_w1n}` |
+| 1 | Secret Menu | ★ Easy | `ssh menu@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9041` | `FLAG{s3cr3t_m3nu_unl0ck3d}` |
+| 2 | Store Credit | ★ Easy | `ssh shop@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9042` | `FLAG{n3g4t1v3_sh0pp1ng_spr33}` |
+| 3 | Name Tag | ★ Easy | `ssh nametag@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9043` | `FLAG{n4m3_t00_l0ng_f0r_th3_t4g}` |
+| 4 | Blank Password | ★ Easy | `ssh vault@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9044` | `FLAG{bl4nk_p4ssw0rd_w0rks}` |
+| 5 | Greeter | ★ Easy | `ssh greeter@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9045` | `FLAG{s3m1c0l0n_s4ys_h3ll0}` |
+| 6 | Exact Fit | ★★ Medium | `ssh exactfit@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9046` | `FLAG{3x4ct_f1t_k3y}` |
+| 7 | Echo Echo | ★★ Medium | `ssh echoecho@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9047` | `FLAG{3ch0_3ch0_l34k3d}` |
+| 8 | Return to Sender | ★★★ Hard | `nc 192.168.8.109 9048` (raw bytes needed; from a Linux account, `nc antares 9001`) | `FLAG{r3turn_t0_s3nd3r_w1n}` |
 
 Pwn players connect with the SSH gate accounts (password `pwnit`) on port 2240, or `nc` on 9041-9048. Return to Sender needs raw bytes, so it has no gate: use `nc` from a Linux challenge account.
 
@@ -146,12 +146,12 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 1. Welcome Mat (★ Easy, 30)
 
 **Teaches:** Logging in over SSH, `ls` and `cat`.  
-**Where:** `ssh welcome@192.168.68.101 -p 2240`, password `doormat`  
+**Where:** `ssh welcome@192.168.8.109 -p 2240`, password `doormat`  
 **Flag:** `FLAG{w3lc0m3_t0_th3_sh3ll}`
 
 **Steps:**
 
-1. In PowerShell, run `ssh welcome@192.168.68.101 -p 2240`, answer `yes` to the fingerprint question, and type the password `doormat` (nothing shows while typing).
+1. In PowerShell, run `ssh welcome@192.168.8.109 -p 2240`, answer `yes` to the fingerprint question, and type the password `doormat` (nothing shows while typing).
 2. `ls` lists one file.
    ```text
    hello.txt
@@ -173,7 +173,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 2. Hide and Seek (★ Easy, 30)
 
 **Teaches:** Hidden files (names starting with `.`) and `ls -a`.  
-**Where:** `ssh hideseek@192.168.68.101 -p 2240`, password `countto10`  
+**Where:** `ssh hideseek@192.168.8.109 -p 2240`, password `countto10`  
 **Flag:** `FLAG{y0u_f0und_m3_1n_th3_cl0s3t}`
 
 **Steps:**
@@ -207,7 +207,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 3. Lost Keys (★ Easy, 30)
 
 **Teaches:** Searching a folder tree with `find -name`.  
-**Where:** `ssh lostkeys@192.168.68.101 -p 2240`, password `jinglejingle`  
+**Where:** `ssh lostkeys@192.168.8.109 -p 2240`, password `jinglejingle`  
 **Flag:** `FLAG{f1nd_f0und_th3_k3ys}`
 
 **Steps:**
@@ -231,7 +231,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 4. Spaced Out (★ Easy, 30)
 
 **Teaches:** File names with spaces and brackets: quotes and Tab completion.  
-**Where:** `ssh spaced@192.168.68.101 -p 2240`, password `spacebar`  
+**Where:** `ssh spaced@192.168.8.109 -p 2240`, password `spacebar`  
 **Flag:** `FLAG{qu0t3s_h4ndl3_sp4c3s}`
 
 **Steps:**
@@ -258,7 +258,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 5. Sticky Note (★ Easy, 30)
 
 **Teaches:** Environment variables: `env`.  
-**Where:** `ssh sticky@192.168.68.101 -p 2240`, password `postit`  
+**Where:** `ssh sticky@192.168.8.109 -p 2240`, password `postit`  
 **Flag:** `FLAG{st1cky_n0t3_1n_th3_3nv}`
 
 **Steps:**
@@ -278,7 +278,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 6. Spot the Difference (★ Easy, 30)
 
 **Teaches:** Comparing two files with `diff`.  
-**Where:** `ssh spotdiff@192.168.68.101 -p 2240`, password `twinphotos`  
+**Where:** `ssh spotdiff@192.168.8.109 -p 2240`, password `twinphotos`  
 **Flag:** `FLAG{0n3_l1n3_ch4ng3d}`
 
 **Steps:**
@@ -302,7 +302,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 7. Needle in the Logs (★★ Medium, 60)
 
 **Teaches:** Narrowing a search by chaining two `grep`s with `|`.  
-**Where:** `ssh needle@192.168.68.101 -p 2240`, password `haystack`  
+**Where:** `ssh needle@192.168.8.109 -p 2240`, password `haystack`  
 **Flag:** `FLAG{tw0_gr3ps_1n_4_r0w}`
 
 **Steps:**
@@ -326,7 +326,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 8. Exact Size (★★ Medium, 60)
 
 **Teaches:** `find` with `-size` (in bytes, `c`) and `-user`.  
-**Where:** `ssh exactsize@192.168.68.101 -p 2240`, password `measuring`  
+**Where:** `ssh exactsize@192.168.8.109 -p 2240`, password `measuring`  
 **Flag:** `FLAG{s1z3d_4nd_s1gn3d_f0r}`
 
 **Steps:**
@@ -350,7 +350,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 9. Odd One Out (★★ Medium, 60)
 
 **Teaches:** `sort | uniq -u` to find the one line that appears once.  
-**Where:** `ssh oddone@192.168.68.101 -p 2240`, password `pairsonly`  
+**Where:** `ssh oddone@192.168.8.109 -p 2240`, password `pairsonly`  
 **Flag:** `FLAG{th3_l0n3ly_s0ck}`
 
 **Steps:**
@@ -376,7 +376,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 10. Crowd Favourite (★★ Medium, 60)
 
 **Teaches:** Counting repeats with `sort | uniq -c | sort -n`.  
-**Where:** `ssh favourite@192.168.68.101 -p 2240`, password `mostvotes`  
+**Where:** `ssh favourite@192.168.8.109 -p 2240`, password `mostvotes`  
 **Flag:** `FLAG{th3_cr0wd_h4s_sp0k3n}`
 
 **Steps:**
@@ -402,7 +402,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 11. Time Capsule (★★ Medium, 60)
 
 **Teaches:** File dates with `ls -l`.  
-**Where:** `ssh capsule@192.168.68.101 -p 2240`, password `buriedtreasure`  
+**Where:** `ssh capsule@192.168.8.109 -p 2240`, password `buriedtreasure`  
 **Flag:** `FLAG{d4t3d_v4l3nt1n3s_d4y}`
 
 **Steps:**
@@ -434,7 +434,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 12. Knock Knock (★★ Medium, 60)
 
 **Teaches:** Scanning ports with `nc -z`, then connecting with `nc`.  
-**Where:** `ssh knock@192.168.68.101 -p 2240`, password `whosthere`  
+**Where:** `ssh knock@192.168.8.109 -p 2240`, password `whosthere`  
 **Flag:** `FLAG{kn0ck_kn0ck_wh0s_p0rt_5287}`
 
 **Steps:**
@@ -467,7 +467,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 13. Russian Doll (★★★ Hard, 100)
 
 **Teaches:** Identifying layers with `file` and unwrapping them (gzip, Base64, tar).  
-**Where:** `ssh russiandoll@192.168.68.101 -p 2240`, password `matryoshka`  
+**Where:** `ssh russiandoll@192.168.8.109 -p 2240`, password `matryoshka`  
 **Flag:** `FLAG{0p3n3d_3v3ry_s1ngl3_d0ll}`
 
 **Steps:**
@@ -511,7 +511,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 14. Undo History (★★★ Hard, 100)
 
 **Teaches:** Git keeps every committed version: `git log -p`.  
-**Where:** `ssh history@192.168.68.101 -p 2240`, password `undoredo`  
+**Where:** `ssh history@192.168.8.109 -p 2240`, password `undoredo`  
 **Flag:** `FLAG{g1t_n3v3r_f0rg3ts}`
 
 **Steps:**
@@ -559,7 +559,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Linux 15. Spare Key (★★★ Hard, 100)
 
 **Teaches:** Logging in with a private key: `ssh -i`.  
-**Where:** `ssh sparekey@192.168.68.101 -p 2240`, password `underthemat`  
+**Where:** `ssh sparekey@192.168.8.109 -p 2240`, password `underthemat`  
 **Flag:** `FLAG{sp4r3_k3y_und3r_th3_m4t}`
 
 **Steps:**
@@ -605,7 +605,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 1. View Source (★ Easy, 30)
 
 **Teaches:** Page source and HTML comments.  
-**Where:** `http://192.168.68.101:8301`  
+**Where:** `http://192.168.8.109:8301`  
 **Flag:** `FLAG{v13w_s0urc3_r3v34ls_4ll}`
 
 **Steps:**
@@ -624,7 +624,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 2. Robots Only (★ Easy, 30)
 
 **Teaches:** robots.txt.  
-**Where:** `http://192.168.68.101:8302`  
+**Where:** `http://192.168.8.109:8302`  
 **Flag:** `FLAG{r0b0ts_txt_p01nts_th3_w4y}`
 
 **Steps:**
@@ -652,7 +652,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 3. Client-Side Lock (★ Easy, 30)
 
 **Teaches:** Client-side checks can be read.  
-**Where:** `http://192.168.68.101:8303`  
+**Where:** `http://192.168.8.109:8303`  
 **Flag:** `FLAG{th3_br0ws3r_kn3w_th3_c0d3}`
 
 **Steps:**
@@ -670,7 +670,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 4. Greyed Out (★ Easy, 30)
 
 **Teaches:** Disabled buttons are just HTML.  
-**Where:** `http://192.168.68.101:8304`  
+**Where:** `http://192.168.8.109:8304`  
 **Flag:** `FLAG{gr3y3d_0ut_but_n0t_l0ck3d}`
 
 **Steps:**
@@ -694,7 +694,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 5. Saved for Later (★ Easy, 30)
 
 **Teaches:** Local Storage.  
-**Where:** `http://192.168.68.101:8305`  
+**Where:** `http://192.168.8.109:8305`  
 **Flag:** `FLAG{l0c4l_st0r4g3_r3m3mb3rs}`
 
 **Steps:**
@@ -713,7 +713,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 6. Header Hunt (★ Easy, 30)
 
 **Teaches:** Response headers.  
-**Where:** `http://192.168.68.101:8306`  
+**Where:** `http://192.168.8.109:8306`  
 **Flag:** `FLAG{h34d3rs_c4rry_s3cr3ts}`
 
 **Steps:**
@@ -748,13 +748,13 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 7. Blink (★★ Medium, 60)
 
 **Teaches:** Meta-refresh redirects; reading a page without following it.  
-**Where:** `http://192.168.68.101:8307`  
+**Where:** `http://192.168.8.109:8307`  
 **Flag:** `FLAG{r3d1r3ct_t00_f4st}`
 
 **Steps:**
 
-1. Type `view-source:http://192.168.68.101:8307` in the address bar (not Ctrl+U after landing on /moved).
-2. Or `curl.exe http://192.168.68.101:8307`:
+1. Type `view-source:http://192.168.8.109:8307` in the address bar (not Ctrl+U after landing on /moved).
+2. Or `curl.exe http://192.168.8.109:8307`:
    ```text
    Lost and Found Lost and Found Town library Lost property this week: one umbrella, two left gloves, and a note that says: FLAG{r3d1r3ct_t00_f4st}
    ```
@@ -769,7 +769,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 8. Next Order (★★ Medium, 60)
 
 **Teaches:** Guessable IDs (IDOR).  
-**Where:** `http://192.168.68.101:8308`  
+**Where:** `http://192.168.8.109:8308`  
 **Flag:** `FLAG{0rd3r_numb3rs_4r3_gu3ss4bl3}`
 
 **Steps:**
@@ -793,7 +793,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 9. Cookie Jar (★★ Medium, 60)
 
 **Teaches:** Editing a Base64 cookie.  
-**Where:** `http://192.168.68.101:8309`  
+**Where:** `http://192.168.8.109:8309`  
 **Flag:** `FLAG{c00k13s_c4n_b3_3d1t3d}`
 
 **Steps:**
@@ -814,7 +814,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 10. Secret Agent (★★ Medium, 60)
 
 **Teaches:** The User-Agent header.  
-**Where:** `http://192.168.68.101:8310`  
+**Where:** `http://192.168.8.109:8310`  
 **Flag:** `FLAG{y0u_4r3_wh0_y0u_s4y_y0u_4r3}`
 
 **Steps:**
@@ -835,7 +835,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 11. Up a Folder (★★ Medium, 60)
 
 **Teaches:** Path traversal.  
-**Where:** `http://192.168.68.101:8311`  
+**Where:** `http://192.168.8.109:8311`  
 **Flag:** `FLAG{cl1mb3d_0n3_f0ld3r_up}`
 
 **Steps:**
@@ -857,7 +857,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 12. Sign In Anyway (★★ Medium, 60)
 
 **Teaches:** SQL injection login bypass, choosing the account.  
-**Where:** `http://192.168.68.101:8312`  
+**Where:** `http://192.168.8.109:8312`  
 **Flag:** `FLAG{s1gn3d_1n_w1th0ut_4_p4ssw0rd}`
 
 **Steps:**
@@ -885,7 +885,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 13. Badge Swap (★★★ Hard, 100)
 
 **Teaches:** Editing JSON inside a Base64 cookie: two fields.  
-**Where:** `http://192.168.68.101:8313`  
+**Where:** `http://192.168.8.109:8313`  
 **Flag:** `FLAG{tw0_f13lds_sw4pp3d}`
 
 **Steps:**
@@ -910,7 +910,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 14. The Union (★★★ Hard, 100)
 
 **Teaches:** UNION-based SQL injection and sqlite_master.  
-**Where:** `http://192.168.68.101:8314`  
+**Where:** `http://192.168.8.109:8314`  
 **Flag:** `FLAG{un10n_s3l3ct_f0und_th3_st4sh}`
 
 **Steps:**
@@ -938,7 +938,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Web 15. Filter Dodge (★★★ Hard, 100)
 
 **Teaches:** Beating a filter that only runs once.  
-**Where:** `http://192.168.68.101:8315`  
+**Where:** `http://192.168.8.109:8315`  
 **Flag:** `FLAG{f1lt3r_d0dg3d_w1th_d0ts}`
 
 **Steps:**
@@ -1742,7 +1742,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 1. Strings Attached (★ Easy, 30)
 
 **Teaches:** Programs carry their text inside them: `strings`.  
-**Where:** `ssh strings@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh strings@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{str1ngs_sp1ll_th3_b34ns}`
 
 **Steps:**
@@ -1766,7 +1766,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 2. Compare Notes (★ Easy, 30)
 
 **Teaches:** Watching library calls with `ltrace`.  
-**Where:** `ssh compare@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh compare@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{ltr4c3_s4w_th3_c0mp4r3}`
 
 **Steps:**
@@ -1793,7 +1793,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 3. Backwards (★ Easy, 30)
 
 **Teaches:** Reading Python source; `[::-1]` reverses text.  
-**Where:** `ssh backwards@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh backwards@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{r34d_1t_b4ckw4rds}`
 
 **Steps:**
@@ -1819,7 +1819,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 4. By the Numbers (★ Easy, 30)
 
 **Teaches:** Character codes: `chr()`, or CyberChef's From Decimal.  
-**Where:** `ssh numbers@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh numbers@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{ch4r_c0d3s_t0_l3tt3rs}`
 
 **Steps:**
@@ -1847,7 +1847,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 5. Letter by Letter (★ Easy, 30)
 
 **Teaches:** Python indexes from 0; rebuilding a word from position checks.  
-**Where:** `ssh letters@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh letters@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{c0unt1ng_st4rts_4t_z3r0}`
 
 **Steps:**
@@ -1873,7 +1873,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 6. Setting (★ Easy, 30)
 
 **Teaches:** Environment variables, seen through `ltrace`.  
-**Where:** `ssh setting@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh setting@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{3nv1r0nm3nt_s3tt1ng_f0und}`
 
 **Steps:**
@@ -1904,7 +1904,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 7. Freeze Frame (★★ Medium, 60)
 
 **Teaches:** Pausing a program in `gdb` and reading a function's arguments.  
-**Where:** `ssh freeze@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh freeze@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{c4ught_b3f0r3_th3_burn}`
 
 **Steps:**
@@ -1950,7 +1950,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 8. Unscramble (★★ Medium, 60)
 
 **Teaches:** Undoing steps in reverse order (Base64, shift, reverse).  
-**Where:** `ssh unscramble@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh unscramble@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{und0n3_1n_r3v3rs3_0rd3r}`
 
 **Steps:**
@@ -1974,7 +1974,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 9. Mixed Up (★★ Medium, 60)
 
 **Teaches:** Undoing hex, reverse and shift.  
-**Where:** `ssh mixedup@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh mixedup@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{h3x_r3v3rs3_sh1ft_und0n3}`
 
 **Steps:**
@@ -1998,7 +1998,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 10. Read the Assembly (★★ Medium, 60)
 
 **Teaches:** Reading a constant out of `disassemble`.  
-**Where:** `ssh assembly@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh assembly@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{1t_w4s_1n_th3_4ss3mbly}`
 
 **Steps:**
@@ -2034,7 +2034,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 11. Level Up (★★ Medium, 60)
 
 **Teaches:** Changing a variable in `gdb`: `set var`.  
-**Where:** `ssh levelup@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh levelup@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{1ts_0v3r_n1n3_th0us4nd}`
 
 **Steps:**
@@ -2061,7 +2061,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 12. Skip the Wait (★★ Medium, 60)
 
 **Teaches:** Leaving a function early with gdb's `return`.  
-**Where:** `ssh skipwait@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh skipwait@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{sk1pp3d_th3_wh0l3_qu3u3}`
 
 **Steps:**
@@ -2093,7 +2093,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 13. Two Returns (★★★ Hard, 100)
 
 **Teaches:** Two `return`s in a row, one with a value.  
-**Where:** `ssh tworeturns@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh tworeturns@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{tw0_r3turns_g0t_m3_1n}`
 
 **Steps:**
@@ -2123,7 +2123,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 14. License Key (★★★ Hard, 100)
 
 **Teaches:** Working out a validation rule and writing a keygen.  
-**Where:** `ssh license@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh license@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{m4d3_my_0wn_k3yg3n}`
 
 **Steps:**
@@ -2154,7 +2154,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Reversing 15. No Names (★★★ Hard, 100)
 
 **Teaches:** Breaking on a library function in a stripped program, and `x/s`.  
-**Where:** `ssh nonames@192.168.68.101 -p 2242`, password `reverse`  
+**Where:** `ssh nonames@192.168.8.109 -p 2242`, password `reverse`  
 **Flag:** `FLAG{n0_n4m3s_n0_pr0bl3m}`
 
 **Steps:**
@@ -2191,7 +2191,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Pwn 1. Secret Menu (★ Easy, 30)
 
 **Teaches:** Reading the source to find a menu choice that isn't printed.  
-**Where:** `ssh menu@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9041`  
+**Where:** `ssh menu@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9041`  
 **Flag:** `FLAG{s3cr3t_m3nu_unl0ck3d}`
 
 **Steps:**
@@ -2212,7 +2212,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Pwn 2. Store Credit (★ Easy, 30)
 
 **Teaches:** A missing check on a negative quantity (a logic bug).  
-**Where:** `ssh shop@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9042`  
+**Where:** `ssh shop@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9042`  
 **Flag:** `FLAG{n3g4t1v3_sh0pp1ng_spr33}`
 
 **Steps:**
@@ -2242,7 +2242,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Pwn 3. Name Tag (★ Easy, 30)
 
 **Teaches:** A buffer overflow spilling into the next variable.  
-**Where:** `ssh nametag@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9043`  
+**Where:** `ssh nametag@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9043`  
 **Flag:** `FLAG{n4m3_t00_l0ng_f0r_th3_t4g}`
 
 **Steps:**
@@ -2263,7 +2263,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Pwn 4. Blank Password (★ Easy, 30)
 
 **Teaches:** `strncmp` with a length taken from the attacker's own input.  
-**Where:** `ssh vault@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9044`  
+**Where:** `ssh vault@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9044`  
 **Flag:** `FLAG{bl4nk_p4ssw0rd_w0rks}`
 
 **Steps:**
@@ -2284,7 +2284,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Pwn 5. Greeter (★ Easy, 30)
 
 **Teaches:** Command injection through a shell metacharacter.  
-**Where:** `ssh greeter@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9045`  
+**Where:** `ssh greeter@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9045`  
 **Flag:** `FLAG{s3m1c0l0n_s4ys_h3ll0}`
 
 **Steps:**
@@ -2306,7 +2306,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Pwn 6. Exact Fit (★★ Medium, 60)
 
 **Teaches:** A precise overflow writing one chosen value, little-endian.  
-**Where:** `ssh exactfit@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9046`  
+**Where:** `ssh exactfit@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9046`  
 **Flag:** `FLAG{3x4ct_f1t_k3y}`
 
 **Steps:**
@@ -2332,7 +2332,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Pwn 7. Echo Echo (★★ Medium, 60)
 
 **Teaches:** A format-string bug that leaks memory with `%N$s`.  
-**Where:** `ssh echoecho@192.168.68.101 -p 2240` (password `pwnit`), or `nc 192.168.68.101 9047`  
+**Where:** `ssh echoecho@192.168.8.109 -p 2240` (password `pwnit`), or `nc 192.168.8.109 9047`  
 **Flag:** `FLAG{3ch0_3ch0_l34k3d}`
 
 **Steps:**
@@ -2361,7 +2361,7 @@ Teams press **Ask for help** on a challenge; it shows on **Admin > Help requests
 ### Pwn 8. Return to Sender (★★★ Hard, 100)
 
 **Teaches:** A return-to-function overflow ("ret2win").  
-**Where:** `nc 192.168.68.101 9048` (raw bytes needed; from a Linux account, `nc antares 9001`)  
+**Where:** `nc 192.168.8.109 9048` (raw bytes needed; from a Linux account, `nc antares 9001`)  
 **Flag:** `FLAG{r3turn_t0_s3nd3r_w1n}`
 
 **Steps:**

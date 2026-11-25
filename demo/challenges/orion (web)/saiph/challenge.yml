@@ -12,7 +12,7 @@ description: |-
   **Your goal:** open Saiph's status page at the address below, and find the flag the server sends in its headers.
 
   **Tools you may need to solve this level:** Your browser's developer tools (press F12)
-connection_info: http://192.168.68.101:8091
+connection_info: http://192.168.8.109:8091
 flags:
   - "STARS{s41ph_s3nds_h34d3rs}"
 tags:

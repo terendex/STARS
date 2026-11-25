@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `jinglejingle`. `cd name` goes into a folder and `cd ..` comes back out, but there's a faster way: a command that searches every folder at once.
 
   **Commands you may need to solve this level:** `find`, `cat`
-connection_info: ssh lostkeys@192.168.68.101 -p 2240
+connection_info: ssh lostkeys@192.168.8.109 -p 2240
 flags:
   - "FLAG{f1nd_f0und_th3_k3ys}"
 tags:

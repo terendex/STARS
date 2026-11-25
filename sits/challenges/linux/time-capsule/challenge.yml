@@ -23,7 +23,7 @@ description: |-
   Log in with the command below and the password `buriedtreasure`.
 
   **Commands you may need to solve this level:** `ls`, `grep`, `cat`
-connection_info: ssh capsule@192.168.68.101 -p 2240
+connection_info: ssh capsule@192.168.8.109 -p 2240
 flags:
   - "FLAG{d4t3d_v4l3nt1n3s_d4y}"
 tags:
