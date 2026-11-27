@@ -1,9 +1,10 @@
-"""First bloods and the help queue, for the real CTF and STARS Classic.
+"""First blood and the help queue, for the real CTF and STARS Classic.
 
-First blood: the first solve of each challenge by a team that isn't hidden or
-banned (or a user, in users mode), so admins and test teams never count. The
-projector page announces new ones, and Admin Panel > Statistics lists them all
-with the player who solved it.
+First blood: the very first solve of the whole event by a team that isn't
+hidden or banned (or a user, in users mode), so admins and test teams never
+count. Exactly one account takes it — whoever lands the first correct answer.
+The projector page announces it when it happens, and Admin Panel > Statistics
+shows it with the player who solved it.
 
 Help queue: players press Ask for help on the challenges page, and admins see
 the requests on Admin Panel > Help Queue, oldest first. Each team has at most
@@ -16,9 +17,10 @@ import time
 
 from flask import Blueprint, jsonify, render_template, request
 
-from CTFd.models import Challenges, Solves, Teams, Users, db
+from CTFd.models import Challenges, Solves, Submissions, Teams, Users, db
 from CTFd.utils import get_config
 from CTFd.utils.decorators import admins_only, authed_only
+from CTFd.utils.scores import get_team_standings, get_user_standings
 from CTFd.utils.user import get_current_team, get_current_user
 
 OPEN = ("open", "coming")
@@ -46,32 +48,84 @@ def unix(moment):
     return calendar.timegm(moment.utctimetuple()) if moment else None
 
 
-def first_bloods():
-    """Each challenge's first solve by a visible account, oldest first."""
+def first_blood():
+    """The whole event's first solve by a visible account, or None.
+
+    First blood goes to a single account: whoever lands the first correct
+    answer of the CTF, whatever challenge it's for. Hidden and banned accounts
+    (admins, test teams) never count, so testing can't take it.
+    """
     Account = Teams if teams_mode() else Users
     owner = Solves.team_id if teams_mode() else Solves.user_id
-    rows = (
+    row = (
         db.session.query(Solves, Account, Challenges)
         .join(Account, owner == Account.id)
         .join(Challenges, Solves.challenge_id == Challenges.id)
         .filter(Account.hidden.is_(False), Account.banned.is_(False))
         .order_by(Solves.date.asc(), Solves.id.asc())
-        .all()
+        .first()
     )
-    seen, found = set(), []
-    for solve, account, challenge in rows:
-        if challenge.id in seen:
-            continue
-        seen.add(challenge.id)
-        found.append({
-            "id": solve.id,
-            "at": unix(solve.date),
-            "challenge": challenge.name,
-            "category": challenge.category,
-            "team": account.name,
-            "player": solve.user.name if solve.user else account.name,
+    if not row:
+        return None
+    solve, account, challenge = row
+    return {
+        "id": solve.id,
+        "at": unix(solve.date),
+        "challenge": challenge.name,
+        "category": challenge.category,
+        "team": account.name,
+        "player": solve.user.name if solve.user else account.name,
+    }
+
+
+def score_matrix():
+    """For the admin Score Matrix page: every team (or user) ranked, every
+    visible challenge grouped by category, and which challenges each has solved
+    or only attempted. Hidden and banned accounts are left out."""
+    teams = teams_mode()
+    id_attr = "team_id" if teams else "user_id"
+    owner = Solves.team_id if teams else Solves.user_id
+    sub_owner = Submissions.team_id if teams else Submissions.user_id
+    Account = Teams if teams else Users
+
+    challenges = (Challenges.query.filter_by(state="visible")
+                  .order_by(Challenges.category, Challenges.value, Challenges.id).all())
+    chals = [{"id": c.id, "name": c.name, "category": c.category or "Uncategorised"} for c in challenges]
+
+    # Who solved what, and who only ever got it wrong.
+    solved = {}
+    for acc_id, ch_id in db.session.query(owner, Solves.challenge_id).all():
+        solved.setdefault(acc_id, set()).add(ch_id)
+    attempted = {}
+    for acc_id, ch_id in (db.session.query(sub_owner, Submissions.challenge_id)
+                          .filter(Submissions.type == "incorrect").all()):
+        attempted.setdefault(acc_id, set()).add(ch_id)
+
+    # Ranked accounts first, then any visible ones that haven't scored yet.
+    standings = get_team_standings() if teams else get_user_standings()
+    ranked = [{"id": getattr(row, id_attr), "name": row.name, "score": int(row.score or 0)} for row in standings]
+    seen = {row["id"] for row in ranked}
+    for account in Account.query.filter_by(hidden=False, banned=False).all():
+        if account.id not in seen:
+            ranked.append({"id": account.id, "name": account.name, "score": 0})
+
+    rows = []
+    for place, account in enumerate(ranked, 1):
+        done = solved.get(account["id"], set())
+        tried = attempted.get(account["id"], set()) - done
+        rows.append({
+            "place": place,
+            "name": account["name"],
+            "score": account["score"],
+            "solved": sorted(done),
+            "attempted": sorted(tried),
         })
-    return found
+
+    categories = []
+    for chal in chals:
+        if chal["category"] not in categories:
+            categories.append(chal["category"])
+    return {"challenges": chals, "categories": categories, "rows": rows}
 
 
 def describe(row):
@@ -117,22 +171,34 @@ def register(app, assets):
     blueprint = Blueprint("stars_extras", __name__, template_folder="templates")
 
     # --- First blood ---------------------------------------------------------
-    @blueprint.route("/stars/first-bloods")
-    def public_first_bloods():
-        # For the projector page: team and challenge only, never players' names.
-        found = [{key: blood[key] for key in ("id", "at", "challenge", "category", "team")} for blood in first_bloods()]
-        response = jsonify({"first_bloods": found})
+    @blueprint.route("/stars/first-blood")
+    def public_first_blood():
+        # For the projector page: team and challenge only, never the player's name.
+        blood = first_blood()
+        found = {key: blood[key] for key in ("id", "at", "challenge", "category", "team")} if blood else None
+        response = jsonify({"first_blood": found})
         response.headers["Cache-Control"] = "no-store"
         return response
 
-    @blueprint.route("/admin/stars/first-bloods")
+    @blueprint.route("/admin/stars/first-blood")
     @admins_only
-    def admin_first_bloods():
+    def admin_first_blood():
         start = int(get_config("start") or 0)
-        found = first_bloods()
-        for blood in found:
+        blood = first_blood()
+        if blood:
             blood["after_start"] = blood["at"] - start if start and blood["at"] and blood["at"] >= start else None
-        return jsonify({"first_bloods": found, "challenges": Challenges.query.filter_by(state="visible").count()})
+        return jsonify({"first_blood": blood})
+
+    # --- Score matrix --------------------------------------------------------
+    @blueprint.route("/admin/stars-matrix")
+    @admins_only
+    def matrix_page():
+        return render_template("stars_matrix_admin.html", assets=assets)
+
+    @blueprint.route("/admin/stars/matrix")
+    @admins_only
+    def matrix_json():
+        return jsonify(score_matrix())
 
     # --- Help queue: players --------------------------------------------------
     @blueprint.route("/stars/help", methods=["GET"])

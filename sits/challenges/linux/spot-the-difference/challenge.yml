@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `twinphotos`.
 
   **Commands you may need to solve this level:** `diff`
-connection_info: ssh spotdiff@192.168.8.109 -p 2240
+connection_info: ssh spotdiff@192.168.68.104 -p 2240
 flags:
   - "FLAG{0n3_l1n3_ch4ng3d}"
 tags:

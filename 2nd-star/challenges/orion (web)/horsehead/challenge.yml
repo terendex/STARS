@@ -21,7 +21,7 @@ description: |-
   **Your goal:** open the archive at the address below while introducing yourself as `StarScope/2.0`. The archive opens and shows the flag.
 
   **Tools you may need to solve this level:** Your browser's developer tools (F12), or `curl.exe` in PowerShell
-connection_info: http://192.168.8.109:8090
+connection_info: http://192.168.68.104:8090
 flags:
   - "STARS{h0rs3h34d_us3r_4g3nt_sp00f3d}"
 tags:

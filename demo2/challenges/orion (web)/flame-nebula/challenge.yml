@@ -16,7 +16,7 @@ description: |-
   **Your goal:** open the register at the address below and get it to show you the site's secret settings. The flag is one of them.
 
   **Tools you may need to solve this level:** Jinja template injection with `{{ }}`
-connection_info: http://192.168.8.109:8501
+connection_info: http://192.168.68.104:8501
 flags:
   - "STARS{fl4m3_t3mpl4t3s_sp1ll_s3cr3ts}"
 tags:

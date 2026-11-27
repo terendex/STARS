@@ -19,7 +19,7 @@ description: |-
   **Your goal:** use the key to log in as `caretaker` and read the flag in the caretaker's home folder.
 
   Log in with the command below and the password `underthemat`. Read `note.txt` too.
-connection_info: ssh sparekey@192.168.8.109 -p 2240
+connection_info: ssh sparekey@192.168.68.104 -p 2240
 flags:
   - "FLAG{sp4r3_k3y_und3r_th3_m4t}"
 tags:

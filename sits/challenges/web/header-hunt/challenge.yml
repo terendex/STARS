@@ -19,7 +19,7 @@ description: |-
   **Your goal:** read the headers the weather site at the address below sends with its page. One of them is the flag.
 
   **Tools you may need to solve this level:** Your browser's developer tools (F12), or `curl.exe` in PowerShell
-connection_info: http://192.168.8.109:8306
+connection_info: http://192.168.68.104:8306
 flags:
   - "FLAG{h34d3rs_c4rry_s3cr3ts}"
 tags:

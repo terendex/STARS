@@ -24,7 +24,7 @@ description: |-
   **How to connect:** the command needs `printf` and `nc`, which the Calvera account on this CTF already has. Log in with `ssh calvera@<address> -p 2250` (use the address from the command below) and the password `neutronstar`, then paste the `printf ... | nc jabbah 9001` line. If you have `nc` on your own computer instead, the command below connects to the same program — keep the same `printf`, but swap `jabbah 9001` for the host and port it shows.
 
   **Commands you may need to solve this level:** `ssh`, `nc`, `printf`
-connection_info: nc 192.168.8.109 9051
+connection_info: nc 192.168.68.104 9051
 files:
   - dist/jabbah.c
 flags:

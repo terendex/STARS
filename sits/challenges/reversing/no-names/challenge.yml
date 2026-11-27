@@ -21,7 +21,7 @@ description: |-
   **Your goal:** catch the flag in memory before it's wiped.
 
   Log in with the command below and the password `reverse`.
-connection_info: ssh nonames@192.168.8.109 -p 2242
+connection_info: ssh nonames@192.168.68.104 -p 2242
 flags:
   - "FLAG{n0_n4m3s_n0_pr0bl3m}"
 tags:

@@ -23,7 +23,7 @@ description: |-
   gdb may warn that it can't find `license.c`. That's normal: you have the program, not the code it was written from.
 
   Log in with the command below and the password `reverse`.
-connection_info: ssh license@192.168.8.109 -p 2242
+connection_info: ssh license@192.168.68.104 -p 2242
 flags:
   - "FLAG{m4d3_my_0wn_k3yg3n}"
 tags:

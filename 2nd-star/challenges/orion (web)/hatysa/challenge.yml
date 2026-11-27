@@ -19,7 +19,7 @@ description: |-
   **Your goal:** open Hatysa's site at the address below, then find the visitor pass it saved in your browser. The pass is the flag.
 
   **Tools you may need to solve this level:** Your browser's developer tools (F12)
-connection_info: http://192.168.8.109:8087
+connection_info: http://192.168.68.104:8087
 flags:
   - "STARS{h4ty54_r3m3mb3rs_y0u}"
 tags:

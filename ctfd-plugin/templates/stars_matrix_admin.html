@@ -1,0 +1,154 @@
+{% extends "admin/base.html" %}
+
+{% block stylesheets %}
+<style>
+  .sm-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 14px; }
+  .sm-count { color: #6b7681; font-size: 0.9rem; }
+  .sm-search { max-width: 220px; }
+  .sm-cats { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sm-cat { cursor: pointer; user-select: none; border: 1px solid #c9d0d8; border-radius: 14px;
+    padding: 3px 12px; font-size: 0.85rem; background: #fff; display: inline-flex; align-items: center; gap: 6px; }
+  .sm-cat .sm-key { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+  .sm-cat.off { opacity: 0.45; text-decoration: line-through; }
+  .sm-legend { display: flex; gap: 16px; align-items: center; margin-left: auto; color: #6b7681; font-size: 0.9rem; }
+  .sm-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sm-swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+  .sm-swatch.solved { background: #2fae5f; }
+  .sm-swatch.attempted { background: #e8b23a; }
+
+  .sm-wrap { overflow: auto; max-height: 74vh; border: 1px solid #e3e6ea; border-radius: 6px; }
+  table.sm { border-collapse: separate; border-spacing: 0; font-size: 0.85rem; margin: 0; }
+  table.sm th, table.sm td { border-bottom: 1px solid #eceff2; border-right: 1px solid #eceff2; }
+  table.sm thead th { position: sticky; background: #1f2733; color: #fff; z-index: 3; }
+  table.sm thead tr.sm-band th { top: 0; height: 26px; }
+  table.sm thead tr.sm-head th { top: 26px; }
+  .sm-cat-head { text-align: center; font-weight: 700; white-space: nowrap; padding: 2px 8px; }
+  .sm-ch { height: 150px; padding: 0; vertical-align: bottom; }
+  .sm-ch > div { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap;
+    padding: 8px 5px; margin: 0 auto; font-weight: 600; line-height: 1.1; }
+  .sm-ch small { color: #9fb0c3; font-weight: 400; }
+
+  .sm-fixed { position: sticky; z-index: 2; background: #fff; }
+  .sm-place { left: 0; min-width: 44px; text-align: center; color: #6b7681; }
+  .sm-team { left: 44px; min-width: 150px; font-weight: 600; white-space: nowrap; }
+  .sm-score { left: 194px; min-width: 60px; text-align: right; font-variant-numeric: tabular-nums; border-right: 2px solid #d4dae0; }
+  table.sm thead .sm-fixed { z-index: 5; background: #1f2733; }
+  tbody tr:nth-child(even) .sm-fixed { background: #f7f9fb; }
+  tbody tr:hover td { background: #eef4ff; }
+  tbody tr:hover .sm-fixed { background: #e4edff; }
+
+  td.sm-cell { width: 26px; min-width: 26px; max-width: 26px; padding: 0; }
+  .sm-dot { display: block; width: 100%; height: 28px; }
+  .sm-dot.solved { background: #2fae5f; }
+  .sm-dot.attempted { background: #e8b23a; }
+  .sm-empty { padding: 24px; color: #6b7681; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <div class="container"><h1>Score Matrix</h1></div>
+</div>
+
+<div class="container-fluid px-4">
+  <div class="sm-controls">
+    <input type="search" class="form-control sm-search" id="sm-search" placeholder="Search teams…" aria-label="Search teams">
+    <div class="sm-cats" id="sm-cats"></div>
+    <div class="sm-legend">
+      <span><span class="sm-swatch solved"></span> Solved</span>
+      <span><span class="sm-swatch attempted"></span> Attempted</span>
+    </div>
+  </div>
+  <div class="sm-count mb-2" id="sm-count"></div>
+  <div class="sm-wrap"><div id="sm-table"><p class="sm-empty">Loading…</p></div></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const PALETTE = ["#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981", "#ef4444", "#14b8a6", "#6366f1", "#0ea5e9", "#d946ef"];
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  let data = null;
+  const color = {};
+  const active = new Set();
+  let query = "";
+
+  function categoryControls() {
+    const box = $("sm-cats");
+    box.innerHTML = "";
+    data.categories.forEach((cat) => {
+      const chip = document.createElement("span");
+      chip.className = "sm-cat";
+      chip.innerHTML = `<span class="sm-key" style="background:${color[cat]}"></span>${esc(cat)}`;
+      chip.addEventListener("click", () => {
+        if (active.has(cat)) active.delete(cat); else active.add(cat);
+        chip.classList.toggle("off", !active.has(cat));
+        render();
+      });
+      box.appendChild(chip);
+    });
+  }
+
+  function render() {
+    const chals = data.challenges.filter((c) => active.has(c.category));
+    const q = query.trim().toLowerCase();
+    const rows = q ? data.rows.filter((r) => r.name.toLowerCase().includes(q)) : data.rows;
+    $("sm-count").textContent = `${rows.length} ${rows.length === 1 ? "team" : "teams"} · ${chals.length} of ${data.challenges.length} challenges shown`;
+
+    if (!chals.length || !rows.length) {
+      $("sm-table").innerHTML = `<p class="sm-empty">${!chals.length ? "No categories selected." : "No teams match that search."}</p>`;
+      return;
+    }
+
+    // Category band: a run of columns per category (challenges are grouped already).
+    let band = "";
+    for (let i = 0; i < chals.length;) {
+      let j = i;
+      while (j < chals.length && chals[j].category === chals[i].category) j++;
+      band += `<th class="sm-cat-head" colspan="${j - i}" style="background:${color[chals[i].category]}">${esc(chals[i].category)}</th>`;
+      i = j;
+    }
+    const head = chals.map((c) =>
+      `<th class="sm-ch" style="border-top:3px solid ${color[c.category]}"><div>${esc(c.name)}</div></th>`).join("");
+
+    const body = rows.map((r) => {
+      const solved = new Set(r.solved), attempted = new Set(r.attempted);
+      const cells = chals.map((c) => {
+        const state = solved.has(c.id) ? "solved" : attempted.has(c.id) ? "attempted" : "";
+        const title = `${esc(r.name)} — ${esc(c.name)}${state ? " (" + state + ")" : ""}`;
+        return `<td class="sm-cell"><span class="sm-dot ${state}" title="${title}"></span></td>`;
+      }).join("");
+      return `<tr><td class="sm-fixed sm-place">${r.place}</td>` +
+        `<td class="sm-fixed sm-team">${esc(r.name)}</td>` +
+        `<td class="sm-fixed sm-score">${r.score}</td>${cells}</tr>`;
+    }).join("");
+
+    $("sm-table").innerHTML =
+      `<table class="sm"><thead>` +
+        `<tr class="sm-band"><th class="sm-fixed sm-place" rowspan="2">#</th>` +
+        `<th class="sm-fixed sm-team" rowspan="2">Team</th>` +
+        `<th class="sm-fixed sm-score" rowspan="2">Score</th>${band}</tr>` +
+        `<tr class="sm-head">${head}</tr>` +
+      `</thead><tbody>${body}</tbody></table>`;
+  }
+
+  async function load() {
+    try {
+      const reply = await fetch("/admin/stars/matrix", { credentials: "same-origin", cache: "no-store" });
+      data = await reply.json();
+      data.categories.forEach((cat, i) => { color[cat] = PALETTE[i % PALETTE.length]; active.add(cat); });
+      categoryControls();
+      render();
+    } catch (error) {
+      $("sm-table").innerHTML = `<p class="sm-empty">Couldn't load the matrix. Check you're still signed in as admin.</p>`;
+    }
+  }
+
+  $("sm-search").addEventListener("input", (e) => { query = e.target.value; render(); });
+  load();
+})();
+</script>
+{% endblock %}

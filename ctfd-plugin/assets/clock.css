@@ -69,8 +69,32 @@ body.stop .fill { background: var(--stop); }
   .music { left: 16px; right: 16px; width: auto; }
 }
 
-/* First blood: shown for a few seconds at the top when a challenge is solved
-   for the first time. */
+/* Scoreboard break: shown instead of the clock while the timer is paused. */
+.scores { height: 100%; padding: 9vh 4vw 4vh; display: flex; flex-direction: column; }
+.scores-head { text-align: center; margin-bottom: 3vh; }
+.scores-title { font-size: clamp(30px, 4.2vw, 80px); font-weight: 700; line-height: 1; }
+.scores-sub { margin-top: 1vh; color: var(--muted); font-size: clamp(14px, 1.7vw, 30px); }
+.scores-cols { flex: 1; display: flex; gap: 4vw; min-height: 0; }
+.scores-col { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.scores-kind {
+  color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  font-size: clamp(13px, 1.4vw, 24px); padding-bottom: 1.2vh; margin-bottom: 1vh; border-bottom: 1px solid var(--line);
+}
+.scores-list { flex: 1; list-style: none; margin: 0; padding: 0; counter-reset: rank; overflow: hidden; }
+.scores-list li {
+  display: flex; align-items: baseline; gap: 1.4vw; padding: 1vh 0.3vw;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: clamp(16px, 2vw, 36px);
+}
+.scores-list li::before {
+  counter-increment: rank; content: counter(rank);
+  min-width: 2.2ch; text-align: right; color: var(--muted); font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.scores-name { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-weight: 600; }
+.scores-score { color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+.scores-empty { color: var(--muted); padding: 2vh 0; }
+
+/* First blood: shown for a few seconds at the top when the event's first
+   solve lands. */
 .blood {
   position: fixed; top: 1.5vh; left: 50%; z-index: 4;
   width: min(80vw, 1100px); padding: 1.1vh 3vw; text-align: center;

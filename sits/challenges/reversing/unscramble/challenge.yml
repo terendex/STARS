@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `reverse`.
 
   **Tools you may need to solve this level:** `cat`, [CyberChef](https://gchq.github.io/CyberChef/)
-connection_info: ssh unscramble@192.168.8.109 -p 2242
+connection_info: ssh unscramble@192.168.68.104 -p 2242
 flags:
   - "FLAG{und0n3_1n_r3v3rs3_0rd3r}"
 tags:

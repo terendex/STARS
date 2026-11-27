@@ -21,7 +21,7 @@ description: |-
   **Your goal:** read the page at the address below before your browser leaves it. The flag is on that page.
 
   **Tools you may need to solve this level:** View page source, your browser's developer tools (F12), or `curl.exe` in PowerShell
-connection_info: http://192.168.8.109:8307
+connection_info: http://192.168.68.104:8307
 flags:
   - "FLAG{r3d1r3ct_t00_f4st}"
 tags:

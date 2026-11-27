@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `littlebear`. Use `ls` to see what's in a folder, `cd name` to go into one, and `cd ..` to come back out. Opening every folder by hand works, but it's slow.
 
   **Commands you may need to solve this level:** `ls`, `cd`, `cat`, `find`
-connection_info: ssh yildun@192.168.8.109 -p 2220
+connection_info: ssh yildun@192.168.68.104 -p 2220
 flags:
   - "STARS{y1ldun_f0und_1n_th3_4rch1v3}"
 tags:

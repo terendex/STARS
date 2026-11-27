@@ -45,12 +45,12 @@ The features CTFd doesn't have come from a plugin. 2nd Star, Classic and SITS mo
 | File | What it does |
 |---|---|
 | `__init__.py` | Loads everything. Makes the email optional in the admin's Create User form, sets a separate login cookie per CTF (`STARS_SESSION_COOKIE`), and runs the mission clock: the admin page, its buttons, and the projector page `/timer`. |
-| `extras.py` | First blood (the public list, and the admin table on Statistics) and the help queue (the `stars_help` table, and the player and admin pages). |
+| `extras.py` | First blood (the event's single first solve, for the projector and the admin Statistics page) and the help queue (the `stars_help` table, and the player and admin pages). |
 | `assets/clock-watch.js` | On players' challenges page: reloads it when the clock starts or ends. Players never see a countdown. |
-| `assets/clock.js`, `clock.css` | The projector page: the countdown, first blood banners, music. |
+| `assets/clock.js`, `clock.css` | The projector page: the countdown, the first blood banner, music. |
 | `assets/music.js`, `playlist.json` | The Spotify player and its track list. `scripts/set-playlist.py` rewrites the list. |
 | `assets/help.js` | The **Ask for help** button on the challenges page. |
-| `assets/admin-extras.js` | The First Bloods table on Statistics and the waiting count next to **Help Queue** in the admin menu. |
+| `assets/admin-extras.js` | The First Blood entry on Statistics and the waiting count next to **Help Queue** in the admin menu. |
 | `templates/` | The HTML for the Mission Clock page, the projector page and the Help Queue page. |
 
 The demos' `demo/ctfd-plugin/__init__.py` signs every visitor in as `demo1` (`STARS_DEMO_AUTOLOGIN` in each demo's `docker-compose.yml`), so nobody needs an account to try them. `STARS_SESSION_COOKIE` gives each demo its own login cookie.

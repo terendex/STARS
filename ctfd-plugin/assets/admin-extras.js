@@ -1,5 +1,5 @@
 // On every admin page: the number of teams waiting for help, next to "Help
-// Queue" in the menu. On Admin Panel > Statistics: the first bloods table.
+// Queue" in the menu. On Admin Panel > Statistics: who took first blood.
 (() => {
   if (window.__starsAdminExtras) return;
   window.__starsAdminExtras = true;
@@ -40,47 +40,40 @@
     } catch (error) { /* try again next time */ }
   }
 
-  // --- First bloods on the statistics page ----------------------------------
-  async function firstBloods() {
+  // --- First blood on the statistics page -----------------------------------
+  async function firstBlood() {
     const heading = Array.from(document.querySelectorAll("h3")).find((h) => h.textContent.trim().startsWith("Player Progression"));
     if (!heading) return;
-    const reply = await fetch("/admin/stars/first-bloods", { credentials: "same-origin", cache: "no-store" });
-    const data = await reply.json();
-    const bloods = data.first_bloods || [];
+    const reply = await fetch("/admin/stars/first-blood", { credentials: "same-origin", cache: "no-store" });
+    const blood = (await reply.json()).first_blood;
 
     const row = document.createElement("div");
     row.className = "row mb-4";
-    row.id = "stars-first-bloods";
+    row.id = "stars-first-blood";
     const column = document.createElement("div");
     column.className = "col-md-12";
     const title = document.createElement("h3");
-    title.textContent = "First Bloods ";
-    const note = document.createElement("sup");
-    note.className = "text-muted";
-    note.textContent = `(${bloods.length} of ${data.challenges} challenges solved)`;
-    title.appendChild(note);
+    title.textContent = "First Blood";
     column.appendChild(title);
 
-    if (!bloods.length) {
+    if (!blood) {
       const empty = document.createElement("p");
       empty.className = "text-muted";
-      empty.textContent = "No challenge has been solved yet.";
+      empty.textContent = "No one has solved a challenge yet.";
       column.appendChild(empty);
     } else {
       const table = document.createElement("table");
       table.className = "table table-striped table-sm";
-      table.innerHTML = "<thead><tr><th>Challenge</th><th>Category</th><th>Team</th><th>Solved by</th><th>Time</th><th>After the start</th></tr></thead>";
+      table.innerHTML = "<thead><tr><th>Team</th><th>Solved by</th><th>Challenge</th><th>Category</th><th>Time</th><th>After the start</th></tr></thead>";
       const body = document.createElement("tbody");
-      for (const blood of bloods) {
-        const tr = document.createElement("tr");
-        cell(tr, blood.challenge, "font-weight-bold");
-        cell(tr, blood.category);
-        cell(tr, blood.team);
-        cell(tr, blood.player);
-        cell(tr, blood.at ? clockTime(blood.at) : "");
-        cell(tr, duration(blood.after_start), "text-muted");
-        body.appendChild(tr);
-      }
+      const tr = document.createElement("tr");
+      cell(tr, blood.team, "font-weight-bold");
+      cell(tr, blood.player);
+      cell(tr, blood.challenge);
+      cell(tr, blood.category);
+      cell(tr, blood.at ? clockTime(blood.at) : "");
+      cell(tr, duration(blood.after_start), "text-muted");
+      body.appendChild(tr);
       table.appendChild(body);
       column.appendChild(table);
     }
@@ -91,7 +84,7 @@
   function begin() {
     badge();
     setInterval(badge, 10000);
-    if (location.pathname.startsWith("/admin/statistics")) firstBloods().catch(() => {});
+    if (location.pathname.startsWith("/admin/statistics")) firstBlood().catch(() => {});
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", begin);
   else begin();

@@ -19,7 +19,7 @@ description: |-
   **Your goal:** open the Pizza Tracker at the address below and look at orders that aren't yours. The owner's order has the flag.
 
   **Tools you may need to solve this level:** Your browser's address bar
-connection_info: http://192.168.8.109:8308
+connection_info: http://192.168.68.104:8308
 flags:
   - "FLAG{0rd3r_numb3rs_4r3_gu3ss4bl3}"
 tags:

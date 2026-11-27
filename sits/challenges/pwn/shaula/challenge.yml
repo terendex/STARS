@@ -30,7 +30,7 @@ description: |-
   If you have `nc`, `nc IP 9041` works too.
 
   **Commands you may need to solve this level:** `ssh`
-connection_info: ssh menu@192.168.8.109 -p 2240
+connection_info: ssh menu@192.168.68.104 -p 2240
 files:
   - dist/shaula.c
 flags:

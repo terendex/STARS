@@ -21,7 +21,7 @@ description: |-
   Log in with the command below and the password `mostvotes`.
 
   **Commands you may need to solve this level:** `cut`, `sort`, `uniq`
-connection_info: ssh favourite@192.168.8.109 -p 2240
+connection_info: ssh favourite@192.168.68.104 -p 2240
 flags:
   - "FLAG{th3_cr0wd_h4s_sp0k3n}"
 tags:

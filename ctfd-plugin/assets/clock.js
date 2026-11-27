@@ -7,6 +7,8 @@
   const time = $("time");
   const fill = $("fill");
   const note = $("note");
+  const scores = $("scores");
+  const clockMain = document.querySelector("main.clock");
 
   const pad = (n) => String(n).padStart(2, "0");
   const hms = (s) => {
@@ -65,10 +67,15 @@
       text = "00:00:00";
       detail = "Flag submissions are closed";
       mood = "stop";
+    } else if (state === "intermission") {
+      heading = "Scores";
+      text = hms(clock.left || 0);
+      detail = "Timer paused";
     } else if (state === "open") {
       heading = "No time limit";
     }
 
+    showScores(state === "intermission", clock ? clock.left : 0);
     if (label.textContent !== heading) label.textContent = heading;
     if (time.textContent !== text) time.textContent = text;
     if (note.textContent !== detail) note.textContent = detail;
@@ -88,54 +95,120 @@
     }
   }
 
-  // --- First bloods ----------------------------------------------------------
-  // Only ones that happen while this page is open are announced, one at a time.
-  const blood = $("blood");
-  const queue = [];
-  let seen = null;
-  let showing = false;
+  // --- Scoreboard break ------------------------------------------------------
+  // While the clock is paused, the projector shows the standings instead of the
+  // countdown. The scores come from /stars/standings, which only answers during
+  // a break, so the scoreboard isn't exposed the rest of the time.
+  let standingsTimer = null;
 
-  function announce() {
-    if (showing || !queue.length) return;
-    const next = queue.shift();
-    showing = true;
+  function fillList(id, items) {
+    const ol = $(id);
+    ol.textContent = "";
+    if (!items || !items.length) {
+      const li = document.createElement("li");
+      li.className = "scores-empty";
+      li.textContent = "No scores yet";
+      ol.appendChild(li);
+      return;
+    }
+    for (const item of items) {
+      const li = document.createElement("li");
+      const name = document.createElement("span");
+      name.className = "scores-name";
+      name.textContent = item.name;
+      const score = document.createElement("span");
+      score.className = "scores-score";
+      score.textContent = `${item.score} pt`;
+      li.append(name, score);
+      ol.appendChild(li);
+    }
+  }
+
+  async function pollStandings() {
+    try {
+      const reply = await fetch("/stars/standings", { cache: "no-store", credentials: "same-origin" });
+      const data = await reply.json();
+      if (!data.intermission) return;
+      const hasTeams = (data.teams || []).length > 0;
+      $("scores-teams-col").hidden = !hasTeams;
+      if (hasTeams) fillList("scores-teams", data.teams);
+      fillList("scores-users", data.users);
+    } catch (error) { /* try again on the next poll */ }
+  }
+
+  function showScores(on, left) {
+    if (on) {
+      $("scores-sub").textContent = left ? `Timer paused · ${hms(left)} on the clock` : "Timer paused";
+      if (scores.hidden) {
+        scores.hidden = false;
+        clockMain.hidden = true;
+        pollStandings();
+      }
+      if (!standingsTimer) standingsTimer = setInterval(pollStandings, 5000);
+    } else {
+      if (!scores.hidden) {
+        scores.hidden = true;
+        clockMain.hidden = false;
+      }
+      if (standingsTimer) {
+        clearInterval(standingsTimer);
+        standingsTimer = null;
+      }
+    }
+  }
+
+  // --- First blood -----------------------------------------------------------
+  // The one first solve of the whole event. Announced once, when it happens
+  // while this page is open; a page opened afterwards doesn't replay it.
+  const blood = $("blood");
+  let announced = null;
+
+  // The stinger that plays with the banner. Drop any sound at
+  // assets/first-blood.mp3 (the Dota "First Blood!" clip, say) and it plays
+  // here; with no file, the banner just shows in silence. Browsers only let it
+  // play after someone has clicked the page, which arming the music already does.
+  const assets = window.STARS_ASSETS || "/plugins/stars/assets/";
+  const bloodSound = new Audio(`${assets}first-blood.mp3`);
+  bloodSound.preload = "auto";
+
+  function announce(next) {
     $("blood-team").textContent = next.team;
     $("blood-what").textContent = `solved ${next.challenge} · ${next.category}`;
     document.body.dataset.blood = `${next.team} | ${next.challenge}`;
+    try {
+      bloodSound.currentTime = 0;
+      bloodSound.play().catch(() => {});
+    } catch (error) { /* no sound file, or not allowed yet */ }
     blood.hidden = false;
     requestAnimationFrame(() => requestAnimationFrame(() => blood.classList.add("on")));
     setTimeout(() => {
       blood.classList.remove("on");
       setTimeout(() => {
         blood.hidden = true;
-        showing = false;
         delete document.body.dataset.blood;
-        announce();
       }, 450);
     }, 8000);
   }
 
-  async function pollBloods() {
+  async function pollBlood() {
     try {
-      const reply = await fetch("/stars/first-bloods", { cache: "no-store", credentials: "same-origin" });
-      const list = (await reply.json()).first_bloods || [];
-      if (seen === null) {
-        seen = new Set(list.map((b) => b.id));
+      const reply = await fetch("/stars/first-blood", { cache: "no-store", credentials: "same-origin" });
+      const next = (await reply.json()).first_blood;
+      if (announced === null) {
+        // First poll: remember what's already there without announcing it.
+        announced = next ? next.id : 0;
         return;
       }
-      for (const b of list) {
-        if (!seen.has(b.id)) {
-          seen.add(b.id);
-          queue.push(b);
-        }
+      if (next && next.id !== announced) {
+        announced = next.id;
+        announce(next);
       }
-      announce();
     } catch (error) {
       // Try again on the next poll.
     }
   }
-  pollBloods();
-  setInterval(pollBloods, 4000);
+  pollBlood();
+  setInterval(pollBlood, 4000);
 
   function fullscreen() {
     if (document.fullscreenElement) document.exitFullscreen();

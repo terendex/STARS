@@ -21,7 +21,7 @@ description: |-
   **Your goal:** open Mintaka's vault at the address below, switch the button back on, and press it. The vault opens and shows the flag.
 
   **Tools you may need to solve this level:** Your browser's developer tools (F12)
-connection_info: http://192.168.8.109:8084
+connection_info: http://192.168.68.104:8084
 flags:
   - "STARS{m1nt4k4_s3rv3r_n3v3r_ch3ck3d}"
 tags:

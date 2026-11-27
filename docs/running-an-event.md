@@ -149,10 +149,10 @@ The tracks are listed in `ctfd-plugin/assets/playlist.json`. To use another albu
 
 ## First blood and help requests
 
-**First blood** is the first team to solve a challenge. Hidden teams and admins never count, so testing doesn't take one.
+**First blood** is the first team to solve *anything* in the whole event — whoever lands the first correct answer. Exactly one team takes it. Hidden teams and admins never count, so testing can't take it.
 
-- **On the projector page,** each new first blood shows at the top for 8 seconds: the team, and the challenge it solved.
-- **Admin Panel > Statistics** has a **First Bloods** table above Player Progression: every challenge solved so far, which team solved it first, the player who did, the time, and how long after the start.
+- **On the projector page,** first blood shows at the top for 8 seconds when it happens: the team, and the challenge it solved. If you put a sound file at `ctfd-plugin/assets/first-blood.mp3`, it plays with the banner (once someone has clicked the page to turn on sound). With no file there, the banner just shows in silence.
+- **Admin Panel > Statistics** has a **First Blood** entry above Player Progression: which team took it, the player who did, the challenge, the time, and how long after the start.
 
 **Help requests:** players press **Ask for help** in the corner of the challenges page. The challenge they have open is chosen for them, and they can say what they've tried. Each team has one request at a time. Asking again changes it.
 

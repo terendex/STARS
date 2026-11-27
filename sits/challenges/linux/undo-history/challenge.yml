@@ -19,7 +19,7 @@ description: |-
   **Your goal:** find the secret ingredient in the folder's history.
 
   Log in with the command below and the password `undoredo`. Then go into the folder with `cd recipes`.
-connection_info: ssh history@192.168.8.109 -p 2240
+connection_info: ssh history@192.168.68.104 -p 2240
 flags:
   - "FLAG{g1t_n3v3r_f0rg3ts}"
 tags:

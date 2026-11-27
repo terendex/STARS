@@ -25,7 +25,7 @@ description: |-
   The program's source code is attached below as a download. Reading it is how you find the weakness.
 
   **Commands you may need to solve this level:** `ssh`, `nc`, `cat`
-connection_info: ssh exactfit@192.168.8.109 -p 2240
+connection_info: ssh exactfit@192.168.68.104 -p 2240
 files:
   - dist/dschubba.c
 flags:
