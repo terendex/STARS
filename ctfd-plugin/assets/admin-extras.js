@@ -81,10 +81,49 @@
     heading.closest(".row").before(row, document.createElement("hr"));
   }
 
+  // --- Hide the third-party "Filter Matrix Data" grid -----------------------
+  // That grid on the Statistics page is injected by a browser extension, not by
+  // CTFd, and it shows nothing useful here (scores are hidden). This hides it so
+  // it stops cluttering the page; the real grid is Admin > Score Matrix. It only
+  // ever touches that extension's own blocks, found by their wording, and never
+  // CTFd's sections or the First Blood block above. Does nothing if the
+  // extension isn't installed.
+  const CTFD_SECTION = /Solve Counts|Score Distribution|Player Progression|Submission Percentages|First Blood/;
+
+  function hideMatrixExtension() {
+    let acted = false;
+    const kill = (wanted) => {
+      // Document order lists ancestors first, so the first hit is the outermost
+      // block that is all extension and no CTFd content: the whole widget.
+      for (const el of document.querySelectorAll("div, section, aside, details")) {
+        if (el.dataset.starsHidden) continue;
+        const text = el.textContent || "";
+        if (wanted.every((word) => text.includes(word)) && !CTFD_SECTION.test(text)) {
+          el.style.display = "none";
+          el.dataset.starsHidden = "1";
+          acted = true;
+          return;
+        }
+      }
+    };
+    kill(["Filter Matrix Data", "Filter Teams"]);        // the filter panel
+    kill(["Place", "Team", "Score", "Opened"]);          // the legend + grid
+    return acted;
+  }
+
   function begin() {
     badge();
     setInterval(badge, 10000);
-    if (location.pathname.startsWith("/admin/statistics")) firstBlood().catch(() => {});
+    if (location.pathname.startsWith("/admin/statistics")) {
+      firstBlood().catch(() => {});
+      // The extension injects after it fetches data, so keep checking briefly.
+      let tries = 0, idle = 0;
+      const sweep = setInterval(() => {
+        idle = hideMatrixExtension() ? 0 : idle + 1;
+        if (++tries >= 30 || idle >= 6) clearInterval(sweep);
+      }, 500);
+      hideMatrixExtension();
+    }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", begin);
   else begin();
